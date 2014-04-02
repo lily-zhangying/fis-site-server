@@ -1,0 +1,115 @@
+<!--
+title: FIS默认配置方案
+toc: 
+-->
+
+<blockquote>
+<p>以下是默认FIS配置方案。</p>
+</blockquote>
+<div class="highlight"><pre>    :::javascript
+    fis.config.set<span class="o">(</span><span class="s1">&#39;modules&#39;</span>, <span class="o">{</span>
+        parser : <span class="o">{</span>
+            less : <span class="s1">&#39;less&#39;</span>,  //添加对less文件的处理
+            tmpl: <span class="s1">&#39;bdtmpl&#39;</span>  //添加对前端模板的处理
+        <span class="o">}</span>,
+        preprocessor: <span class="o">{</span>
+            tpl: <span class="s1">&#39;extlang&#39;</span>,  //增加对tpl的预处理
+        <span class="o">}</span>,
+        postprocessor: <span class="o">{</span>
+            tpl: <span class="s1">&#39;require-async&#39;</span>,  //增加对tpl中的异步组件收集处理
+            js: <span class="s1">&#39;jswrapper, require-async&#39;</span>  //增加对JS组件的组件化包装和收集异步组件使用依赖关系处理
+        <span class="o">}</span>,
+        optimizer : <span class="o">{</span>
+            tpl : <span class="s1">&#39;smarty-xss,html-compress&#39;</span> //增加对tpl文件的smarty-xss修复和压缩处理
+        <span class="o">}</span>
+    <span class="o">})</span><span class="p">;</span>
+
+    fis.config.set<span class="o">(</span><span class="s1">&#39;roadmap&#39;</span>, <span class="o">{</span>
+        ext : <span class="o">{</span>
+            less : <span class="s1">&#39;css&#39;</span>  //less文件编译后转为css文件
+        <span class="o">}</span>,
+        path : <span class="o">[</span>
+        <span class="o">{</span>
+            reg : /^<span class="se">\/</span><span class="nb">test</span><span class="se">\/</span><span class="o">(</span>.+<span class="o">)</span>/i,    //对test目录编译发布的路径设置
+            release : <span class="s1">&#39;/test/${namespace}/$1&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg : /<span class="se">\.</span>tmpl<span class="nv">$/</span>i,   //不产出后缀为tmpl的文件
+            release : <span class="nb">false</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg : /^<span class="se">\/</span>widget<span class="se">\/</span><span class="o">(</span>.*<span class="se">\.</span>tpl<span class="o">)</span><span class="nv">$/</span>i,   //设置widget中的tpl为组件化文件，以及产出路径
+            isMod : <span class="nb">true</span>,
+            url : <span class="s1">&#39;${namespace}/widget/$1&#39;</span>,
+            release : <span class="s1">&#39;/template/${namespace}/widget/$1&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg : /^<span class="se">\/</span>widget<span class="se">\/</span><span class="o">(</span>.*<span class="se">\.</span><span class="o">(</span>js<span class="p">|</span>css<span class="o">))</span><span class="nv">$/</span>i,  //设置widget中的js、css为组件化文件，以及产出路径
+            isMod : <span class="nb">true</span>,
+            release : <span class="s1">&#39;/static/${namespace}/widget/$1&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg : /^<span class="se">\/</span>plugin<span class="se">\/</span>/i
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg : /^<span class="se">\/</span>page<span class="se">\/</span><span class="o">(</span>.+<span class="se">\.</span>tpl<span class="o">)</span><span class="nv">$/</span>i,  //设置page中的tpl为组件化文件，以及产出路径
+            isMod: <span class="nb">true</span>,
+            release : <span class="s1">&#39;/template/${namespace}/page/$1&#39;</span>,
+            extras: <span class="o">{</span>
+                isPage: <span class="nb">true</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg : <span class="s1">&#39;${namespace}-map.json&#39;</span>,  //设置map.json文件的产出路径
+            release : <span class="s1">&#39;/config/${namespace}-map.json&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg: /^<span class="se">\/</span>static<span class="se">\/</span><span class="o">(</span>.*<span class="o">)</span>/i,  //设置static目录下文件的产出路径
+            release: <span class="s1">&#39;/static/${namespace}/$1&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg: /<span class="se">\.</span><span class="o">(</span>tpl<span class="p">|</span>php<span class="p">|</span>html<span class="p">|</span>xhtml<span class="o">)</span><span class="nv">$/</span>i
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg: /^<span class="se">\/</span>config<span class="se">\/</span>.*/i,
+            release: <span class="s1">&#39;$&amp;&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg: <span class="s2">&quot;server.conf&quot;</span>,
+            release: <span class="s1">&#39;/$&amp;&#39;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            reg: /<span class="se">\/</span>.+/i,
+            release: <span class="s1">&#39;/static/${namespace}$&amp;&#39;</span>
+        <span class="o">}</span>
+        <span class="o">]</span>
+    <span class="o">})</span>:
+
+    fis.config.set<span class="o">(</span><span class="s1">&#39;settings&#39;</span>, <span class="o">{</span>
+        parser : <span class="o">{</span>
+            bdtmpl : <span class="o">{</span>                      //设置对前端模板处理时默认的定界符
+                LEFT_DELIMITER : <span class="s1">&#39;&lt;#&#39;</span>,   
+                RIGHT_DELIMITER : <span class="s1">&#39;#&gt;&#39;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        postprocessor : <span class="o">{</span>
+            jswrapper: <span class="o">{</span>          //设置对组件包装时的类型
+                <span class="nb">type</span>: <span class="s1">&#39;amd&#39;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>,
+        optimizer : <span class="o">{</span>
+            <span class="s1">&#39;smarty-xss&#39;</span> : <span class="o">{</span>     //设置对tpl进行smarty-xss的默认配置
+                <span class="s1">&#39;escapeMap&#39;</span> : <span class="o">{</span>
+                    <span class="s1">&#39;js&#39;</span> : <span class="s1">&#39;f_escape_js&#39;</span>,
+                    <span class="s1">&#39;html&#39;</span> : <span class="s1">&#39;f_escape_xml&#39;</span>,
+                    <span class="s1">&#39;data&#39;</span> : <span class="s1">&#39;f_escape_data&#39;</span>,
+                    <span class="s1">&#39;path&#39;</span> : <span class="s1">&#39;f_escape_path&#39;</span>,
+                    <span class="s1">&#39;event&#39;</span> : <span class="s1">&#39;f_escape_event&#39;</span>,
+                    <span class="s1">&#39;no_escape&#39;</span> : <span class="s1">&#39;escape:none&#39;</span>
+                <span class="o">}</span>,
+                <span class="s1">&#39;leftDelimiter&#39;</span> : <span class="s1">&#39;{%&#39;</span>,
+                <span class="s1">&#39;rightDelimiter&#39;</span> : <span class="s1">&#39;%}&#39;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">})</span><span class="p">;</span>
+</pre></div>

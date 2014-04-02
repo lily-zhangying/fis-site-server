@@ -1,0 +1,35 @@
+<!--
+title: 在css中嵌入资源
+toc: 
+-->
+
+<blockquote>
+<p>与html类似，凡是命中了资源定位能力的编译标记， <strong>除了src=&quot;xxx&quot;之外</strong>，都可以通过添加 <code>?__inline</code> 编译标记都可以把文件内容嵌入进来。src=&quot;xxx&quot;被用在ie浏览器支持的filter内，该属性不支持base64字符串，因此未做处理。</p>
+</blockquote>
+
+<ul>
+<li><p>在css文件中嵌入其他css文件</p>
+
+<ul>
+<li><p>源码：</p>
+<div class="highlight"><pre><span class="k">@import</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;demo.css?__inline&#39;</span><span class="o">)</span><span class="p">;</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="nt">img</span> <span class="p">{</span> <span class="k">border</span><span class="o">:</span> <span class="m">5px</span> <span class="k">solid</span> <span class="m">#ccc</span><span class="p">;</span> <span class="p">}</span><span class="o">;</span>
+</pre></div></li>
+</ul></li>
+<li><p>在css中嵌入图片的base64</p>
+
+<ul>
+<li><p>源码：</p>
+<div class="highlight"><pre><span class="nc">.style</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(images/logo.gif?__inline)</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="nc">.style</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(data:image/gif;base64,R0lGODlhDgGBALMAAGBn6eYxLvvy9PnKyfO...Jzna6853wjKc850nPeoYgAgA7)</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></li>
+</ul></li>
+</ul>

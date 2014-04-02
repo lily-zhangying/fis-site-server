@@ -1,0 +1,29 @@
+<!--
+title: 本地开发环境
+toc: <ul class="nav"><li><a href="#toc_0">安装</a></li><li><a href="#toc_1">使用</a></li></ul>
+-->
+
+<blockquote>
+<p>用户在无后端开发环境情况下，可依赖提供本地开发调试进行开发，包括本地调试环境、模拟转发模块、测试数据模块。</p>
+</blockquote>
+
+<h2 id="toc_0">安装</h2>
+<div class="highlight"><pre><span class="n">fisp</span> <span class="n">server</span> <span class="n">init</span>
+</pre></div>
+<p>安装FIS本地运行环境后，执行 <strong>fisp server open</strong> 命令可打开本地运行环境目录</p>
+
+<p><img src="/static/fis-site/images/fis-plus/server_086ef8c.jpg" alt="本地运行环境目录"/></p>
+
+<h2 id="toc_1">使用</h2>
+
+<p>当你安装好FIS本地开发环境时，你便可使用此利器进行开发调试，首先你可能需要打开本地server</p>
+<div class="highlight"><pre><span class="n">fisp</span> <span class="n">server</span> <span class="n">start</span>
+</pre></div>
+<p>完成页面开发后，你需要发布你的模块到本地临时部署目录(即本地开发模块所在目录)</p>
+<div class="highlight"><pre><span class="c1">//编译发布模块同时开启文件监听，随改随看</span>
+<span class="n">fisp</span> <span class="k">release</span> <span class="o">-</span><span class="n">w</span>
+</pre></div>
+<p>通过模板<a href="/userdoc/fis/%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83#toc_1">路径访问规则</a>，在浏览器中打开模板页面：</p>
+<div class="highlight"><pre><span class="nl">http:</span><span class="c1">//localhost:8080/modulename/page/pagename</span>
+</pre></div>
+<p>为了模拟线上环境，通过<a href="/userdoc/fis/%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E6%95%B0%E6%8D%AE%E5%8A%9F%E8%83%BD">测试数据模块</a>和<a href="/userdoc/fis/%E6%9C%AC%E5%9C%B0%E6%A8%A1%E6%8B%9F%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E5%8A%9F%E8%83%BD">调试转发模块</a>将本地开发模拟成线上环境。</p>

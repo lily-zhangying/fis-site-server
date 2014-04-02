@@ -1,0 +1,128 @@
+.cases-container {
+    margin-top: 20px;
+    min-width: 900px;
+}
+
+.cases-container:after {
+    content: '';
+    display: block;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    clear: both;
+}
+
+.cases-container .case-item {
+    width: 33.3333%;
+    float: left;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.cases-container .case-item-inner {
+    text-align: left;
+    background: #f7f9f9;
+    border-radius: 5px;
+    padding: 20px 20px 180px 20px;
+    position: relative;
+    width: 80%;
+    min-width: 282px;
+    display: inline-block;
+}
+
+.cases-container .case-item:nth-child(3n+1) {
+    text-align: left;
+}
+.cases-container .case-item:nth-child(3n+3) {
+    text-align: right;
+}
+
+.cases-container .case-item h1 {
+    font-size: 18px;
+    margin: 0 auto 20px auto;
+    color: #21b384;
+    width: 300px;
+}
+
+.cases-container .case-img {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left:-150px;
+    width: 300px;
+    height: 180px;
+    padding: 10px 36px 27px 36px;
+    background: url(/static/fis-site/css/macbook_pro.png) no-repeat;
+}
+
+.cases-container .case-img img {
+    width: 100%;
+    display: block;
+}
+.cases-container .case-img a:before {
+    content: '';
+    width: 228px;
+    height: 142px;
+    position: absolute;
+    right: 36px;
+    z-index: 5;
+}
+.cases-container .case-img a:hover:before {
+    background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0;
+}
+
+.cases-container .case-img a:after {
+    content: '';
+    width: 93px;
+    height: 144px;
+    background: url(/static/fis-site/css/mask.png) no-repeat;
+    position: absolute;
+    right: 30px;
+    top: 0;
+    z-index: 10;
+}
+
+.cases-container-webapp .case-item {
+    width: 25%;
+}
+.cases-container-webapp .case-item-inner {
+    padding: 20px 20px 380px 20px;
+}
+
+.cases-container-webapp .case-img {
+    background: url(/static/fis-site/css/iphone5s.png) no-repeat 50% 50%;
+    background-size: 200px 377px;
+    width: 200px;
+    height: 377px;
+    padding: 55px 26px 54.5px 24px;
+    margin-left: -100px;
+    bottom: 0;
+}
+
+.cases-container-webapp .case-img a:before {
+    width: 151px;
+    height: 266px;
+    left: 24px;
+    top: 55px;
+}
+.cases-container-webapp .case-img a:after {
+    right: 26px;
+    top: 47px;
+}
+.cases-container-webapp .case-item-inner {
+    min-width: 230px;
+}
+
+.cases-container-webapp .case-item:nth-child(3n+1) {
+    text-align: center;
+}
+.cases-container-webapp .case-item:nth-child(3n+3) {
+    text-align: center;
+}
+.cases-container-webapp .case-item:nth-child(4n+1) {
+    text-align: left;
+}
+.cases-container-webapp .case-item:nth-child(4n+4) {
+    text-align: right;
+}
+

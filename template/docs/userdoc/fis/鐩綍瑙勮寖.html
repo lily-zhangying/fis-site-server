@@ -1,0 +1,116 @@
+<!--
+title: 目录规范
+toc: <ul class="nav"><li><a href="#toc_0">站点目录结构</a></li><li><a href="#toc_1">路径说明</a></li><li><a href="#toc_2">组件化</a></li></ul>
+-->
+
+<blockquote>
+<p>规范是辅助用户完成开发的利器，按照规范进行开发，可以极大的提升开发效率，并充分利用开发环境的各种功能。<br/>
+在FIS中，定义了一套默认的模块化开发规范。</p>
+</blockquote>
+
+<h3 id="toc_0">站点目录结构</h3>
+
+<p>业务功能模块化，针对常见的业务模型，抽象出以下层级关系：</p>
+
+<ul>
+<li><code>站点(site)</code>：一般指能独立提供服务，具有单独二级域名的产品线。如旅游产品线或者特大站点的子站点（lv.baidu.com）。</li>
+<li><code>模块(module)</code>：具有较清晰业务逻辑关系的功能业务集合，一般也叫系统子模块，多个子系统构成一个站点。</li>
+<li><code>页面(page)</code>: 具有独立URL的输出内容，多个页面一般可组成子系统。</li>
+<li><code>组件(widget)</code>：能独立提供功能且能够复用的独立资源，它可以是独立的JS、CSS或者是由JS、CSS和页面组成的页面碎片。</li>
+<li><code>静态资源(static)</code>：非组件资源目录，包括模板页面引用的静态资源和其他静态资源（favicon,crossdomain.xml等）。</li>
+<li><code>插件(plugin)</code>: 模板插件目录(可选，对于特殊需要的产品线，可以独立维护)。</li>
+<li><code>测试数据(test)</code>: 页面对应的测试数据目录。</li>
+</ul>
+
+<p>FIS规范定义了两类模块： <strong>common模块</strong>与 <strong>业务模块</strong>。</p>
+
+<ul>
+<li><code>common模块</code>: 为其他业务模块提供规范、资源复用的通用模块。</li>
+<li><code>业务模块</code>: 根据业务、URI等将站点进行划分的子系统站点模块。</li>
+</ul>
+
+<p>站点整体目录结构示意：</p>
+<div class="highlight"><pre><span class="p">|</span>---site
+<span class="p">|</span>     <span class="p">|</span>---common //通用子系统
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---config //smarty配置文件
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---page //模板页面文件目录，也包含用于继承的模板页面
+<span class="p">|</span>     <span class="p">|</span>            └── layout.tpl 
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---widget //组件的资源目录，包括模板组件,JS组件,CSS组件等
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     └── menu   //widget模板组件
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     <span class="p">|</span>    └── menu.tpl  
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     <span class="p">|</span>    └── menu.js   
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     <span class="p">|</span>    └── menu.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     └── ui   //UI组件
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── dialog  //JS组件
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          <span class="p">|</span>    └──dialog.js
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          <span class="p">|</span>    └──dialog.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── reset //CSS组件
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>               └── reset.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---static //非组件静态资源目录，包括模板页面引用的静态资源和其他静态资源
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---plugin //模板插件目录<span class="o">(</span>可选，对于特殊需要的产品线，可以独立维护<span class="o">)</span>
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---fis-conf.js //fis配置文件  
+<span class="p">|</span>     <span class="p">|</span>---module1 //module1子系统
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---test
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---config
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---page
+<span class="p">|</span>     <span class="p">|</span>            └── index.tpl 
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---widget
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---static
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     └── index //index.tpl模板对应的静态资源
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── index.js  
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── index.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---fis-conf.js //fis配置文件
+
+        ......
+</pre></div>
+<p><strong>为什么FIS要按照上述模块化方式定义规范呢？</strong></p>
+
+<ul>
+<li><p>模块化是一种处理复杂系统分解成为更好的可管理模块的方式，它可以把系统代码划分为一系列职责单一，高度解耦且可替换的模块，系统中某一部分的变化将如何影响其它部分就会变得显而易见，系统的可维护性更加简单易得。</p></li>
+<li><p>想了解的更多，可以查看<a href="http://fis.baidu.com/blog/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E4%B9%8B%E6%A8%A1%E5%9D%97%E5%8C%96">FIS模块化</a></p></li>
+</ul>
+
+<h3 id="toc_1">路径说明</h3>
+
+<ol>
+<li><p><code>页面(page)</code>：存放在 <strong>模块根目录/page</strong> 下，url访问路径为 <strong>/模块名/page/页面名</strong>，例如path_to_user_module/page/view.tpl，访问url为：/user/page/view。页面静态资源存储的位置为：</p>
+<div class="highlight"><pre>tpl ：path_to_module/page/页面名.tpl
+ js ：path_to_module/page/页面名.js
+css ：path_to_module/page/页面名.css
+</pre></div></li>
+<li><p><code>css组件</code>：一般来说，CSS组件是最简单的组件，它的存储方式为：</p>
+<div class="highlight"><pre><span class="c">#widget目录下的css文件皆为css组件，建议存放在widget/ui目录下</span>
+css ：path_to_module/widget/ui/组件名/组件名.css
+</pre></div></li>
+<li><p><code>js组件</code>：支持AMD规范的js组件，js组件存储的方式为：</p>
+<div class="highlight"><pre><span class="c">#widget目录下的js文件皆为js组件，建议存放在widget/ui目录下</span>
+js ：path_to_module/widget/ui/组件名/组件名.js
+</pre></div></li>
+<li><p><code>模板组件</code>：存放在 <strong>模块根目录/widget</strong> 下，每个widget包含至少一个与widget目录**同名**的tpl，同时可以有与widget <strong>同名</strong> 的js、css作为其静态资源。组件存储方式为：</p>
+<div class="highlight"><pre>tpl ：path_to_module/widget/组件名/组件名.tpl
+ js ：path_to_module/widget/组件名/组件名.js
+css ：path_to_module/widget/组件名/组件名.css
+</pre></div></li>
+<li><p><code>配置文件(fis-conf.js)</code>：fis配置文件存放在模块根目录下 <strong>path_to_user_module/fis-conf.js</strong> ，smarty配置文件存放在：</p>
+<div class="highlight"><pre>conf：path_to_module/config/模块名/
+</pre></div></li>
+<li><p><code>smarty插件</code>：与smarty插件相关的都存放在plugin目录下，存储位置为：</p>
+<div class="highlight"><pre>插件：path_to_module/plugin/
+</pre></div></li>
+<li><p><code>测试数据(test)</code>：fis开发环境允许在本地开发中设置测试数据进行调试，测试数据以页面模板为单位进行组织，其存储方式为：</p>
+<div class="highlight"><pre>tpl：path_to_module/page/模块名/页面名.tpl
+data：path_to_module/test/page/页面名.json<span class="o">(</span>或php<span class="o">)</span>
+</pre></div></li>
+</ol>
+
+<h3 id="toc_2">组件化</h3>
+
+<p>模块的widget目录默认为组件目录，组件化按照代码的组织方式，分为以下三种：</p>
+
+<ul>
+<li><p>CSS组件：独立css代码片段。可以被其他css，js，模板引用。</p></li>
+<li><p>JS组件：独立js代码片段，JS组件可以封装CSS组件的代码。</p></li>
+<li><p>模板组件：涉及代码最多，有模板代码，JS代码，css代码和HTML代码。 建议，模板组件中的js仅被这个widget使用，保持widget的独立。</p></li>
+</ul>
+
+<p>下面的文档会详细介绍组件的使用方式。</p>

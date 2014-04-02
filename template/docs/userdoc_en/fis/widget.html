@@ -1,0 +1,156 @@
+<p>##How to Develop With Widgets</p>
+
+<p>Widget is a set of specs which let web developers leverage their HTML, CSS and JavaScript knowledge to build widgets that can be reused easily and reliably.</p>
+
+<p>###Why Widget</p>
+
+<p>To understand why widget(components) are so important, we need look no further than how we’ve hacked around the lack of components. As an example, let’s run through the process of consuming a typical third-party widget.</p>
+
+<p>First, we include the widget’s CSS and JavaScript:</p>
+<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;my-widget.css&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;my-widget.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+<p>Next, we might need to add placeholder elements to the page where our widgets will be inserted.</p>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="err">data-my-widget</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+<p>Finally, when the DOM is ready, we reach back into the document, find the placeholder elements and instantiate our widgets:</p>
+<div class="highlight"><pre><span class="c1">// jQuery used here for brevity...</span>
+
+<span class="err">$</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="err">$</span><span class="p">(&#39;[</span><span class="n">data</span><span class="o">-</span><span class="n">my</span><span class="o">-</span><span class="n">widget</span><span class="p">]&#39;).</span><span class="n">myWidget</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></div>
+<p>Can we get a way to avoid this constant three-step process to achieve simple, consistent, reusable, encapsulated and composable widgets, the answer is yes, but we’re only just getting started. There are three types of widget, Template widget, JavaScript widget, CSS widget, Template widget(smarty for now) can invoke JavaScript widget and CSS widget. It’s a great time to start experimenting.</p>
+
+<p>###Template Widget</p>
+
+<p>Template widget can build anything from a button to a complete application as an encapsulated, reusable element. Each Smarty widget contains at least one tpl(smarty) file which has the same name width the Smarty widget directory, it also can have the same name js and css file for the widget. <strong>The reason of why the tpl, js and css must have the same name is that if you do that then you don&#39;t need to explicitly import resources.</strong> The fis framework will automatically find and load all the js and css files that the widget need when the widget rendering. </p>
+<div class="highlight"><pre><span class="n">tpl</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">tpl</span>
+<span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
+<span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
+</pre></div>
+<ul>
+<li>tpl, a template provides a method for declaring document fragments in HTML</li>
+<li>js, a javascript widget to control the UI interaction </li>
+<li>css, a css widget to control the style and layout of the tpl</li>
+</ul>
+
+<p>####Call Template Widget</p>
+
+<p>Use {%widget%} to call template widget with a widget a name(path).</p>
+<div class="highlight"><pre><span class="p">{</span><span class="o">%</span><span class="n">widget</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;home:widget/section/section.tpl&quot;</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+<p>The smarty widget tag is used to dynamic control the output of widget static resources and html, usage:</p>
+
+<p><img src="./images/widget.jpg" alt="widget"/></p>
+
+<p>###JavaScript Widget</p>
+
+<p>JavaScript widget can make you write like modular commonjs components that include their own css, images, etc, with fis framework(loader) you get automatic dependency resolution. Achieve faster load times with asynchronous loading and the ability to optimize downloads.</p>
+
+<p>####Define a Module</p>
+
+<p>The compiler automatic wraps the scripts and in AMD modules.</p>
+<div class="highlight"><pre><span class="c1">//before</span>
+<span class="c1">//common/widget/menu/menu.js</span>
+<span class="k">var</span> <span class="err">$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(&#39;</span><span class="nl">common:</span><span class="n">widget</span><span class="o">/</span><span class="n">jquery</span><span class="o">/</span><span class="n">jquery</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;);</span>
+
+<span class="n">exports</span><span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">&#39;).</span><span class="n">click</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="k">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="n">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+        <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">.</span><span class="n">active</span><span class="p">&#39;).</span><span class="n">removeClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+        <span class="err">$</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">addClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+        <span class="k">event</span><span class="p">.</span><span class="n">preventDefault</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">//after</span>
+<span class="n">define</span><span class="p">(&#39;</span><span class="nl">common:</span><span class="n">widget</span><span class="o">/</span><span class="n">menu</span><span class="o">/</span><span class="n">menu</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;,</span> <span class="k">function</span><span class="p">(</span><span class="n">require</span><span class="p">,</span> <span class="n">exports</span><span class="p">,</span> <span class="k">module</span><span class="p">){</span>
+    <span class="k">var</span> <span class="err">$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(&#39;</span><span class="nl">common:</span><span class="n">widget</span><span class="o">/</span><span class="n">jquery</span><span class="o">/</span><span class="n">jquery</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;);</span>
+    <span class="n">exports</span><span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">&#39;).</span><span class="n">click</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="k">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="n">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">.</span><span class="n">active</span><span class="p">&#39;).</span><span class="n">removeClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+            <span class="err">$</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">addClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+            <span class="k">event</span><span class="p">.</span><span class="n">preventDefault</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+<span class="p">});</span>
+</pre></div>
+<p>####Load a Module</p>
+
+<p>FIS framework will ensure that all dependent modules are loaded before your module execution. So when we need a module, simply provide a module name to require anywhere. </p>
+<div class="highlight"><pre><span class="c1">//sybsystem name: path</span>
+<span class="c1">//path can be absolute url or relative url</span>
+<span class="n">require</span><span class="p">(</span><span class="s">&quot;common:widget/ui/a/a.js&quot;</span><span class="p">);</span>
+</pre></div>
+<p>The module can return immediately and synchronously because the dependency are pre-loaded.</p>
+
+<p>The framework also provides an runtime asynchronous interface to load the modules that do not need to be loaded at startup.</p>
+<div class="highlight"><pre><span class="c1">//names can be string or array</span>
+<span class="n">require</span><span class="p">.</span><span class="n">async</span> <span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">callback</span><span class="p">);</span>
+
+<span class="n">require</span><span class="p">.</span><span class="n">async</span><span class="p">([</span><span class="s">&quot;common:widget/menu/menu.js&quot;</span><span class="p">],</span><span class="k">function</span><span class="p">(</span><span class="n">menu</span><span class="p">){</span>
+      <span class="n">menu</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
+<span class="p">})</span>
+</pre></div>
+<p>####CSS attachment in a JavaScript Widget</p>
+
+<p>JavaScript widget can make you write a JavaScript module that with a CSS file with the same name to control the style and layout of the widget. </p>
+<div class="highlight"><pre><span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
+<span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
+</pre></div>
+<p>The corresponding css file will be automatically loaded in the page.</p>
+
+<p>####Subset of AMD Specification</p>
+
+<p>FIS loader is a subset of AMD, <strong>does not fully comply with AMD</strong> for a better experience and higher performance.</p>
+
+<p>###CSS Widget</p>
+
+<p>In general, CSS widgets are the most simple components, the css files in widget directory are css widgets, files and widgets are in one-to-one correspondence. CSS widgets offers several extensions to the CSS @import to provide more flexibility over what you can do with external files.</p>
+
+<p>####Reference in CSS</p>
+
+<p>Use @require to import external files, but without adding the imported styles to the compiled output. FIS takes a different approach to loading than traditional @import tags, while it can also run fast and optimize well.</p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * demo.css</span>
+<span class="cm"> * @require reset.css</span>
+<span class="cm"> */</span>
+</pre></div>
+<p>We declare dependencies through @require, so fis compiler can record dependencies by identifying @require in css comments. After compilation, you can see map.json file,</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;res&quot;</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="p">...</span>
+        <span class="s">&quot;demo.css&quot;</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="s">&quot;uri&quot;</span> <span class="o">:</span> <span class="s">&quot;/static/css/demo_7defa41.css&quot;</span><span class="p">,</span>
+            <span class="s">&quot;type&quot;</span> <span class="o">:</span> <span class="s">&quot;css&quot;</span><span class="p">,</span>
+            <span class="s">&quot;deps&quot;</span> <span class="o">:</span> <span class="p">[</span> <span class="s">&quot;reset.css&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">...</span>
+    <span class="p">},</span>
+    <span class="s">&quot;pkg&quot;</span> <span class="o">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+<p>the fis framework will find and load all the resources the widget need fast and optimize well through this map.json file.</p>
+
+<p>####Require in Smarty</p>
+
+<p>Use {%require%} to import external files in Smarty, but without adding the imported styles to the compiled output.</p>
+<div class="highlight"><pre><span class="p">{</span><span class="o">%</span><span class="n">require</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;home:static/index/index.css&quot;</span><span class="o">%</span><span class="p">}</span>
+</pre></div>
+<p><img src="./images/require.jpg" alt="require"/></p>
+
+<p>####Inline in CSS</p>
+
+<p>Use @import url(&#39;url?__inline&#39;) to include the source file in the output.</p>
+<div class="highlight"><pre><span class="o">//</span><span class="n">before</span>
+<span class="nd">@import</span> <span class="n">url</span><span class="p">(</span><span class="s">&#39;demo.css?__inline&#39;</span><span class="p">);</span>
+
+<span class="o">//</span><span class="n">after</span> 
+<span class="o">//</span><span class="n">below</span> <span class="ow">is</span> <span class="n">ther</span> <span class="n">sourece</span> <span class="n">of</span> <span class="n">the</span> <span class="n">demo</span><span class="o">.</span><span class="n">css</span>
+<span class="n">img</span> <span class="p">{</span> <span class="n">border</span><span class="p">:</span> <span class="mi">5</span><span class="n">px</span> <span class="n">solid</span> <span class="c">#ccc; };</span>
+</pre></div>
+<p>####CSS Preprocessor</p>
+
+<p>By default, the css preprocessor compile LESS files to CSS. There are also some other css preprocessor plug-ins which you can install and config to use. </p>

@@ -1,0 +1,115 @@
+<!--
+title: 开发调试
+weight: 90
+toc: <ul class="nav"><li><a href="#toc_0">快速上手</a><ul class="nav"><li><a href="#toc_1">示例演示</a></li><li><a href="#toc_2">命令介绍</a></li></ul></li><li><a href="#toc_3">开发框架</a><ul class="nav"><li><a href="#toc_4">开发规范</a></li><li><a href="#toc_5">三种语言能力扩展</a></li><li><a href="#toc_6">模板开发</a></li><li><a href="#toc_7">JS开发</a></li><li><a href="#toc_8">CSS开发</a></li><li><a href="#toc_9">Smarty插件</a></li></ul></li><li><a href="#toc_10">本地调试</a></li><li><a href="#toc_11">自动编译</a></li></ul>
+-->
+
+<blockquote>
+<p>fis通过提供开发框架和开发工具解决工程师底层架构和繁琐的重复性劳动问题，让工程师专注于业务，提高研发效率。</p>
+</blockquote>
+
+<h2 id="toc_0">快速上手</h2>
+
+<p>快速搭建项目，提供灵活的脚手架工具，辅助项目开发，能够生成项目、页面、模块、插件等各类资源。</p>
+
+<h3 id="toc_1">示例演示</h3>
+
+<ul>
+<li><a href="/userdoc/fis/%E7%A4%BA%E4%BE%8B#toc_0">示例安装</a></li>
+<li><a href="/userdoc/fis/%E7%A4%BA%E4%BE%8B#toc_1">示例预览</a></li>
+</ul>
+
+<h3 id="toc_2">命令介绍</h3>
+
+<ul>
+<li><a href="/userdoc/fis/getting-start#toc_1">三条命令，满足你的所有需求</a></li>
+</ul>
+
+<h2 id="toc_3">开发框架</h2>
+
+<p>基于模块化的高性能前后端开发框架，可以根据终端灵活控制资源输出策略，有效监控资源加载情况并自动优化网站性能。</p>
+
+<h3 id="toc_4">开发规范</h3>
+
+<ul>
+<li><a href="/userdoc/fis/%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83#toc_0">站点目录结构</a></li>
+<li><a href="/userdoc/fis/%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83#toc_1">路径说明</a></li>
+</ul>
+
+<h3 id="toc_5">三种语言能力扩展</h3>
+
+<ul>
+<li><a href="/userdoc/fis/%E4%B8%89%E7%A7%8D%E8%AF%AD%E8%A8%80%E8%83%BD%E5%8A%9B">关于三种语言能力</a></li>
+<li>在html、模板中：<a href="/userdoc/fis/%E5%9C%A8html%E4%B8%AD%E5%AE%9A%E4%BD%8D%E8%B5%84%E6%BA%90">定位资源</a>、<a href="/userdoc/fis/%E5%9C%A8html%E4%B8%AD%E5%B5%8C%E5%85%A5%E8%B5%84%E6%BA%90">嵌入资源</a>、<a href="/userdoc/fis/%E5%9C%A8html%E4%B8%AD%E5%A3%B0%E6%98%8E%E4%BE%9D%E8%B5%96">声明依赖</a></li>
+<li>在js中：    <a href="/userdoc/fis/%E5%9C%A8js%E4%B8%AD%E5%AE%9A%E4%BD%8D%E8%B5%84%E6%BA%90">定位资源</a>、<a href="https://github.com/fis-dev/fis/wiki/%E5%9C%A8js%E4%B8%AD%E5%B5%8C%E5%85%A5%E8%B5%84%E6%BA%90">嵌入资源</a>、<a href="https://github.com/fis-dev/fis/wiki/%E5%9C%A8js%E4%B8%AD%E5%A3%B0%E6%98%8E%E4%BE%9D%E8%B5%96">声明依赖</a></li>
+<li>在css中：    <a href="https://github.com/fis-dev/fis/wiki/%E5%9C%A8css%E4%B8%AD%E5%AE%9A%E4%BD%8D%E8%B5%84%E6%BA%90">定位资源</a>、<a href="https://github.com/fis-dev/fis/wiki/%E5%9C%A8css%E4%B8%AD%E5%B5%8C%E5%85%A5%E8%B5%84%E6%BA%90">嵌入资源</a>、<a href="https://github.com/fis-dev/fis/wiki/%E5%9C%A8css%E4%B8%AD%E5%A3%B0%E6%98%8E%E4%BE%9D%E8%B5%96">声明依赖</a></li>
+</ul>
+
+<h3 id="toc_6">模板开发</h3>
+
+<ul>
+<li><a href="/userdoc/fis/%E6%A8%A1%E6%9D%BF#toc_0">page页面</a></li>
+<li><a href="/userdoc/fis/%E6%A8%A1%E6%9D%BF#toc_1">前端模板</a></li>
+<li><a href="/userdoc/fis/%E6%A8%A1%E6%9D%BF#toc_2">模板组件</a></li>
+</ul>
+
+<h3 id="toc_7">JS开发</h3>
+
+<ul>
+<li><a href="/userdoc/fis/js#widget">JS组件</a></li>
+<li><a href="/userdoc/fis/js#widget">modjs前端组件化框架</a></li>
+<li><a href="/userdoc/fis/js#%E5%85%B6%E4%BB%96">其他</a></li>
+</ul>
+
+<h3 id="toc_8">CSS开发</h3>
+
+<ul>
+<li><a href="/userdoc/fis/css#widget">CSS组件</a></li>
+<li><a href="/userdoc/fis/css#%E5%85%B6%E4%BB%96">其他</a></li>
+</ul>
+
+<h3 id="toc_9">Smarty插件</h3>
+
+<ul>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#html">html</a></li>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#head">head</a></li>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#body">body</a></li>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#script">script</a></li>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#require">require</a></li>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#widget">widget</a></li>
+</ul>
+
+<h2 id="toc_10">本地调试</h2>
+
+<p>便捷的本地调试环境，内置调试服务器，支持数据及请求模拟、文件监听、浏览器自动刷新。</p>
+
+<ul>
+<li><a href="/userdoc/fis/%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95">本地调试环境安装</a></li>
+<li><a href="/userdoc/fis/%E6%9C%AC%E5%9C%B0%E6%A8%A1%E6%8B%9F%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E5%8A%9F%E8%83%BD">本地模拟url转发</a></li>
+<li><a href="/userdoc/fis/%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E6%95%B0%E6%8D%AE%E5%8A%9F%E8%83%BD">本地测试数据</a></li>
+<li><a href="/userdoc/fis/%E7%BA%BF%E4%B8%8A%E8%B0%83%E8%AF%95%E6%B5%8B%E8%AF%95">线上调试测试</a></li>
+</ul>
+
+<h2 id="toc_11">自动编译</h2>
+
+<p>自动化构建，支持对文件进行编译、校验、压缩、合并、优化，自动处理静态资源内嵌、路径替换、md5时间戳、依赖关系。</p>
+
+<ul>
+<li><p>自动化工具</p>
+
+<ul>
+<li><a href="/userdoc/fis/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7#xss">模板XSS修复</a></li>
+<li><a href="/userdoc/fis/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7#%E5%9B%BE%E7%89%87%E5%90%88%E5%B9%B6%E5%B7%A5%E5%85%B7">图片合并</a></li>
+<li><a href="/userdoc/fis/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7#%E6%A8%A1%E6%9D%BF%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7">模板压缩</a></li>
+<li><a href="/userdoc/fis/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7#js%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7">JS压缩</a></li>
+<li><a href="/userdoc/fis/%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7#css%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7">CSS压缩</a></li>
+</ul></li>
+<li><p>开发配置</p>
+
+<ul>
+<li><a href="/userdoc/fis/%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE">基础</a></li>
+<li><a href="/userdoc/fis/%E6%89%93%E5%8C%85%E9%85%8D%E7%BD%AE">打包</a></li>
+<li><a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE">插件</a></li>
+<li><a href="/userdoc/fis/%E4%BA%A7%E5%87%BA%E9%85%8D%E7%BD%AE">产出</a></li>
+</ul></li>
+</ul>

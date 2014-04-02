@@ -1,0 +1,36 @@
+<p>FIS的安装比较简单，首先确认已安装<a href="http://nodejs.org">Node.js</a>,通过npm进行全局安装：</p>
+<div class="highlight"><pre>npm install -g fis
+</pre></div>
+<p>通过下载一个Demo示例来感受下FIS如何使用:</p>
+
+<pre class="terminal">
+<span class="command-prompt">fis install firstblood-demo</span>
+install [firstblood-demo@latest]
+
+<span class="command-prompt">cd firstblood</span>
+
+<span class="command-prompt">ll</span>
+
+total 40
+-rw-rw-r--  1 username  staff    31  6  6  2013 demo.css
+-rw-rw-r--  1 username  staff    27  6  6  2013 demo.js
+drwxrwxr-x  4 username  staff   136  1 21 12:09 <span class="blue">images</span>
+-rw-rw-r--  1 username  staff  5663  6  6  2013 index.html
+-rw-rw-r--  1 username  staff     0  6  6  2013 script.js
+-rw-rw-r--  1 username  staff  2799  6  6  2013 style.css
+
+<span class="command-prompt">fis release -d ./output</span>
+
+[WARNI] missing config file [fis-conf.js]
+
+<span class="green">Ω</span> ....... <span class="green">58ms</span>
+
+<span class="command-prompt">fis server start --root ./output</span>
+checking java support : v1.6.0
+checking php-cgi support : v5.5.8
+starting fis-server ... at port [8080]
+
+ [NOTIC] browse <span class="yellow">http://127.0.0.1:8080/</span>
+
+<span class="command-prompt active"><span class="active-prompt"></span></span>
+</pre>

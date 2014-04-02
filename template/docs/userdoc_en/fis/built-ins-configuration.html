@@ -1,0 +1,190 @@
+<!--
+title: Built-ins Configuration
+toc: <ul class="nav"><li><a href="#toc_0">Built-ins Configuration</a><ul class="nav"><li><a href="#toc_1">settings.postprocessor.jswrapper</a></li><li><a href="#toc_2">settings.optimizer.uglify-js</a></li><li><a href="#toc_3">settings.optimizer.clean-css</a></li><li><a href="#toc_4">settings.optimizer.png-compressor</a></li><li><a href="#toc_5">settings.spriter.csssprites</a></li></ul></li></ul>
+type: detail
+-->
+
+<h2 id="toc_0">Built-ins Configuration</h2>
+
+<ul>
+<li>explanation：plugins detail settings</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+fis.config.set(&#39;settings.optimizer.uglify-js.output.max_line_len&#39;, 500);<br/>
+fis.config.set(&#39;settings.optimizer.clean-css.keepBreaks&#39;, true);<br/>
+</code></p>
+
+<p>or<br/>
+<code>javascript<br/>
+//fis-conf.js<br/>
+fis.config.merge({<br/>
+    settings : {<br/>
+        optimizer : {<br/>
+            //config fis-optimizer-uglify-js detail<br/>
+            &#39;uglify-js&#39; : {<br/>
+                output : {<br/>
+                    max_line_len : 500<br/>
+                }<br/>
+            },<br/>
+            //config fis-optimizer-clean-css detail<br/>
+            &#39;clean-css&#39; : {<br/>
+                keepBreaks : true<br/>
+            }<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+</ul>
+
+<h3 id="toc_1">settings.postprocessor.jswrapper</h3>
+
+<ul>
+<li>explanation：jswrapper</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+fis.config.set(&#39;settings.postprocessor.jswrapper.template&#39;, &#39;try{ ${content} }catch(e){e.message+=&quot;${id}&quot;;throw e;}&#39;);<br/>
+</code></p>
+
+<p>or<br/>
+<code>javascript<br/>
+fis.config.merge({<br/>
+    settings : {<br/>
+        postprocessor : {<br/>
+            jswrapper : {<br/>
+                template : &#39;try{ ${content} }catch(e){ e.message += &quot;${id}&quot;; throw e; }&#39;<br/>
+            }<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+</ul>
+
+<h3 id="toc_2">settings.optimizer.uglify-js</h3>
+
+<ul>
+<li>explanation：uglifyJS</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li>options：
+
+<ul>
+<li><code>mangle</code></li>
+<li><code>output</code></li>
+<li><code>compress</code></li>
+</ul></li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+fis.config.set(&#39;settings.optimizer.uglify-js.output.ascii_only&#39;, true);<br/>
+</code></p>
+
+<p>or<br/>
+<code>javascript<br/>
+fis.config.merge({<br/>
+    settings : {<br/>
+        optimizer : {<br/>
+            &#39;uglify-js&#39; : {<br/>
+                output : {<br/>
+                    ascii_only : true<br/>
+                }<br/>
+            }<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+</ul>
+
+<h3 id="toc_3">settings.optimizer.clean-css</h3>
+
+<ul>
+<li>explanation：clean-css</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li>options：<a href="https://github.com/GoalSmashers/clean-css#how-to-use-clean-css-programmatically">doc</a></li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+fis.config.set(&#39;settings.optimizer.clean-css.keepBreaks&#39;, true);<br/>
+</code></p>
+
+<p>or<br/>
+<code>javascript<br/>
+fis.config.merge({<br/>
+    settings : {<br/>
+        optimizer : {<br/>
+            &#39;clean-css&#39; : {<br/>
+                keepBreaks : true<br/>
+            }<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+</ul>
+
+<h3 id="toc_4">settings.optimizer.png-compressor</h3>
+
+<ul>
+<li>explanation：png-compressor</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+//use pngquant<br/>
+fis.config.set(&#39;settings.optimizer.png-compressor.type&#39;, &#39;quant&#39;);<br/>
+</code></p>
+
+<p>or<br/>
+<code>javascript<br/>
+//use pngquant<br/>
+fis.config.merge({<br/>
+    settings : {<br/>
+        optimizer : {<br/>
+            &#39;png-compressor&#39; : {<br/>
+                type : &#39;quant&#39;<br/>
+            }<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+</ul>
+
+<h3 id="toc_5">settings.spriter.csssprites</h3>
+
+<ul>
+<li>explanation：csssprites</li>
+<li>type：<code>Object</code></li>
+<li><p>default：<br/>
+<code>javascript<br/>
+{<br/>
+    margin       : 3,<br/>
+    layout       : &#39;linear&#39;,<br/>
+    width_limit  : 10240,<br/>
+    height_limit : 10240<br/>
+}<br/>
+</code></p></li>
+<li><p>options：</p>
+
+<ul>
+<li><code>margin</code></li>
+<li><code>layout</code>：linear,matrix</li>
+</ul></li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+fis.config.set(&#39;settings.spriter.csssprites.layout&#39;, &#39;matrix&#39;);<br/>
+</code></p>
+
+<p>or<br/>
+<code>javascript<br/>
+fis.config.merge({<br/>
+    settings : {<br/>
+        spriter : {<br/>
+            csssprites : {<br/>
+                layout : &#39;matrix&#39;<br/>
+            }<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+</ul>

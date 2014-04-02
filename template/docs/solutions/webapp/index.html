@@ -1,0 +1,194 @@
+<!--
+title: 高性能Webapp解决方案
+toc: <ul class="nav"><li><a href="#toc_0">介绍</a></li><li><a href="#toc_1">快速上手</a></li><li><a href="#toc_2">使用文档</a><ul class="nav"><li><a href="#toc_3">引入插件</a></li><li><a href="#toc_4">支持localstorage</a></li><li><a href="#toc_5">前端loader</a></li><li><a href="#toc_6">整页切换</a></li><li><a href="#toc_7">页面管理库page.js</a><ul class="nav"><li><a href="#toc_8">appPage.start()</a></li><li><a href="#toc_9">data-area</a></li><li><a href="#toc_10">appPage.redirect()</a></li></ul></li></ul></li></ul>
+-->
+
+<blockquote>
+<p>高性能Webapp解决方案，利用后端渲染方式，实现传统webapp前端局刷效果，实现一站式的体验效果，大幅提高性能和静态资源缓存命中率。</p>
+</blockquote>
+
+<h2 id="toc_0">介绍</h2>
+
+<p>高性能Webapp解决方案，与传统webapp前端局刷（backbone等）相比，优势有：</p>
+
+<ul>
+<li>采用后端渲染，不使用前端模板，大幅提高渲染性能</li>
+<li>几乎不改变开发习惯，轻松上手和改造原有项目。</li>
+</ul>
+
+<h2 id="toc_1">快速上手</h2>
+
+<p>第一步，需要安装<a href="https://github.com/xiangshouding/bigpipe.smarty" title="BigPipe.smarty">fis-plus</a></p>
+
+<blockquote>
+<p>$ npm install -g fis-plus</p>
+</blockquote>
+
+<p>第二步，下载示例代码</p>
+
+<p>linux or Unix:</p>
+
+<blockquote>
+<p>$ wget /solutions/fis-plus/solution/quickling.zip</p>
+</blockquote>
+
+<p>windows:</p>
+
+<p><a href="/static/fis-site/quickling.zip">下载</a></p>
+
+<p>局部刷新</p>
+
+<blockquote>
+<p>$ cd single</p>
+</blockquote>
+
+<p>第三步，使用安装的<a href="https://github.com/xiangshouding/bigpipe.smarty" title="BigPipe.smarty">fis-plus</a>编译发布项目</p>
+
+<p>局部刷新</p>
+
+<blockquote>
+<p>$ fisp release -cmpr common</p>
+
+<p>$ fisp release -cmpr index</p>
+</blockquote>
+
+<p>第四步，启动开发服务器</p>
+
+<blockquote>
+<p>$ fisp server start</p>
+</blockquote>
+
+<p>第五步，安装本地测试框架</p>
+
+<blockquote>
+<p>$ fisp server install pc</p>
+</blockquote>
+
+<p>第六步，打开浏览器访问</p>
+
+<p>局部刷新: <a href="">http://127.0.0.1:8080/index/page/index</a></p>
+
+<h2 id="toc_2">使用文档</h2>
+
+<h3 id="toc_3"><strong>引入插件</strong></h3>
+
+<p>Webapp插件主要包括：</p>
+
+<ul>
+<li>后端解决方案插件 <a href="https://github.com/xiangshouding/fis-smarty-bigpipe-plugin" title="quickling plugin">Webapp解决方案的插件</a>。下载后放置到项目的plugin目录中。</li>
+<li>前端加载器<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/BigPipe.js" title="loader">loader</a>，<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/BigPipe.js" title="loader">前端loader</a>依赖<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/lazyload.js" title="lazyload.js">lazyload.js</a></li>
+<li>FIS组件化库<a href="https://github.com/zjcqoo/mod" title="modjs">modjs</a>保持最新</li>
+</ul>
+
+<p>插件引入代码如下：</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/lazyload.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/BigPipe.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>最后，发布这个项目；访问对应URL查看页面。</p>
+
+<h3 id="toc_4"><strong>支持localstorage</strong></h3>
+
+<blockquote>
+<p>无线端使用localstorage本地缓存，可以减少请求数目，提高性能。高性能Webapp解决方案也内置了localstorage本地缓存方案。</p>
+</blockquote>
+
+<p>只需要引入支持localstorage的FIS组件化库<a href="https://github.com/xiangshouding/mod-store.js" title="mod-store.js">mod-store.js</a>即可。</p>
+
+<p>插件引入代码如下：</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/mod-store.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/lazyload.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/BigPipe.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<h3 id="toc_5"><strong>前端loader</strong></h3>
+
+<p><code>局部刷新</code> 中FIS提供了一个可被异步请求的<code>后端框架</code>(以<a href="https://github.com/xiangshouding/bigpipe.smarty" title="BigPipe.smarty">smarty插件</a>的方式)；<br/>
+<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/single/common/static/lib/js/BigPipe.js" title="loader">前端loader</a>。</p>
+
+<p>前端loader提供接口<code>fetch</code>方法，来异步请求渲染一个widget。</p>
+<div class="highlight"><pre><span class="nx">BigPipe</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">containerId</span><span class="p">);</span>
+</pre></div>
+<p>例子</p>
+<div class="highlight"><pre><span class="nx">BigPipe</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/index/page/index?pagelets[]=&quot;pager&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;pager&#39;</span><span class="p">);</span>
+</pre></div>
+<p>表示请求<code>paglet_id=&quot;pager&quot;</code>的widget，并把它渲染到页面的<code>&lt;div id=&quot;pager&quot;&gt;&lt;/div&gt;</code><br/>
+内。</p>
+
+<p>这个接口提供了异步请求渲染一个widget的能力。这样就可以实现局刷了。</p>
+
+<h3 id="toc_6">整页切换</h3>
+
+<p>支持整个页面的切换，例如：A页面 -> B页面</p>
+<div class="highlight"><pre><span class="o">|</span> <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="o">|</span>
+<span class="o">|</span> <span class="p">{</span><span class="o">%</span><span class="n">widget</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;xxxx&quot;</span> <span class="n">pagelet_id</span><span class="o">=</span><span class="s">&quot;pager&quot;</span><span class="o">%</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="o">%</span><span class="n">widget</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;oooo&quot;</span> <span class="n">pagelet_id</span><span class="o">=</span><span class="s">&quot;pager&quot;</span><span class="o">%</span><span class="p">}</span> <span class="o">|</span>
+</pre></div>
+<p>两个都有相同的pagelet_id的widget，整页切换。</p>
+
+<p>提供<code>widget_block</code>来解决。只需要在layout里面使用widget_block<br/>
+其他页面extends即可。</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">widget_block</span> <span class="na">pagelet_id</span><span class="o">=</span><span class="s2">&quot;pager&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="o">%</span><span class="cp">}{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">widget_block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>整个页面就这样切换起来了。</p>
+
+<h3 id="toc_7"><strong>页面管理库page.js</strong></h3>
+
+<p>以上接口在使用时需要考虑前端很多细节，为此提供了page.js这个页面管路口库。</p>
+
+<p>page.js是跟<a href="https://github.com/doith">@donny</a> 同学合作写的页面管理的前端库<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/single/common/static/lib/js/spljs/page.js">page.js</a></p>
+
+<ul>
+<li>事件代理，代理需要局刷的URL, 绑定异步接口;</li>
+<li>前进后退控制， 使用pushState</li>
+</ul>
+
+<p>提供接口</p>
+
+<h4 id="toc_8">appPage.start()</h4>
+<div class="highlight"><pre><span class="nx">appPage</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span>
+    <span class="nx">containerId</span><span class="o">:</span> <span class="s1">&#39;pager&#39;</span><span class="p">,</span>   <span class="c1">//pagelets渲染容器</span>
+    <span class="nx">pagelets</span><span class="o">:</span> <span class="s1">&#39;pager&#39;</span><span class="p">,</span>      <span class="c1">//请求的pagelet</span>
+    <span class="nx">validateUrl</span><span class="o">:</span> <span class="sr">/.*/i</span><span class="p">,</span>     <span class="c1">//符合这个规则的链接或者带data-href属性的元素进行事件代理</span>
+    <span class="nx">cacheMaxTime</span><span class="o">:</span> <span class="mi">1000</span>      <span class="c1">//每一个pagelet的缓存时间，视访问情况而定。</span>
+<span class="p">);</span>
+</pre></div>
+<h4 id="toc_9">data-area</h4>
+
+<p>如果更新小范围的内容该如何办？</p>
+
+<ul>
+<li>只需在触发元素上添加<code>data-area</code>属性，</li>
+</ul>
+
+<p>如;</p>
+<div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/xxxxx&quot;</span> <span class="na">data-area=</span><span class="s">&quot;left-bar&quot;</span><span class="nt">&gt;</span>A<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+<p>当点击时回请求页面的<code>pagelet_id=&quot;left-bar&quot;</code>的widget，并渲染到当前页面的<code>&lt;div id=&quot;left-bar&quot;&gt;&lt;/div&gt;</code>内。</p>
+
+<h4 id="toc_10">appPage.redirect()</h4>
+<div class="highlight"><pre><span class="nx">appPage</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span>
+    <span class="s2">&quot;/index/page/index&quot;</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;pagelets&quot;</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span>     <span class="c1">// 需要请求的pagelet</span>
+        <span class="s2">&quot;containerId&quot;</span><span class="o">:</span> <span class="s2">&quot;xxx&quot;</span>   <span class="c1">// pagelet渲染的容器</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+<p>如果还有一些小的pagelet（widget）没有考虑到，可以用这个接口做加载。</p>

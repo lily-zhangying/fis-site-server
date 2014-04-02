@@ -1,0 +1,21 @@
+<!--
+title: 标准PC解决方案
+toc: <ul class="nav"><li><a href="#toc_0">介绍</a></li><li><a href="#toc_1">使用</a></li></ul>
+-->
+
+<h2 id="toc_0">介绍</h2>
+
+<p>线上动态的收集静态资源，把收集到的css放到头部，把收集到的JavaScript放到尾部。</p>
+
+<h2 id="toc_1">使用</h2>
+
+<p>步骤:</p>
+<div class="highlight"><pre>npm install -g fis-plus
+mkdir demo
+<span class="nb">cd </span>demo
+fisp install pc-demo
+fisp server install pc
+fisp server start       //启动server
+fisp release -r common  //发布common模块
+fisp release -r home    //发布home模块
+</pre></div>

@@ -1,0 +1,45 @@
+<!--
+title: 示例
+toc: <ul class="nav"><li><a href="#toc_0">示例安装</a></li><li><a href="#toc_1">示例预览</a></li></ul>
+-->
+
+<h3 id="toc_0">示例安装</h3>
+
+<p>我们使用FIS-Plus解决方案进行FIS官网开发，用户可直接下载安装示例来直观的观察体验FIS-Plus解决方案的开发模式：</p>
+<div class="highlight"><pre><span class="c1">//将官网项目拆分为2个模块进行开发</span>
+<span class="err">$</span> <span class="n">fisp</span> <span class="n">install</span> <span class="n">pc</span><span class="o">-</span><span class="n">demo</span><span class="o">-</span><span class="n">common</span>
+<span class="err">$</span> <span class="n">fisp</span> <span class="n">install</span> <span class="n">pc</span><span class="o">-</span><span class="n">demo</span><span class="o">-</span><span class="n">home</span>
+</pre></div>
+<p>或者你可以直接安装整个demo示例</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp install pc-demo
+</pre></div>
+<p>为了可以正常运行demo，需要安装FIS本地的调试预览环境</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp server install pc
+</pre></div>
+<h3 id="toc_1">示例预览</h3>
+
+<p>在你执行命令下的目录下会下载安装common和home两个模块，具体目录如下：</p>
+<div class="highlight"><pre>├── common   //公用资源模块
+│   ├── fis-conf.js  //配置文件
+│   ├── page     //页面模板目录
+│   ├── plugin   //smarty plugin目录
+│   ├── static   //静态资源目录
+│   └── widget   //模块化组件目录
+└── home    //业务模块
+    ├── fis-conf.js
+    ├── page
+    ├── static
+    ├── <span class="nb">test</span>    //测试数据目录
+    └── widget
+</pre></div>
+<p>用户根据目录规范，将代码进行分类归置，具体的开发规范可查看<a href="/solutions/fis-plus/%E7%9B%AE%E5%BD%95%E8%A7%84%E8%8C%83">解决方案规范</a>。接下来我们将模块进行发布，在本地环境中预览页面：</p>
+<div class="highlight"><pre><span class="c1">//启动本地server服务</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">start</span>
+<span class="c1">//在common模块路径下发布common模块</span>
+<span class="n">fisp</span> <span class="k">release</span> <span class="o">-</span><span class="n">cw</span>
+<span class="c1">//在home模块路径下发布home模块</span>
+<span class="n">fisp</span> <span class="k">release</span> <span class="o">-</span><span class="n">cw</span>
+<span class="c1">//在浏览器中访问页面，可预览FIS官网</span>
+<span class="nl">http:</span><span class="c1">//localhost:8080/home/page/index</span>
+</pre></div>
+<p>发布完模块后，用户则可以在浏览器中访问编译后的页面，此时你就看到一个由FIS-Plus解决方案生成的页面，你可以尝试修改模块，感受下FIS-Plus的神奇魅力.</p>

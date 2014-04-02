@@ -1,0 +1,63 @@
+<!--
+title: 在css中定位资源
+toc: 
+-->
+
+<blockquote>
+<p>fis编译工具会识别css文件或 <strong>html的style标签内容</strong> 中 <strong>url(path)</strong> 以及 <strong>src=path</strong> 字段，并将其替换成对应资源的编译后url路径</p>
+</blockquote>
+<div class="highlight"><pre><span class="c">/*源码：</span>
+<span class="c">@import url(&#39;demo.css&#39;);</span>
+<span class="c">编译后*/</span>
+<span class="k">@import</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;/demo_7defa41.css&#39;</span><span class="o">)</span><span class="p">;</span>
+
+<span class="nc">.style</span> <span class="p">{</span>
+    <span class="c">/*源码：</span>
+<span class="c">    background: url(&#39;images/body-bg.png&#39;);</span>
+<span class="c">    编译后*/</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(&#39;/images/body-bg_1b8c3e0.png&#39;)</span><span class="p">;</span>
+
+    <span class="c">/*源码：</span>
+<span class="c">    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39;images/body-bg.png&#39;);</span>
+<span class="c">    编译后*/</span>
+    <span class="n">_filter</span><span class="o">:</span><span class="n">progid</span><span class="o">:</span><span class="n">DXImageTransform</span><span class="o">.</span><span class="n">Microsoft</span><span class="o">.</span><span class="n">AlphaImageLoader</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s1">&#39;/images/body-bg_1b8c3e0.png&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>资源定位结果可以被fis的配置文件控制</strong>，比如添加配置，调整文件发布路径：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">path</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的css文件</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.css&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/css/xxx目录下</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/css$&amp;&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有image目录下的.png，.gif文件</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/^\/images\/(.*\.(?:png|gif))/i</span><span class="p">,</span>
+                <span class="c1">//发布到/static/pic/xxx目录下</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/pic/$1&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+<p>再次编译得到：</p>
+<div class="highlight"><pre><span class="c">/*源码：</span>
+<span class="c">@import url(&#39;demo.css&#39;);</span>
+<span class="c">编译后*/</span>
+<span class="k">@import</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;/static/css/demo_7defa41.css&#39;</span><span class="o">)</span><span class="p">;</span>
+
+<span class="nc">.style</span> <span class="p">{</span>
+    <span class="c">/*源码：</span>
+<span class="c">    background: url(&#39;images/body-bg.png&#39;);</span>
+<span class="c">    编译后*/</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(&#39;/static/pic/body-bg_1b8c3e0.png&#39;)</span><span class="p">;</span>
+
+    <span class="c">/*源码：</span>
+<span class="c">    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39;images/body-bg.png&#39;);</span>
+<span class="c">    编译后*/</span>
+    <span class="n">_filter</span><span class="o">:</span><span class="n">progid</span><span class="o">:</span><span class="n">DXImageTransform</span><span class="o">.</span><span class="n">Microsoft</span><span class="o">.</span><span class="n">AlphaImageLoader</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s1">&#39;/static/pic/body-bg_1b8c3e0.png&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>

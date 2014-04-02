@@ -1,0 +1,25 @@
+<p>##URL Rewriting</p>
+
+<p>The FIS server module gives you the ability to redirect one URL to another. This opens up all sorts of possibilities, you can simulate online url Rules in this machine, like ajax request rewrite. </p>
+
+<p>We need to first create a text document called &quot;server.conf&quot; to contain our rules. It must be named exactly that. This would be placed in the root directory of the subsystem. Using this we have access to these directives: redirect, template and rewrite.</p>
+<div class="highlight"><pre><span class="n">redirect</span> <span class="o">^</span><span class="err">\</span><span class="o">/</span><span class="n">index</span><span class="err">\</span><span class="o">?</span><span class="p">.</span><span class="o">*</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="n">index</span>
+<span class="n">rewrite</span> <span class="o">^</span><span class="err">\</span><span class="o">/</span><span class="n">news</span><span class="err">\</span><span class="o">?</span><span class="p">.</span><span class="o">*</span><span class="n">tn</span><span class="err">\</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span><span class="p">.</span><span class="o">*</span> <span class="n">app</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">news</span><span class="p">.</span><span class="n">php</span>
+</pre></div>
+<p>####Rdirect</p>
+
+<ul>
+<li>Description: Sends an external redirect based on a regular expression match of the current URL</li>
+<li>Syntax: redirect URL-path URL</li>
+</ul>
+
+<p>Make sure use regular expressions. The supplied regular expression is matched against the URL-path.</p>
+
+<p>####Rewrite</p>
+
+<ul>
+<li>Description: Sends a request to access a file based on a regular expression match of the current URL</li>
+<li>Syntax: redirect URL-path file</li>
+</ul>
+
+<p>If it matches, the server will send a requiest to access the file to get resource(the php file will be executed and return the results). We can simulate ajax request to get JSON data with rewirte.</p>

@@ -1,0 +1,237 @@
+<!--
+title: API
+weight: 1
+toc: <ul class="nav"><li><a href="#toc_0">Object</a></li><li><a href="#toc_1">fis.util</a></li><li><a href="#toc_2">fis.config</a></li><li><a href="#toc_3">fis.project</a></li><li><a href="#toc_4">fis.file</a><ul class="nav"><li><a href="#toc_5">file object</a></li></ul></li><li><a href="#toc_6">fis.compile</a></li><li><a href="#toc_7">fis.log</a></li></ul>
+-->
+
+<h2 id="toc_0">Object</h2>
+
+<p>OO</p>
+
+<p>define:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">derive</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//blabla</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="c1">//extend</span>
+<span class="p">});</span>
+</pre></div>
+<p>use:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
+</pre></div>
+<h2 id="toc_1">fis.util</h2>
+
+<ul>
+<li><p>is(source, type)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s1">&#39;fis&#39;</span><span class="p">,</span> <span class="s1">&#39;String&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; true</span>
+</pre></div></li>
+<li><p>map(obj, callback)</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39; =&gt; &#39;</span> <span class="o">+</span> <span class="nx">value</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="c1">// =&gt; </span>
+<span class="c1">//  0 =&gt; 1 </span>
+<span class="c1">//  1 =&gt; 2 </span>
+<span class="c1">//  2 =&gt; 3</span>
+</pre></div></li>
+<li><p>pad(str, len, fill, pre)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">pad</span><span class="p">(</span><span class="s1">&#39;aaa&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; aaa..</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">pad</span><span class="p">(</span><span class="s1">&#39;aaa&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="c1">// =&gt; ..aaa</span>
+</pre></div></li>
+<li><p>merge(source, target)</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">key1</span><span class="o">:</span> <span class="s1">&#39;value1&#39;</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">ab</span> <span class="o">=</span> <span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+<span class="c1">// =&gt; {key: &#39;value&#39;, key1: &#39;value1&#39;}</span>
+</pre></div></li>
+<li><p>clone(source)</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span><span class="nx">data</span><span class="o">:</span> <span class="s1">&#39;string&#39;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">clone</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span><span class="p">,</span> <span class="s1">&#39;a != b&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; AssertionError: a != b</span>
+</pre></div></li>
+<li><p>escapeReg(str)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">escapeReg</span><span class="p">(</span><span class="s1">&#39;/home/fis/a.js&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; \\/home\\/fis\\/a\\.js</span>
+</pre></div></li>
+<li><p>escapeShellCmd(str)</p></li>
+<li><p>escapeShellArg(str)</p></li>
+<li><p>stringQuote(str, quotes)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">stringQuote</span><span class="p">(</span><span class="s1">&#39;&quot;fis&quot;&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; { origin: &#39;&quot;fis&quot;&#39;, rest: &#39;fis&#39;, quote: &#39;&quot;&#39; }</span>
+</pre></div></li>
+<li><p>getMimeType(ext)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">getMimeType</span><span class="p">(</span><span class="s1">&#39;png&#39;</span><span class="p">)</span>
+<span class="c1">// =&gt; image/png</span>
+</pre></div></li>
+<li><p>realpath(path)</p>
+<div class="highlight"><pre><span class="c1">//cwd: /home/fis</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">realpath</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; /home</span>
+</pre></div></li>
+<li><p>realpathSafe(path)</p>
+
+<p>@see realpath，当目录或文件不存在时，不返回false，直接返回传入路径</p>
+<div class="highlight"><pre><span class="c1">//cwd: /home/fis</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">realpathSafe</span><span class="p">(</span><span class="s1">&#39;../a.js&#39;</span><span class="p">);</span>
+<span class="c1">///home/a.js不存在</span>
+<span class="c1">// =&gt; ../a.js</span>
+</pre></div></li>
+<li><p>isAbsolute(path)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">isAbsolute</span><span class="p">(</span><span class="s1">&#39;/usr/&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; true</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">isAbsolute</span><span class="p">(</span><span class="s1">&#39;/usr&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; false</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">isAbsolute</span><span class="p">(</span><span class="s1">&#39;usr/&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; false</span>
+</pre></div></li>
+<li><p>isFile(path)</p></li>
+<li><p>isDir(path)</p></li>
+<li><p>mtime(path)</p></li>
+<li><p>touch(path, mtime)</p></li>
+<li><p>isWin()</p></li>
+<li><p>isTextFile()</p></li>
+<li><p>isImageFile()</p></li>
+<li><p>md5(data, len)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">md5</span><span class="p">(</span><span class="s1">&#39;fis&#39;</span><span class="p">);</span> <span class="c1">//不设定len，默认7个。最长32个</span>
+<span class="c1">// =&gt; 37ab815</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">md5</span><span class="p">(</span><span class="s1">&#39;fis&#39;</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+<span class="c1">// =&gt; 37ab815c056b5c5f600f6ac93e486a78</span>
+</pre></div></li>
+<li><p>base64(data)</p></li>
+<li><p>mkdir(path, mode)</p></li>
+<li><p>toEncoding(str, encoding)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">toEncoding</span><span class="p">(</span><span class="s1">&#39;中文&#39;</span><span class="p">,</span> <span class="s1">&#39;gbk&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &lt;Buffer d6 d0 ce c4&gt;</span>
+</pre></div></li>
+<li><p>isUtf8(bytes)</p></li>
+<li><p>readBuffer(buffer)</p></li>
+<li><p>read(path, convert)</p></li>
+<li><p>write(path, data, charset, append)</p></li>
+<li><p>find(rPath, include, exclude)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;/home/fis&#39;</span><span class="p">,</span> <span class="sr">/.*\.js/</span><span class="p">);</span> <span class="c1">// all javascript file</span>
+<span class="c1">// =&gt; [...]</span>
+</pre></div></li>
+<li><p>del(rPath, include, exclude)</p></li>
+<li><p>copy(rSource, target, include, exclude)</p></li>
+<li><p>ext(str)</p></li>
+<li><p>query(str)</p></li>
+<li><p>pathinfo(path)</p></li>
+</ul>
+
+<h2 id="toc_2">fis.config</h2>
+
+<ul>
+<li><p>fis.config.merge(obj)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">namespace</span><span class="o">:</span> <span class="s1">&#39;demo&#39;</span>
+<span class="p">});</span>
+</pre></div></li>
+<li><p>fis.config.set(key, def)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;namespace&#39;</span><span class="p">,</span> <span class="s1">&#39;demo&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>fis.config.get(key)</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span> <span class="c1">//获取全部的配置信息</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;namespace&#39;</span><span class="p">)</span> <span class="c1">//获取namespace</span>
+</pre></div></li>
+</ul>
+
+<h2 id="toc_3">fis.project</h2>
+
+<ul>
+<li>getProjectPath() 获得项目路径</li>
+<li>setProjectRoot(rPath) 设置项目路径</li>
+</ul>
+
+<h2 id="toc_4">fis.file</h2>
+
+<ul>
+<li><p>wrap()</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">fis</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">wrap</span><span class="p">(</span><span class="s1">&#39;/home/fis/debug/static/demo.js&#39;</span><span class="p">);</span>
+</pre></div>
+<h3 id="toc_5">file object</h3></li>
+<li><p>isHtmlLike  是否是类HTML文件，比如tpl</p></li>
+<li><p>isJsLike    是否是类JS文件，比如coffeescript</p></li>
+<li><p>isCssLike   是否是类CSS文件，比如less、sass</p></li>
+<li><p>requires    文件依赖的id列表</p></li>
+<li><p>extras      文件额外属性</p></li>
+<li><p>useMap      是否记录到map.json</p></li>
+<li><p>isMod       是否需要组件化</p></li>
+<li><p>exists()</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">exists</span><span class="p">();</span>
+<span class="c1">// =&gt; true or false</span>
+</pre></div></li>
+<li><p>isText()  是否为一文本文件</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">isText</span><span class="p">();</span>
+<span class="c1">// =&gt; true or false</span>
+</pre></div></li>
+<li><p>isImage() 是否为一个图像文件</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">isImage</span><span class="p">();</span>
+<span class="c1">// =&gt; true or false</span>
+</pre></div></li>
+<li><p>toString() file的真实路径</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+<span class="c1">// =&gt; /home/fis/debug/static/demo.js</span>
+</pre></div></li>
+<li><p>getMtime() 获取文件最后修改时间</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">mtime</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getMtime</span><span class="p">();</span>
+</pre></div></li>
+<li><p>setContent(c) 设置文件内容</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">setContent</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>getContent() 获取文件内容</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getContent</span><span class="p">();</span>
+</pre></div></li>
+<li><p>getHash()  获取文件内容hash</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">hash</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getHash</span><span class="p">();</span>
+</pre></div></li>
+<li><p>getBase64(prefix) 获取文件的base64</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">base64</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getBase64</span><span class="p">();</span>
+</pre></div></li>
+<li><p>getId() 获取文件对应的ID</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getId</span><span class="p">();</span>
+</pre></div></li>
+<li><p>getUrl(withHash, withDomain)  获取文件的url</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getUrl</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</pre></div></li>
+<li><p>addRequire(id)  给文件添加依赖</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">addRequire</span><span class="p">(</span><span class="s1">&#39;a.js&#39;</span><span class="p">);</span>
+<span class="c1">// demo.js 依赖与a.js</span>
+</pre></div></li>
+<li><p>removeRequire(id)</p>
+<div class="highlight"><pre><span class="nx">file</span><span class="p">.</span><span class="nx">removeRequire</span><span class="p">(</span><span class="s1">&#39;a.js&#39;</span><span class="p">);</span>
+<span class="c1">// 移除对a.js的依赖</span>
+</pre></div></li>
+</ul>
+
+<h2 id="toc_6">fis.compile</h2>
+
+<h2 id="toc_7">fis.log</h2>
+
+<ul>
+<li><p>debug</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s1">&#39;debugMessage&#39;</span><span class="p">);</span>
+<span class="c1">// [DEBUG] 18:49:46.0958 debugMessage</span>
+</pre></div></li>
+<li><p>notice</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">notice</span><span class="p">(</span><span class="s1">&#39;noticeMessage&#39;</span><span class="p">);</span>
+<span class="c1">// [NOTICE] 18:49:46.0958 noticeMessage</span>
+</pre></div></li>
+<li><p>warning</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">warning</span><span class="p">(</span><span class="s1">&#39;warningMessage&#39;</span><span class="p">);</span>
+<span class="c1">// [WARNING] 18:49:46.0958 warningMessage</span>
+</pre></div></li>
+<li><p>error</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;errorMessage&#39;</span><span class="p">);</span>
+<span class="c1">// [ERROR] 18:49:46.0958 errorMessage</span>
+<span class="c1">// 编译中断</span>
+</pre></div></li>
+</ul>

@@ -1,0 +1,107 @@
+<div class="highlight"><pre>:::javascript
+fis.config.set(&#39;modules&#39;, {
+    parser : {
+        less : &#39;less&#39;,  //添加对less文件的处理
+        tmpl: &#39;bdtmpl&#39;  //添加对前端模板的处理
+    },
+    preprocessor: {
+        tpl: &#39;extlang&#39;,  //增加对tpl的预处理
+    },
+    postprocessor: {
+        tpl: &#39;require-async&#39;,  //增加对tpl中的异步组件收集处理
+        js: &#39;jswrapper, require-async&#39;  //增加对JS组件的组件化包装和收集异步组件使用依赖关系处理
+    },
+    optimizer : {
+        tpl : &#39;smarty-xss,html-compress&#39; //增加对tpl文件的smarty-xss修复和压缩处理
+    }
+});
+
+fis.config.set(&#39;roadmap&#39;, {
+    ext : {
+        less : &#39;css&#39;  //less文件编译后转为css文件
+    },
+    path : [
+    {
+        reg : /^\/test\/(.+)/i,    //对test目录编译发布的路径设置
+        release : &#39;/test/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>/$1&#39;
+    },
+    {
+        reg : /\.tmpl$/i,   //不产出后缀为tmpl的文件
+        release : false
+    },
+    {
+        reg : /^\/widget\/(.*\.tpl)$/i,   //设置widget中的tpl为组件化文件，以及产出路径
+        isMod : true,
+        url : &#39;<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>/widget/$1&#39;,
+        release : &#39;/template/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>/widget/$1&#39;
+    },
+    {
+        reg : /^\/widget\/(.*\.(js|css))$/i,  //设置widget中的js、css为组件化文件，以及产出路径
+        isMod : true,
+        release : &#39;/static/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>/widget/$1&#39;
+    },
+    {
+        reg : /^\/plugin\//i
+    },
+    {
+        reg : /^\/page\/(.+\.tpl)$/i,  //设置page中的tpl为组件化文件，以及产出路径
+        isMod: true,
+        release : &#39;/template/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>/page/$1&#39;,
+        extras: {
+            isPage: true
+        }
+    },
+    {
+        reg : &#39;<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>-map.json&#39;,  //设置map.json文件的产出路径
+        release : &#39;/config/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>-map.json&#39;
+    },
+    {
+        reg: /^\/static\/(.*)/i,  //设置static目录下文件的产出路径
+        release: &#39;/static/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>/$1&#39;
+    },
+    {
+        reg: /\.(tpl|php|html|xhtml)$/i
+    },
+    {
+        reg: /^\/config\/.*/i,
+        release: &#39;$<span class="err">&amp;</span>&#39;
+    },
+    {
+        reg: &quot;server.conf&quot;,
+        release: &#39;/$<span class="err">&amp;</span>&#39;
+    },
+    {
+        reg: /\/.+/i,
+        release: &#39;/static/<span class="cp">${</span><span class="n">namespace</span><span class="cp">}</span>$<span class="err">&amp;</span>&#39;
+    }
+    ]
+}):
+
+fis.config.set(&#39;settings&#39;, {
+    parser : {
+        bdtmpl : {                      //设置对前端模板处理时默认的定界符
+            LEFT_DELIMITER : &#39;<span class="err">&lt;</span>#&#39;,   
+            RIGHT_DELIMITER : &#39;#&gt;&#39;
+        }
+    },
+    postprocessor : {
+        jswrapper: {          //设置对组件包装时的类型
+            type: &#39;amd&#39;
+        }
+    },
+    optimizer : {
+        &#39;smarty-xss&#39; : {     //设置对tpl进行smarty-xss的默认配置
+            &#39;escapeMap&#39; : {
+                &#39;js&#39; : &#39;f_escape_js&#39;,
+                &#39;html&#39; : &#39;f_escape_xml&#39;,
+                &#39;data&#39; : &#39;f_escape_data&#39;,
+                &#39;path&#39; : &#39;f_escape_path&#39;,
+                &#39;event&#39; : &#39;f_escape_event&#39;,
+                &#39;no_escape&#39; : &#39;escape:none&#39;
+            },
+            &#39;leftDelimiter&#39; : &#39;{%&#39;,
+            &#39;rightDelimiter&#39; : &#39;%}&#39;
+        }
+    }
+});
+</pre></div>

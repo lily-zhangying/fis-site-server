@@ -1,0 +1,130 @@
+<!--
+title: 插件使用
+toc: <ul class="nav"><li><a href="#toc_0">html</a></li><li><a href="#toc_1">head</a></li><li><a href="#toc_2">body</a></li><li><a href="#toc_3">script</a></li><li><a href="#toc_4">require</a></li><li><a href="#toc_5">widget</a></li></ul>
+-->
+
+<blockquote>
+<p>FIS-Plus解决方案提供一套基于smarty(version &gt;= 3.1.13)插件的后台运行框架，针对静态资源管理、模板模块化、pagelet等功能。</p>
+</blockquote>
+
+<h3 id="toc_0">html</h3>
+
+<ul>
+<li>功能：代替&lt;html&gt;标签，设置页面运行的前端框架，以及控制整体页面输出。</li>
+<li>属性值：framework及html标签原生属性值</li>
+<li>是否必须：是</li>
+<li>用法：在模板中替换普通&lt;html&gt;标签</li>
+</ul>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;home:static/lib/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    ....</span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p><img src="/static/fis-site/images/fis-plus/tpl1_fbad2c9.jpg" alt="html"/></p>
+
+<h3 id="toc_1">head</h3>
+
+<ul>
+<li>功能：代替&lt;head&gt;标签，控制CSS资源加载输出。</li>
+<li>属性值：head标签原生属性值</li>
+<li>是否必须：是</li>
+<li>用法：在模板中替换普通&lt;head&gt;标签</li>
+</ul>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;home:static/lib/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p><img src="/static/fis-site/images/fis-plus/tpl2_2373cfb.jpg" alt="head"/></p>
+
+<h3 id="toc_2">body</h3>
+
+<ul>
+<li>功能：代替&lt;body&gt;标签，控制JS资源加载输出。</li>
+<li>属性值：body标签原生属性值</li>
+<li>是否必须：是</li>
+<li>用法：在模板中替换普通&lt;body&gt;标签</li>
+</ul>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;home:static/lib/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ....</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p><img src="/static/fis-site/images/fis-plus/tpl3_60b8620.jpg" alt="body"/></p>
+
+<h3 id="toc_3">script</h3>
+
+<ul>
+<li>功能：代替&lt;script&gt;标签，收集使用JS组件的代码块，控制输出至页面底部。</li>
+<li>属性值：无</li>
+<li>是否必须：在模板中使用异步JS组件的JS代码块，必须通过插件包裹</li>
+<li>用法：在模板中替换普通&lt;script&gt;标签</li>
+</ul>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;home:static/lib/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">       </span><span class="cp">{</span><span class="c">*通过script插件收集加载组件化JS代码*</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       </span><span class="cp">{</span><span class="o">%</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">           require.async(&quot;home:static/ui/B/B.js&quot;);</span>
+<span class="x">       </span><span class="cp">{</span><span class="o">%/</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p><img src="/static/fis-site/images/fis-plus/tpl4_14c6f6d.jpg" alt="script"/></p>
+
+<h3 id="toc_4">require</h3>
+
+<ul>
+<li>功能：通过静态资源管理框架加载静态资源。</li>
+<li>插件类型：compiler</li>
+<li>属性值：name(调用文件目录路径，与src属性二选一) | src(调用线上资源，与name属性二选一)</li>
+<li>是否必须：是</li>
+<li>用法：在模板中如果需要加载模块内某个静态资源，可以通过require插件加载，便于管理输出静态资源</li>
+</ul>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;home:static/lib/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">       </span><span class="cp">{</span><span class="c">*通过script插件收集加载组件化JS代码*</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       </span><span class="cp">{</span><span class="o">%</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            require.async(&quot;home:static/ui/B/B.js&quot;);</span>
+<span class="x">       </span><span class="cp">{</span><span class="o">%/</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/index/index.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p><img src="/static/fis-site/images/fis-plus/tpl5_d82f332.jpg" alt="require"/></p>
+
+<h3 id="toc_5">widget</h3>
+
+<ul>
+<li>功能：调用模板组件，渲染输出模板片段。</li>
+<li>插件类型：compiler</li>
+<li>属性值：name(调用文件目录路径)</li>
+<li>是否必须：是</li>
+<li>用法：在模板中调用某个模板组件</li>
+</ul>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;home:static/lib/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">       </span><span class="cp">{</span><span class="c">*通过script插件收集加载组件化JS代码*</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       </span><span class="cp">{</span><span class="o">%</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            require.async(&quot;home:static/ui/B/B.js&quot;);</span>
+<span class="x">       </span><span class="cp">{</span><span class="o">%/</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/index/index.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:widget/A/A.tpl&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p><img src="/static/fis-site/images/fis-plus/tpl6_bd9d3ae.jpg" alt="widget"/></p>

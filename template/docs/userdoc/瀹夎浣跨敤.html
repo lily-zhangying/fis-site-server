@@ -1,0 +1,54 @@
+<!--
+title: 安装使用
+weight: 100
+toc: <ul class="nav"><li><a href="#toc_0">安装nodejs</a></li><li><a href="#toc_1">安装fis</a></li><li><a href="#toc_2">安装lights</a></li><li><a href="#toc_3">安装Java</a></li><li><a href="#toc_4">安装php&amp;php-cgi</a></li></ul>
+-->
+
+<p>fis的 自动化/辅助开发工具 被发布为一套 npm包，它对环境的要求是：</p>
+
+<ul>
+<li>操作系统：任何能安装 nodejs 的操作系统</li>
+<li>node版本：&gt;= v0.8.0</li>
+<li>jre版本：&gt;= v1.5.0 【如果不需要本地调试服务器，可以忽略java环境要求】</li>
+<li>php-cgi版本：&gt;= v5.0.0 【如果不需要本地调试服务器，可以忽略php-cgi环境要求】</li>
+</ul>
+
+<h2 id="toc_0">安装nodejs</h2>
+
+<ul>
+<li><a href="http://nodejs.org/">安装nodejs</a></li>
+</ul>
+
+<h2 id="toc_1">安装fis</h2>
+
+<p>nodejs安装好后，命令行执行</p>
+<div class="highlight"><pre>npm install -g fis-plus
+</pre></div>
+<p>安装好fis之后，执行 fisp -v，如果看到下面信息，恭喜，你已拥有百度前端团队倾情打造的前端集成解决方案的开发调试环境啦！</p>
+
+<p><img src="/static/fis-site/images/fis-version_d6dc05e.png" style="width:520px;" /></p>
+
+<p><code>注意：上面安装的FIS是 smarty3+php 后端的</code> ，如果后端是其他语言，请查看<a href="https://github.com/fex-team/fis">文档</a></p>
+
+<h2 id="toc_2">安装lights</h2>
+
+<p>lights是fis提供的包管理工具，托管了fis所有资源。是使用fis的时候，必不可少的利器噢</p>
+<div class="highlight"><pre>npm install -g lights
+</pre></div>
+<h2 id="toc_3">安装Java</h2>
+
+<p>为了使用FIS本地调试服务器，需要安装java</p>
+
+<ul>
+<li><a href="http://java.com/">安装java</a></li>
+</ul>
+
+<h2 id="toc_4">安装php&amp;php-cgi</h2>
+
+<p>为了使用FIS本地调试服务器，需要安装php以及php-cgi</p>
+
+<ul>
+<li><a href="https://gist.github.com/xiangshouding/9359739">mac安装</a></li>
+<li><a href="https://gist.github.com/lily-zhangying/9295c5221fa29d429d52">windows安装</a></li>
+<li><a href="https://github.com/fouber/install-php-cgi-1">linux安装</a></li>
+</ul>

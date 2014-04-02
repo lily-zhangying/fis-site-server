@@ -1,0 +1,86 @@
+<p>##Recommended Directory Structure</p>
+
+<p>The FIS recommended project directory structure which consists of four levels:</p>
+
+<ul>
+<li><strong>site</strong>, which consists of several subsystem.</li>
+<li><strong>subsystem</strong>, which groups a set of related business logic feature into a organized group, several subsystems constitute a site.</li>
+<li><strong>page</strong>, which use back-end template rending the widgets and model into a web page suitable for interaction with ther user.</li>
+<li><strong>widget</strong>, is a set of specs which let web developers leverage their HTML, CSS and JavaScript knowledge to build widgets that can be reused easily and reliably.</li>
+</ul>
+
+<p>By default, the projects include the following folders:</p>
+<div class="highlight"><pre><span class="p">|</span>---site //the project
+<span class="p">|</span>     <span class="p">|</span>---common //common subsystem
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---page //page file directory
+<span class="p">|</span>     <span class="p">|</span>            └── layout.tpl 
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---widget //widget directory, include template module, JavaScript module, CSS module, ext
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     └── menu   //template module
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     <span class="p">|</span>    └── menu.tpl  
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     <span class="p">|</span>    └── menu.js   
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     <span class="p">|</span>    └── menu.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     └── ui
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── dialog  //JavaScript module
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          <span class="p">|</span>    └──dialog.js
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          <span class="p">|</span>    └──dialog.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── reset // CSS module
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>               └── reset.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---static //static resources which <span class="k">do </span>not belong to the widget
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---fis-conf.js //fis config file
+<span class="p">|</span>     <span class="p">|</span>---subsystem1 //business subsystem
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---test //test cases
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---page
+<span class="p">|</span>     <span class="p">|</span>            └── index.tpl 
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---widget
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---static
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>     └── index //the static resources which belong to index.tpl
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── index.js  
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>          └── index.css
+<span class="p">|</span>     <span class="p">|</span>      <span class="p">|</span>---fis-conf.js //fis config file
+<span class="p">|</span>     <span class="p">|</span>---subsystem2 //business subsystem
+</pre></div>
+<p>The following describes the use cases for each directory as listed.</p>
+
+<ul>
+<li>site, this directory contains your application, it contains several subsystem directory.</li>
+<li>subsystem directory, this directory contains set of related business logic feature resources.</li>
+<li>page, this directory contains views(template).</li>
+<li>widget, this directory contains widgets.</li>
+<li>static, this directory contains static resources which do not belong to the widget.</li>
+<li>test, this directory contains application tests, these could be hand-written based on some other testing framework. </li>
+</ul>
+
+<p>###Subsystem</p>
+
+<p>The reason we isolate the subsystem is to result in greater maintainability which can make parallel developments easily and deploy the subsystem parallelly. There are two types of subsystem, common subsystem and ordinary subsystem, the common subsystem is for common libraries, modules and template on which the other ordinary subsyestems depends. The subsystem directory usually contains page, widget, static, test and the fis-conf.js. <br/>
+<strong>We do not recommend calling each other between the ordinary subsystems, but ordinary subsystem can call common subsystem</strong>, so that it can guarantee the ordinary subsystems are independent. This can bring great flexibility and maintainability  to the project. For instance, if you have many ordinary subsystems and one common subsystem, you will just release some subsystems which new feature are in, without the need to publish the entire site.</p>
+
+<p>###Page</p>
+
+<p>We provide a framework based on Smarty3/PHP for template, there are alse other back-end solutions coming soon, like java, go, etc. The framework can efficiently control the loading of static resources. </p>
+
+<p>You can find more in <a href="./doc/smarty%20framework.md">Pages and Layout Based On Smarty</a>;</p>
+
+<p>###Widget</p>
+
+<p>There are three types of widget, Template widget, JavaScript widget, CSS widget, Template widget(smarty for now) can invoke JS widget and CSS widget.</p>
+
+<p>####CSS widget</p>
+
+<p>In general, CSS widgets are the most simple components, the css files in widget directory are css widgets. Each css widget contains at least one css file which has the same name with the css widget directory, while the css directory also can contains some pictures which are referenced in the css. </p>
+<div class="highlight"><pre><span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
+</pre></div>
+<p>####JavaScript widget</p>
+
+<p>The new JavaScript widget enables developers to create their own hidden implementations of HTML elements. For example, instead of pasting (and re-pasting) a script and a css into a web page, you only need call the JavaScript widget through require, the fis framework will auto load all the resources needed. The JavaScript files in widget directory are JavaScript widgets. Each JavaScript widget contains at least one JavaScript file which has the same name with the JavaScript widget directory, the JavaScript widget also can have the same name css file for the widget. </p>
+<div class="highlight"><pre><span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
+<span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
+</pre></div>
+<p>####Template widget</p>
+
+<p>Template widget can build anything from a button to a complete application as an encapsulated, reusable element. Each Smarty widget contains at least one tpl(smarty) file which has the same name width the Smarty widget directory, the template provides a method for declaring document fragments in HTML. The Smarty widget also can have the same name js and css file for the widget. <strong>The reason of why the tpl, js and css must have the same name is that if you do that then you don&#39;t need to explicitly import resources.</strong> The fis framework will automatically find and load all the js and css files that the widget need when the widget rendering. </p>
+<div class="highlight"><pre><span class="n">tpl</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">tpl</span>
+<span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
+<span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
+</pre></div>
+<p>You can find more in <a href="./doc/widget.md">How to Develop With Widgets</a>.</p>

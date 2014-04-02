@@ -1,0 +1,60 @@
+<h2 id="toc_0">Deploy</h2>
+
+<p>Build your application on your machine and just upload public/directory to the directory that is served by a webserver. Only changed files are deployed to servers. Updating servers was never this quick and easy.</p>
+
+<ul>
+<li>explanation：deploy。</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+//fis-conf.js<br/>
+fis.config.merge({<br/>
+    deploy : {<br/>
+        //through fis release --dest remote<br/>
+        remote : {<br/>
+            //the receiver url<br/>
+            receiver : &#39;http://www.example.com/path/to/receiver.php&#39;,<br/>
+            //Find the file from the static directory<br/>
+            from : &#39;/static&#39;,<br/>
+            //Saved to the remote machine / home / fis / www static directory /<br/>
+            to : &#39;/home/fis/www/&#39;,<br/>
+            //Wildcard or regular filter files, which means that all the js file uploads only<br/>
+            include : &#39;**.js&#39;,<br/>
+            //do not release files in widget directory<br/>
+            exclude : /\/widget\//i,<br/>
+            //Support for file string replacement<br/>
+            replace : {<br/>
+                from : &#39;http://www.online.com&#39;,<br/>
+                to : &#39;http://www.offline.com&#39;<br/>
+            }<br/>
+        },<br/>
+        //Just take the name, there is no special meaning<br/>
+        local : {<br/>
+            //from parameter is omitted, which means that after the release from the root directory to start uploading<br/>
+            //Posted on the current project output directory level in<br/>
+            to : &#39;../output&#39;<br/>
+        },<br/>
+        //Array<br/>
+        remote2 : [<br/>
+            {<br/>
+                //Upload the static directory to / home / fis / www / webroot under<br/>
+                //Upload file path is / home / fis / www / webroot / static / xxxx<br/>
+                receiver : &#39;http://www.example.com/path/to/receiver.php&#39;,<br/>
+                from : &#39;/static&#39;,<br/>
+                to : &#39;/home/fis/www/webroot&#39;<br/>
+            },<br/>
+            {<br/>
+                //Upload the template directory to /home/fis/www/tpl\<br/>
+                //Upload file path is /home/fis/www/tpl/xxxx<br/>
+                receiver : &#39;http://www.example.com/path/to/receiver.php&#39;,<br/>
+                from : &#39;/template&#39;,<br/>
+                to : &#39;/home/fis/www/tpl&#39;,<br/>
+                subOnly : true<br/>
+            }<br/>
+        ]<br/>
+    }<br/>
+});<br/>
+</code></p></li>
+<li><p>Tips: - dest parameter supports the use of a comma (,) to separate multiple release configuration, such as the above example, we can use the fis release - dest ** remote, local, remote2 ** command compilation released simultaneously in more than one goals.</p></li>
+</ul>

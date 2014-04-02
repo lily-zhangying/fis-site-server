@@ -1,0 +1,43 @@
+<!--
+title: 在html中嵌入资源
+toc: 
+-->
+
+<blockquote>
+<p>在html中可以嵌入其他文件内容或者base64编码值，可以在资源定位的基础上，给资源加 <strong>?__inline</strong> 参数来标记资源嵌入需求。</p>
+</blockquote>
+
+<ul>
+<li><p>源码：</p>
+<div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;images/logo.gif?__inline&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+<p>编译后</p>
+<div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;data:image/gif;base64,R0lGODlhDgGBALMAAGBn6eYxLvvy9PnKyfO...Jzna6853wjKc850nPeoYgAgA7&quot;</span><span class="nt">/&gt;</span>
+</pre></div></li>
+<li><p>源码：</p>
+<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;demo.css?__inline&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+<p>编译后</p>
+<div class="highlight"><pre><span class="nt">&lt;style&gt;img</span> <span class="p">{</span> <span class="k">border</span><span class="o">:</span> <span class="m">5px</span> <span class="k">solid</span> <span class="m">#ccc</span><span class="p">;</span> <span class="p">}</span><span class="nt">&lt;/style&gt;</span>
+</pre></div></li>
+<li><p>源码：</p>
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;demo.js?__inline&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+<p>编译后</p>
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;inline file&#39;</span><span class="p">);</span><span class="nt">&lt;/script&gt;</span>
+</pre></div></li>
+<li><p>源码（推荐使用）：</p>
+<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;import&quot;</span> <span class="na">href=</span><span class="s">&quot;demo.html?__inline&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+<p>编译后</p>
+<div class="highlight"><pre><span class="c">&lt;!-- this is the content of demo.html --&gt;</span>
+<span class="nt">&lt;h1&gt;</span>demo.html content<span class="nt">&lt;/h1&gt;</span>
+</pre></div></li>
+<li><p>源码（功能同&lt;link ref=&quot;import&quot; href=&quot;xxx?__inline&quot;&gt;语法，此语法为旧语法，<code>不推荐使用</code>。）：</p>
+<div class="highlight"><pre><span class="c">&lt;!--inline[demo.html]--&gt;</span>
+</pre></div>
+<p>编译后</p>
+<div class="highlight"><pre><span class="c">&lt;!-- this is the content of demo.html --&gt;</span>
+<span class="nt">&lt;h1&gt;</span>demo.html content<span class="nt">&lt;/h1&gt;</span>
+</pre></div></li>
+</ul>

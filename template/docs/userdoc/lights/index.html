@@ -1,0 +1,227 @@
+<!--
+title: lights包管理工具
+toc: <ul class="nav"><li><a href="#toc_0">安装</a></li><li><a href="#toc_1">特性</a></li><li><a href="#toc_2">使用</a><ul class="nav"><li><a href="#toc_3">install    下载</a></li><li><a href="#toc_4">search    搜索</a></li><li><a href="#toc_5">adduser    添加用户</a></li><li><a href="#toc_6">publish    发布</a></li><li><a href="#toc_7">package.json  配置文件</a></li><li><a href="#toc_8">keywords  资源分类</a></li><li><a href="#toc_9">commonJS开发体验</a></li><li><a href="#toc_10">README.md  介绍</a></li><li><a href="#toc_11">unpublish  删除</a></li><li><a href="#toc_12">owner   维护人</a></li><li><a href="#toc_13">config    设置</a></li><li><a href="#toc_14">update    更新</a></li><li><a href="#toc_15">remove    删除</a></li></ul></li><li><a href="#toc_16">设置仓库</a></li><li><a href="#toc_17">搭建私有仓库</a></li></ul>
+-->
+
+<blockquote>
+<p>lights 是FIS包管理工具。提供便捷、易用的资源安装、发布、搜索，管理工具。用于团队间快速共享资源，提升开发效率。 访问 lights.baidu.com ,找到更多资源。</p>
+</blockquote>
+
+<h2 id="toc_0">安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>npm install -g lights
+</pre></div>
+<p>lights被发布为一套npm包，对它对环境的要求是：</p>
+
+<ol>
+<li>操作系统：任何能安装 nodejs 的操作系统</li>
+<li>node版本：&gt;= v0.8.0</li>
+<li>安装好lights之后，执行 lights -v，如果看到版本信息，恭喜，你已拥有lights包管理工具啦！</li>
+</ol>
+
+<h2 id="toc_1">特性</h2>
+
+<ul>
+<li>具有CommonJS的模块化开发体验</li>
+<li>管理模板、JavaScript、CSS、img等多种资源</li>
+<li>完美支持FIS的模块化规范</li>
+<li>大量丰富的包资源(业务组件、smarty插件，FIS demo等)</li>
+<li>便捷、易用的包安装、发布、搜索</li>
+<li>自动管理包依赖，无冗余依赖下载</li>
+</ul>
+
+<h2 id="toc_2">使用</h2>
+
+<p>执行 <strong>lights --help</strong> 让我们来看一下lights命令的相关帮助：</p>
+<div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">lights</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
+
+<span class="n">Commands</span><span class="o">:</span>
+
+      <span class="n">install</span>      <span class="n">install</span> <span class="n">resource</span> <span class="n">from</span> <span class="n">lights</span>
+      <span class="n">search</span>       <span class="n">search</span> <span class="n">resource</span> <span class="n">of</span> <span class="n">lights</span>
+      <span class="n">adduser</span>      <span class="n">add</span> <span class="n">user</span> <span class="n">of</span> <span class="n">lights</span>
+      <span class="n">publish</span>      <span class="n">publish</span> <span class="n">resource</span> <span class="n">to</span> <span class="n">lights</span>
+      <span class="n">unpublish</span>    <span class="n">remove</span> <span class="n">resource</span> <span class="n">to</span> <span class="n">lights</span>
+      <span class="n">owner</span>        <span class="n">change</span> <span class="n">ownership</span> <span class="n">of</span> <span class="n">resource</span>
+      <span class="n">config</span>       <span class="kd">set</span> <span class="n">or</span> <span class="kd">get</span> <span class="n">config</span> <span class="k">if</span> <span class="n">lights</span>
+
+<span class="n">Options</span><span class="o">:</span>
+
+  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>     <span class="n">output</span> <span class="n">usage</span> <span class="n">information</span>
+  <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">output</span> <span class="n">the</span> <span class="n">version</span> <span class="n">number</span>
+</pre></div>
+<h3 id="toc_3">install    下载</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights install
+</pre></div>
+<ol>
+<li>安装组件依赖。</li>
+<li><p>读取当前文件夹下的package.json的dependecies节点，下载所有依赖。  </p>
+<div class="highlight"><pre><span class="nv">$ </span>lights install &lt;name&gt;@&lt;version&gt; 
+Options:
+--repos &lt;url&gt; : repository,仓库地址
+</pre></div></li>
+<li><p>lights install 下载资源以及资源的所有依赖到当前目录。</p></li>
+<li><p>不输入version时，默认下载最新版本</p></li>
+<li><p>当前目录已经存在该资源的，提示已经存在，不会覆盖，需要手动删除才能继续下载。</p></li>
+<li><p>**--repos ** ： lights默认仅与一个仓库交互，仓库之间没有同步时，可以设置--repos<br/>
+参数，指定仓库下载。<br/>
+例如，lights install gmu --repos fedev.baidu.com:8889</p></li>
+<li><p><strong>repos的 url的格式为</strong> ： <strong>机器名或者ip地址 + 端口号。</strong></p></li>
+<li><p>默认的lights.baidu.com的仓库地址为 fedev.baidu.com:8889.</p></li>
+</ol>
+
+<h3 id="toc_4">search    搜索</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights search &lt;key&gt;
+</pre></div>
+<ol>
+<li> 通过关键字搜索资源。</li>
+<li> 显示相关资源的描述，仓库等。 </li>
+</ol>
+
+<h3 id="toc_5">adduser    添加用户</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights adduser
+</pre></div>
+<ol>
+<li>   通过用户名，密码，email创建用户。</li>
+<li>   发布资源前需要添加用户噢</li>
+</ol>
+
+<h3 id="toc_6">publish    发布</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights publish &lt;folder&gt;
+</pre></div>
+<ol>
+<li><p>folder: 一个包含package.json的文件夹</p></li>
+<li><p>如果包名（name）或者版本（version）已经存在，会发布失败. <br/>
+    可以添加 <strong>--force</strong> 参数来强行覆盖已存在的版本。</p></li>
+</ol>
+
+<h3 id="toc_7">package.json  配置文件</h3>
+
+<ol>
+<li><p>资源必须包括package.json文件</p>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;myproject&quot;</span><span class="p">,</span>
+  <span class="s">&quot;version&quot;</span><span class="o">:</span> <span class="s">&quot;0.0.1&quot;</span><span class="p">,</span>
+  <span class="s">&quot;description&quot;</span><span class="o">:</span> <span class="s">&quot;An example lights components&quot;</span><span class="p">,</span>
+  <span class="s">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s">&quot;jquery&quot;</span> <span class="o">:</span> <span class="s">&quot;1.7.1&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;repository&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;git&quot;</span><span class="p">,</span>
+    <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;https://github.com/myproject&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;keywords&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s">&quot;scaffold&quot;</span><span class="p">,</span>
+    <span class="s">&quot;assets&quot;</span>
+  <span class="p">],</span>
+  <span class="s">&quot;author&quot;</span><span class="o">:</span> <span class="s">&quot;me&quot;</span><span class="p">,</span>
+  <span class="s">&quot;license&quot;</span><span class="o">:</span> <span class="s">&quot;MIT&quot;</span>
+<span class="p">}</span>
+</pre></div></li>
+<li><p>资源有依赖的时候，package.json添加dependencies节点。例如</p>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s">&quot;Chart&quot;</span> <span class="o">:</span> <span class="s">&quot;0.2.0&quot;</span><span class="p">,</span>
+    <span class="s">&quot;jquery&quot;</span> <span class="o">:</span> <span class="s">&quot;2.0.3&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div></li>
+<li><p>依赖的文件需要都publish到lights的仓库中，否则下载依赖会失败。依赖的组件还有依赖时，会递归下载。</p></li>
+<li><p><strong>组件以及依赖全部下载到相同目录，没有目录嵌套</strong>。</p></li>
+<li><p><strong>注意：组件开发中，如果使用依赖的方式，注意相对路径的写法，保证组件下载后可用。</strong></p></li>
+<li><p>**目前 package.json中的版本号，仅支持具体版本号写法，不支持 &gt;=等。否则会报错 **</p></li>
+</ol>
+
+<h3 id="toc_8">keywords  资源分类</h3>
+
+<blockquote>
+<p>前端资源聚合的资源没有强行分类，网站首页显示的资源类型，是由关键字**keywords**筛选出的。包含资源数目最多的才会显示出来噢~</p>
+</blockquote>
+
+<p>默认提供以下关键字，推荐选择默认keywords，让其他同学更容易找到你的资源~<br/>
+默认keywords类型：</p>
+<div class="highlight"><pre>    <span class="n">framework</span> <span class="err">（基础库资源</span> <span class="err">——</span> <span class="n">backbone</span><span class="err">，</span><span class="n">jquery</span><span class="err">等）</span>
+    <span class="n">css</span>  <span class="p">(</span><span class="n">css</span><span class="err">资源，组件等</span><span class="p">)</span>
+    <span class="n">test</span>  <span class="p">(</span><span class="err">测试相关资源</span><span class="p">)</span>
+    <span class="n">widget</span>  <span class="p">(</span><span class="err">组件化资源（</span><span class="n">html</span><span class="err">组件化，</span><span class="n">js</span><span class="err">组件化）</span>
+    <span class="n">smartyPlugin</span>  <span class="p">(</span><span class="n">smarty</span><span class="err">插件</span><span class="p">)</span>
+    <span class="n">assets</span> <span class="err">素材（</span><span class="n">icon</span><span class="err">，图片等）</span>
+    <span class="n">kernal</span>  <span class="err">（</span><span class="n">FIS</span> <span class="err">核心资源）</span>
+    <span class="n">monitor</span> <span class="err">（监控资源</span> <span class="err">——</span> <span class="n">webspped</span><span class="err">，</span> <span class="err">统计脚本，</span><span class="n">hunter</span><span class="err">等）</span>
+    <span class="n">scaffold</span> <span class="err">（脚手架资源</span> <span class="err">——</span> <span class="err">各种使用</span><span class="n">demo</span><span class="err">，代码框架等）</span>
+    <span class="n">html5</span>  <span class="err">（</span><span class="n">html5</span><span class="err">资源）</span>
+    <span class="n">utils</span> <span class="err">（基础</span><span class="n">util</span><span class="err">资源</span> <span class="err">——</span> <span class="n">date</span><span class="err">，</span><span class="n">array</span><span class="err">等各种操作）</span>
+</pre></div>
+<h3 id="toc_9">commonJS开发体验</h3>
+
+<p>所谓commonJS开发体验，是基于FIS的前端框架 modJS。lights无缝结合FIS的组件化开发写法，开发的widget等组件可以在FIS中自动运行。</p>
+<div class="highlight"><pre><span class="cp">[</span><span class="err">具体规范细节</span><span class="cp">]</span><span class="x">(http://fe.baidu.com/doc/fis/2.0/user/js.text#widget)</span>
+</pre></div>
+<h3 id="toc_10">README.md  介绍</h3>
+
+<ol>
+<li> README.md为 <strong>markdown</strong> 语法的文件</li>
+<li> 组件资源根目录下放置README.md文件</li>
+<li> 为资源添加介绍，会在网站上显示噢</li>
+</ol>
+
+<h3 id="toc_11">unpublish  删除</h3>
+<div class="highlight"><pre><span class="nx">lights</span> <span class="nx">unpublish</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span><span class="err">[</span><span class="p">@</span><span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="cp">]</span>
+</pre></div>
+<ol>
+<li> 删除资源。如果不设定版本，会删除此资源的所有版本。</li>
+</ol>
+
+<h3 id="toc_12">owner   维护人</h3>
+<div class="highlight"><pre><span class="nx">lights</span> <span class="nx">owner</span> <span class="nx">ls</span> <span class="o">&lt;</span><span class="nx">package</span> <span class="nx">name</span><span class="o">&gt;</span>
+<span class="nx">lights</span> <span class="nx">owner</span> <span class="nx">add</span> <span class="o">&lt;</span><span class="nx">user</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">package</span> <span class="nx">name</span><span class="o">&gt;</span>
+<span class="nx">lights</span> <span class="nx">owner</span> <span class="nx">rm</span> <span class="o">&lt;</span><span class="nx">user</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">package</span> <span class="nx">name</span><span class="o">&gt;</span>
+</pre></div>
+<ol>
+<li> <strong>ls</strong>: 列出对资源有修改权限的维护人。</li>
+<li> <strong>add</strong>: 对资源添加维护人。</li>
+<li> <strong>rm</strong>: 删除资源的维护人。</li>
+</ol>
+
+<p>注意：所有资源的操作权限只有两种。可修改与不可修改。</p>
+
+<h3 id="toc_13">config    设置</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights config <span class="nb">set</span> &lt;key&gt; &lt;value&gt;
+<span class="nv">$ </span>lights config get &lt;key&gt;
+<span class="nv">$ </span>lights config ls
+</pre></div>
+<ol>
+<li> <strong>ls</strong>: 列出lights所有的设置，包括 username，email，repos。</li>
+<li> <strong>set</strong>: 对lights进行设置。目前仅支持设置 repos，修改username等请使用adduser命令。</li>
+<li> <strong>get</strong>: 获取lights设置。可以根据key值来获取。</li>
+</ol>
+
+<h3 id="toc_14">update    更新</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights update &lt;pkg&gt;
+</pre></div>
+<ol>
+<li> 更新资源到最新版本。</li>
+<li> <strong>update会覆盖更新</strong>。原有已经下载的包会被覆盖，包括所有依赖。</li>
+</ol>
+
+<h3 id="toc_15">remove    删除</h3>
+<div class="highlight"><pre><span class="nv">$ </span>lights remove &lt;pkg&gt;
+</pre></div>
+<ol>
+<li> 删除已经安装的资源。删除目录为命令行所在的目录。</li>
+<li> <strong>remove不会删除依赖资源</strong>。删除依赖可能会导致其他依赖的资源不可用，remove仅支持删除资源本身</li>
+</ol>
+
+<h2 id="toc_16">设置仓库</h2>
+
+<p>lights支持分布式的仓库存储。自行搭建的lights私有仓库，需要在lights中设置repos的url来指定。</p>
+<div class="highlight"><pre><span class="err">$</span><span class="n">lights</span> <span class="n">config</span> <span class="n">set</span> <span class="n">repos</span> <span class="n">fedev</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="mi">8889</span>
+</pre></div>
+<ol>
+<li> 默认的lights.baidu.com的仓库地址为 fedev.baidu.com:8889.</li>
+<li> repos <strong>url的格式为</strong> : <strong>机器名或者ip地址 + 端口号</strong>。</li>
+<li> 分布式的仓库支持，后续会在仓库页面，设置数据同步的功能。</li>
+</ol>
+
+<h2 id="toc_17">搭建私有仓库</h2>
+
+<p>相关文档 [<a href="https://github.com/lily-zhangying/lights/wiki/newRepos">https://github.com/lily-zhangying/lights/wiki/newRepos</a>]</p>

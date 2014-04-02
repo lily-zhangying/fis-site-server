@@ -1,0 +1,105 @@
+<!--
+title: Command Line
+toc: 
+type: detail
+-->
+
+<p>##Command Line</p>
+
+<p>There are three commands you have to know which can meet all you needs.</p>
+<div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">fis</span><span class="o">-</span><span class="n">plus</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
+
+  <span class="n">Commands</span><span class="o">:</span>
+
+    <span class="n">release</span>            <span class="n">build</span> <span class="n">and</span> <span class="n">deploy</span> <span class="n">your</span> <span class="n">project</span>
+    <span class="n">server</span>             <span class="n">launch</span> <span class="n">a</span> <span class="n">php</span><span class="o">-</span><span class="n">cgi</span> <span class="n">server</span>
+    <span class="n">lights</span> <span class="n">install</span>     <span class="n">install</span> <span class="n">components</span> <span class="n">and</span> <span class="n">demos</span>
+
+  <span class="n">Options</span><span class="o">:</span>
+
+    <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>     <span class="n">output</span> <span class="n">usage</span> <span class="n">information</span>
+    <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">output</span> <span class="n">the</span> <span class="n">version</span> <span class="n">number</span>
+    <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">color</span>     <span class="n">disable</span> <span class="n">colored</span> <span class="n">output</span>
+</pre></div>
+<p>###fisp release</p>
+
+<p>fisp release is a very powerful command which can compile and deploy your code. It can meet a variety of front-end development needs with the appropriate parameter. Below is the output from fisp release --help</p>
+<div class="highlight"><pre>  <span class="nb">Usage</span><span class="p">:</span> <span class="nx">release</span> <span class="err">[</span><span class="nx">options</span><span class="cp">]</span>
+
+  Options:
+
+    -h, --help             output usage information
+    -d, --dest <span class="nt">&lt;names&gt;</span>     release output destination
+    -m, --md5 <span class="cp">[</span><span class="nx">level</span><span class="cp">]</span>      md5 release option
+    -D, --domains          add domain name
+    -l, --lint             with lint
+    -t, --test             with unit testing
+    -o, --optimize         with optimizing
+    -p, --pack             with package
+    -w, --watch            monitor the changes of project
+    -L, --live             automatically reload your browser
+    -c, --clean            clean compile cache
+    -r, --root <span class="nt">&lt;path&gt;</span>      set project root
+    -f, --file <span class="nt">&lt;filename&gt;</span>  set fis-conf file
+    -u, --unique           use unique compile caching
+    --verbose              enable verbose output
+</pre></div>
+<p>###fisp server</p>
+
+<p>fisp server command can start a small built-in server which can monitor your file changes. If you run php/smarty on your pc, make sure you have installed <a href="http://java.com/en/">Java version &gt;= 1.6</a> and <a href="http://cn2.php.net/downloads.php">php</a>. After install Java and php, we can start the debug server, after the server starts, it automatically checks the environment, and finally tell you that port it is listening on:</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp server start
+checking java support : version 1.6.0
+checking php-cgi support : version 5.2.11
+starting fis-server on port : 8080
+</pre></div>
+<p>below is the output from fisp server --help</p>
+<div class="highlight"><pre>  <span class="nb">Usage</span><span class="p">:</span> <span class="nx">server</span> <span class="o">&lt;</span><span class="nx">command</span><span class="o">&gt;</span> <span class="err">[</span><span class="nx">options</span><span class="cp">]</span>
+
+  Commands:
+
+    start                  start server
+    stop                   shutdown server
+    restart                restart server
+    info                   output server info
+    open                   open document root directory
+    clean                  clean files in document root
+    install <span class="nt">&lt;name&gt;</span>         install server framework
+    init                   initialize server framework
+
+  Options:
+
+    -h, --help                     output usage information
+    -p, --port <span class="nt">&lt;int&gt;</span>               server listen port
+    --root <span class="nt">&lt;path&gt;</span>                  document root
+    --type <span class="nt">&lt;php</span><span class="err">|</span><span class="na">java</span><span class="err">|</span><span class="na">node</span><span class="nt">&gt;</span>         process language
+    --rewrite <span class="cp">[</span><span class="nx">script</span><span class="cp">]</span>             enable rewrite mode
+    --repos <span class="nt">&lt;url&gt;</span>                  install repository
+    --timeout <span class="nt">&lt;seconds&gt;</span>            start timeout
+    --php_exec <span class="nt">&lt;path&gt;</span>              path to php-cgi executable file
+    --php_exec_args <span class="nt">&lt;args&gt;</span>         php-cgi arguments
+    --php_fcgi_children <span class="nt">&lt;int&gt;</span>      the number of php-cgi processes
+    --php_fcgi_max_requests <span class="nt">&lt;int&gt;</span>  the max number of requests
+    --include <span class="nt">&lt;glob&gt;</span>               clean include filter
+    --exclude <span class="nt">&lt;glob&gt;</span>               clean exclude filter
+</pre></div>
+<p>###lights install</p>
+
+<p>Lights is a front end package management tool which can make it exceedingly simple to find, install and keep packages up-to-date. You can install fis demo, modules and other resources through lights. Below is the output from lights --help</p>
+<div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">lights</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
+
+<span class="n">Commands</span><span class="o">:</span>
+
+      <span class="n">install</span>      <span class="n">install</span> <span class="n">resource</span> <span class="n">from</span> <span class="n">lights</span>
+      <span class="n">search</span>       <span class="n">search</span> <span class="n">resource</span> <span class="n">of</span> <span class="n">lights</span>
+      <span class="n">adduser</span>      <span class="n">add</span> <span class="n">user</span> <span class="n">of</span> <span class="n">lights</span>
+      <span class="n">publish</span>      <span class="n">publish</span> <span class="n">resource</span> <span class="n">to</span> <span class="n">lights</span>
+      <span class="n">unpublish</span>    <span class="n">remove</span> <span class="n">resource</span> <span class="n">to</span> <span class="n">lights</span>
+      <span class="n">owner</span>        <span class="n">change</span> <span class="n">ownership</span> <span class="n">of</span> <span class="n">resource</span>
+      <span class="n">config</span>       <span class="kd">set</span> <span class="n">or</span> <span class="kd">get</span> <span class="n">config</span> <span class="k">if</span> <span class="n">lights</span>
+
+<span class="n">Options</span><span class="o">:</span>
+
+  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>     <span class="n">output</span> <span class="n">usage</span> <span class="n">information</span>
+  <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">output</span> <span class="n">the</span> <span class="n">version</span> <span class="n">number</span>
+</pre></div>
+<p><a href="http://lightjs.duapp.com">View all packages available through Lights&#39;s registry</a>.</p>

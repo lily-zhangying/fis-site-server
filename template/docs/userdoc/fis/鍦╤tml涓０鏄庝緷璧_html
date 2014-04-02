@@ -1,0 +1,47 @@
+<!--
+title: 在html中声明依赖
+toc: 
+-->
+
+<blockquote>
+<p>用户可以在html的注释中声明依赖关系，这些依赖关系最终会被记录到fis编译产出的 <strong>map.json</strong> 文件中。</p>
+</blockquote>
+
+<p>在项目的index.html里使用注释声明依赖关系：</p>
+<div class="highlight"><pre><span class="c">&lt;!--</span>
+<span class="c">    @require demo.js</span>
+<span class="c">    @require &quot;demo.css&quot;</span>
+<span class="c">--&gt;</span>
+</pre></div>
+<p>由于默认情况下，只有js和css文件可以被录入map.json表中，如果想将html文件加入表中，需要添加配置声明html文件为模块化文件，例如：</p>
+<div class="highlight"><pre><span class="c1">//fis-conf.js</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;roadmap.path&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1">//所有的html文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.html&#39;</span><span class="p">,</span>
+        <span class="c1">//都是组件化文件</span>
+        <span class="nx">isMod</span> <span class="o">:</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">]);</span>
+</pre></div>
+<p>执行 fis release --dest ./output --md5 命令对项目进行编译，查看output目录下的map.json文件，则可看到：</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;res&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;demo.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/css/demo_7defa41.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;demo.js&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/js/demo_33c5143.js&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;demo.css&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;index.html&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/index.html&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;demo.js&quot;</span><span class="p">,</span> <span class="s2">&quot;demo.css&quot;</span> <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>

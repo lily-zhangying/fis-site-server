@@ -1,0 +1,170 @@
+<!--
+title: 上传部署
+toc: <ul class="nav"><li><a href="#toc_0">产出目录</a></li><li><a href="#toc_1">上传配置</a><ul class="nav"><li><a href="#toc_2">上传到1个测试机</a></li><li><a href="#toc_3">上传到多个测试机</a></li><li><a href="#toc_4">小贴士</a></li></ul></li><li><a href="#toc_5">上传常见问题</a></li></ul>
+-->
+
+<h2 id="toc_0">产出目录</h2>
+
+<p>FIS 根据目录规范默认设置了文件的产出路径：</p>
+<div class="highlight"><pre>└── config
+│    └── modulename-map.json    静态资源表
+├── template 
+│    ├──home
+│    │   └── page
+│    │         └── index.tpl      page级模板文件
+│    │   └── widget
+│    │         └── section
+│    │           └── section.tpl   widget模板文件
+├── static
+│    └── home
+│    │   ├── pkg
+│    │   │   ├── demo.css  打包css文件
+│    │   │   └── demo.js   打包js文件       
+│    │   ├── index
+│    │   │   ├── index.css  page级css文件
+│    │   │   └── index.js   page级js文件
+│    │   └── widget             widget组件目录
+│    │       └── section
+│    │               └── section.css
+├── plugin
+├── <span class="nb">test</span>
+</pre></div>
+<p>用户根据产出后的目录，只需要将 <strong>config、template、static、plugin</strong> 目录上传至联调机器进行项目联调。</p>
+
+<h2 id="toc_1">上传配置</h2>
+
+<p>用户通过配置 <strong>deploy节点</strong> 进行文件上传，fis支持使用post请求向http服务器发送文件，服务器端可以使用php、java等后端逻辑进行接收，<a href="https://github.com/fis-dev/fis-command-release">fis-command-release</a>插件中提供了一个这样的 <a href="https://github.com/fis-dev/fis-command-release/blob/master/tools/receiver.php">php版示例</a>，用户可以直接部署此文件于接收端服务器上。</p>
+
+<p><code>注意： receiver.php放到测试机后，请在浏览器中直接访问该文件，保证可以访问。<br/>
+可以访问的情况下，页面会显示 I&#39;m ready for that, you know.</code></p>
+
+<p>根据产出目录以及联调机器，进行上传配置：</p>
+
+<h3 id="toc_2">上传到1个测试机</h3>
+<div class="highlight"><pre><span class="c1">//上传到一个 remote测试机</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;deploy&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="c1">//使用fis release --dest static来使用这个配置</span>
+    <span class="nx">remote</span><span class="o">:</span> <span class="p">[{</span>
+        <span class="c1">//如果配置了receiver，fis会把文件逐个post到接收端上</span>
+        <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+        <span class="c1">//从产出的结果的static目录下找文件</span>
+        <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/static&#39;</span><span class="p">,</span>
+        <span class="c1">//上传目录从static下一级开始不包括static目录</span>
+        <span class="nx">subOnly</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span> 
+        <span class="c1">//保存到远端机器的/home/fis/www/static目录下</span>
+        <span class="c1">//这个参数会跟随post请求一起发送</span>
+        <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/&#39;</span><span class="p">,</span>
+        <span class="c1">//某些后缀的文件不进行上传</span>
+        <span class="nx">exclude</span> <span class="o">:</span> <span class="sr">/.*\.(?:svn|cvs|tar|rar|psd).*/</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//如果配置了receiver，fis会把文件逐个post到接收端上</span>
+        <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+        <span class="c1">//从产出的结果的config目录下找文件</span>
+        <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/config&#39;</span><span class="p">,</span>
+        <span class="c1">//保存到远端机器的/home/fis/www/config目录下</span>
+        <span class="c1">//这个参数会跟随post请求一起发送</span>
+        <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/&#39;</span><span class="p">,</span>
+        <span class="c1">//某些后缀的文件不进行上传</span>
+        <span class="nx">exclude</span> <span class="o">:</span> <span class="sr">/.*\.(?:svn|cvs|tar|rar|psd).*/</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//如果配置了receiver，fis会把文件逐个post到接收端上</span>
+        <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+        <span class="c1">//从产出的结果的template目录下找文件</span>
+        <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/config&#39;</span><span class="p">,</span>
+        <span class="c1">//保存到远端机器的/home/fis/www/template目录下</span>
+        <span class="c1">//这个参数会跟随post请求一起发送</span>
+        <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/&#39;</span><span class="p">,</span>
+        <span class="c1">//某些后缀的文件不进行上传</span>
+        <span class="nx">exclude</span> <span class="o">:</span> <span class="sr">/.*\.(?:svn|cvs|tar|rar|psd).*/</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//如果配置了receiver，fis会把文件逐个post到接收端上</span>
+        <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+        <span class="c1">//从产出的结果的plugin目录下找文件</span>
+        <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/plugin&#39;</span><span class="p">,</span>
+        <span class="c1">//保存到远端机器的/home/fis/www/plugin目录下</span>
+        <span class="c1">//这个参数会跟随post请求一起发送</span>
+        <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/&#39;</span><span class="p">,</span>
+        <span class="c1">//某些后缀的文件不进行上传</span>
+        <span class="nx">exclude</span> <span class="o">:</span> <span class="sr">/.*\.(?:svn|cvs|tar|rar|psd).*/</span>
+    <span class="p">}]</span>
+<span class="p">});</span>
+</pre></div>
+<h3 id="toc_3">上传到多个测试机</h3>
+<div class="highlight"><pre><span class="c1">//上传到remote，local，remote2三台机器</span>
+<span class="c1">//fis-conf.js</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;deploy&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="c1">//使用fis release --dest remote来使用这个配置</span>
+    <span class="nx">remote</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="c1">//如果配置了receiver，fis会把文件逐个post到接收端上</span>
+        <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+        <span class="c1">//从产出的结果的static目录下找文件</span>
+        <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/static&#39;</span><span class="p">,</span>
+        <span class="c1">//保存到远端机器的/home/fis/www/static目录下</span>
+        <span class="c1">//这个参数会跟随post请求一起发送</span>
+        <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/&#39;</span><span class="p">,</span>
+        <span class="c1">//通配或正则过滤文件，表示只上传所有的js文件</span>
+        <span class="nx">include</span> <span class="o">:</span> <span class="s1">&#39;**.js&#39;</span><span class="p">,</span>
+        <span class="c1">//widget目录下的那些文件就不要发布了</span>
+        <span class="nx">exclude</span> <span class="o">:</span> <span class="sr">/\/widget\//i</span><span class="p">,</span>
+        <span class="c1">//支持对文件进行字符串替换</span>
+        <span class="nx">replace</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;http://www.online.com&#39;</span><span class="p">,</span>
+            <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;http://www.offline.com&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">//名字随便取的，没有特殊含义</span>
+    <span class="nx">local</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="c1">//from参数省略，表示从发布后的根目录开始上传</span>
+        <span class="c1">//发布到当前项目的上一级的output目录中</span>
+        <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;../output&#39;</span>
+    <span class="p">},</span>
+    <span class="c1">//也可以是一个数组</span>
+    <span class="nx">remote2</span> <span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="c1">//将static目录上传到/home/fis/www/webroot下</span>
+            <span class="c1">//上传文件路径为/home/fis/www/webroot/static/xxxx</span>
+            <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+            <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/static&#39;</span><span class="p">,</span>
+            <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/webroot&#39;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="c1">//将template目录内的文件（不包括template一级）</span>
+            <span class="c1">//上传到/home/fis/www/tpl下</span>
+            <span class="c1">//上传文件路径为/home/fis/www/tpl/xxxx</span>
+            <span class="nx">receiver</span> <span class="o">:</span> <span class="s1">&#39;http://www.example.com/path/to/receiver.php&#39;</span><span class="p">,</span>
+            <span class="c1">//from支持正则</span>
+            <span class="nx">from</span> <span class="o">:</span> <span class="s1">&#39;/template&#39;</span><span class="p">,</span>
+            <span class="nx">to</span> <span class="o">:</span> <span class="s1">&#39;/home/fis/www/tpl&#39;</span><span class="p">,</span>
+            <span class="c1">//subOnly仅上传</span>
+            <span class="nx">subOnly</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">]</span>  
+<span class="p">});</span>
+</pre></div>
+<h3 id="toc_4">小贴士</h3>
+
+<ul>
+<li><p><strong>--dest参数</strong> 支持使用逗号（,）分割多个发布配置，比如上面的例子，我们可以使用fis release --dest <strong>remote,plugin</strong> 命令在一次编译中同时发布多个目标。</p></li>
+<li><p><code>subOnly参数</code><br/>
+默认上传from整个目录到测试机。添加subOnly参数仅上传from目录下文件。</p></li>
+<li><p>replace替换多个字符串<br/>
+需要replace替换多个字符串，可以使用正则的方式。例如：</p></li>
+</ul>
+<div class="highlight"><pre><span class="nx">replace</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="nx">from</span> <span class="o">:</span> <span class="sr">/www\.a\.com|www\.b\.com/</span><span class="p">,</span>
+    <span class="nx">to</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">m</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">m</span> <span class="o">===</span> <span class="s1">&#39;www.a.com&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="s1">&#39;www.x.com&#39;</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">m</span> <span class="o">===</span> <span class="s1">&#39;www.b.com&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="s1">&#39;www.y.com&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<h2 id="toc_5">上传常见问题</h2>
+
+<ol>
+<li><p><code>上传到一半突然中断,怎么办？</code></p>
+
+<p>A: 请关闭测试机的服务器的防火墙，然后重新上传。至于服务器防火墙怎么关闭，不同服务器不一样，所以还是查文档或者google一下吧</p></li>
+</ol>

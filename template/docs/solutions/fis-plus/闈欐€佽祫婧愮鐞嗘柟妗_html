@@ -1,0 +1,419 @@
+<blockquote>
+<p>FIS在执行编译的过程中，会扫描这些编译标记，从而建立一张静态资源关系表，它在编译阶段最后会产出为一份map.json 文件，这份文件详细记录了项目内的静态资源id、发布后的线上路径、资源类型以及依赖关系 和 资源打包等信息。FIS-Plus解决方法，在运行时根据组件使用情况来 按需加载资源或者资源所在的包，从而提升前端页面运行性能。</p>
+</blockquote>
+
+<h3 id="toc_0">组件化拆分你的页面</h3>
+
+<p>首先，我们将页面的每个小部件，当做一个组件，在fis中，我们叫它 <strong>widget</strong> 。接下来，一个页面将会是由多个组件进行组合，同时也会有页面自身需要的资源,对下面photo模块下的index.tpl进行举例说明：</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="nf">html</span> <span class="na">framewrok</span><span class="o">=</span><span class="s2">&quot;photo:static/mod.js&quot;</span><span class="cp">}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{</span><span class="nf">head</span><span class="cp">}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{</span><span class="nf">/head</span><span class="cp">}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{</span><span class="nf">body</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="nf">require</span> <span class="na">name</span><span class="o">=</span><span class="s1">&#39;photo:page/index.tpl&#39;</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="nf">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;photo:widget/A/A.tpl&quot;</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="nf">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;photo:widget/B/B.tpl&quot;</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="nf">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;photo:widget/C/C.tpl&quot;</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="nf">script</span><span class="cp">}</span><span class="x"></span>
+<span class="x">       require.async([&#39;/static/index/index.js&#39;],function()</span><span class="cp">{</span>
+           <span class="na">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s1">&#39;index&#39;</span><span class="o">);</span>
+       <span class="cp">}</span><span class="x">);</span>
+<span class="x">    </span><span class="cp">{</span><span class="nf">script</span><span class="cp">}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{</span><span class="nf">/body</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="nf">/html</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>这个网站的目录结构变成了：</p>
+<div class="highlight"><pre><span class="err">根目录</span>
+<span class="err">├──</span> <span class="n">photo</span> 
+<span class="err">│</span>    <span class="err">├──</span><span class="n">page</span>
+<span class="err">│</span>    <span class="err">│</span>   <span class="err">└──</span> <span class="n">index</span><span class="p">.</span><span class="n">tpl</span>
+<span class="err">│</span>    <span class="err">├──</span><span class="k">static</span>
+<span class="err">│</span>    <span class="err">│</span>   <span class="err">└──</span> <span class="n">index</span>
+<span class="err">│</span>    <span class="err">│</span>         <span class="err">└──</span> <span class="n">index</span><span class="p">.</span><span class="n">js</span>
+<span class="err">│</span>    <span class="err">│</span>         <span class="err">└──</span> <span class="n">index</span><span class="p">.</span><span class="n">css</span>
+    <span class="err">│</span>    <span class="err">│</span>   <span class="err">└──</span> <span class="n">mod</span><span class="p">.</span><span class="n">js</span>
+<span class="err">│</span>    <span class="err">├──</span><span class="n">widget</span>
+<span class="err">│</span>    <span class="err">│</span>   <span class="err">└──</span> <span class="n">A</span>
+<span class="err">│</span>    <span class="err">│</span>       <span class="err">└──</span> <span class="n">A</span><span class="p">.</span><span class="n">tpl</span>
+<span class="err">│</span>    <span class="err">│</span>       <span class="err">└──</span> <span class="n">A</span><span class="p">.</span><span class="n">css</span> 
+<span class="err">│</span>    <span class="err">│</span>   <span class="err">└──</span> <span class="n">B</span>
+<span class="err">│</span>    <span class="err">│</span>       <span class="err">└──</span> <span class="n">B</span><span class="p">.</span><span class="n">tpl</span>
+<span class="err">│</span>    <span class="err">│</span>       <span class="err">└──</span> <span class="n">B</span><span class="p">.</span><span class="n">css</span>
+<span class="err">│</span>    <span class="err">│</span>   <span class="err">└──</span> <span class="n">C</span>
+<span class="err">│</span>    <span class="err">│</span>       <span class="err">└──</span> <span class="n">C</span><span class="p">.</span><span class="n">tpl</span>
+<span class="err">│</span>    <span class="err">│</span>       <span class="err">└──</span> <span class="n">C</span><span class="p">.</span><span class="n">css</span>
+</pre></div>
+<h3 id="toc_1">让fis帮你产出静态资源表</h3>
+
+<p>大家还记得fis会产出的那个 <a href="https://github.com/fis-dev/fis/wiki/%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86#----1">map.json</a> 么？使用fis，加入适当的配置，对这个项目进行编译会得到一个 map.json的文件，它的内容是：</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;res&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;photo:page/index.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/template/photo/page/index.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;extras&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;isPage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="nt">&quot;async&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;photo:static/index/index.js&quot;</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:static/index/index.js&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/static/photo/index/index_5deaf23.js&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;js&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/A/A.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;photo/widget/A/A.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;photo:widget/A/A.css&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/A/A.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/photo/widget/A/A_7defa41.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/B/B.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;photo/widget/B/B.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;photo:widget/B/B.css&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/B/B.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/photo/widget/B/B_34derfb.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/C/C.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;photo/widget/C/C.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;photo:widget/C/C.css&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/C/C.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/photo/widget/C/C_23a1wfe.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>到这里或许你已经猜到我们的 <strong>{widget name=&quot;resource_id&quot;}</strong> 是如何工作的了：</p>
+
+<h3 id="toc_2">静态资源管理系统</h3>
+
+<ol>
+<li>准备三个数据结构：
+
+<ul>
+<li>uris = []，数组，顺序存放要同步输出资源的uri</li>
+<li>asyncUris = {}，异步资源表，顺序存放要异步输出的资源的信息</li>
+<li>has = {}，hash表，存放已收集的静态资源，防止重复加载</li>
+</ul></li>
+<li>加载资源表 <strong>photo-map.json</strong></li>
+<li>执行 <strong>{html framework=&quot;photo:static/mod.js&quot;}</strong>
+
+<ol>
+<li>设置前端框架的JS文件，优先在全部静态资源之前加载</li>
+</ol></li>
+<li>执行 <strong>{require name=&quot;photo:static/index/index.tpl&quot;}</strong> 
+
+<ol>
+<li>在表中查找id为 <strong>photo:static/index/index.tpl</strong> 的资源，查看 <strong>photo:static/index/index.tpl</strong> 资源的extras属性中的 <strong>async</strong> ，发现它依赖资源 <strong>photo:static/index/index.js</strong> </li>
+<li>在表中查找id为 <strong>photo:static/index/index.js</strong> 的资源，将信息存入 <strong>asyncUris</strong> 数组中，并在 <strong>has表 **里标记已加载 **photo:static/index/index.tpl</strong> 资源,我们得到：
+<code>javascript
+uris = [];
+asyncUris = {
+    &#39;photo:static/index/index.js&#39; : {
+         &#39;url&#39; : &#39;_/static/photo/index/index_5deaf23.js_&#39;,
+         &#39;pkg&#39; : &#39;&#39;,
+         &#39;deps&#39; ： []
+     }
+};
+has = {
+    &#39;photo:static/index/index.tpl&#39; : true
+};
+</code></li>
+</ol></li>
+<li>执行 {widget name=&quot;photo:widget/A/A.tpl&quot;}
+
+<ol>
+<li>在表中查找id为 <strong>photo:widget/A/A.tpl</strong> 的资源，取得它的资源路径 <em>photo/widget/A/A.tpl</em> ，记为 <strong>tpl_path</strong></li>
+<li>模板引擎加载并渲染 tpl_path 所指向的模板文件，即 photo/widget/A/A.tpl，并输出它的html内容</li>
+<li>查看 photo/widget/A/A.tpl 资源的 <strong>deps</strong> 属性，发现它依赖资源 <strong>photo:widget/A/A.css</strong></li>
+<li>在表中查找id为 photo:widget/A/A.css 的资源，取得它的资源路径为 _/static/photo/widget/A/A_7defa41.css_，存入 <strong>uris数组</strong> 中，并在 <strong>has表</strong> 里标记已加载 photo:widget/A/A.css 资源，我们得到：
+<code>javascript
+uris = [
+&#39;/static/photo/widget/A/A_7defa41.css&#39;
+];
+asyncUris = {
+&#39;photo:static/index/index.js&#39; : {
+     &#39;url&#39; : &#39;/static/photo/index/index_5deaf23.js&#39;,
+     &#39;pkg&#39; : &#39;&#39;,
+     &#39;deps&#39; ： []
+ }
+};
+has = {
+&#39;photo:static/index/index.tpl&#39; : true
+&#39;photo:widget/A/A.css&#39; : true
+};
+</code></li>
+</ol></li>
+<li>执行 {widget name=&quot;B&quot;}，步骤与上述步骤3相同，我们得到：
+<code>javascript
+uris = [
+    &#39;/static/photo/widget/A/A_7defa41.css&#39;,
+    &#39;/static/photo/widget/B/B_34derfb.css&#39;
+];
+asyncUris = {
+    &#39;photo:static/index/index.js&#39; : {
+         &#39;url&#39; : &#39;/static/photo/index/index_5deaf23.js&#39;,
+         &#39;pkg&#39; : &#39;&#39;,
+         &#39;deps&#39; ： []
+     }
+};
+has = {
+    &#39;photo:static/index/index.js&#39; : true,
+    &#39;photo:widget/A/A.css&#39; : true,
+    &#39;photo:widget/B/B.css&#39; : true
+};
+</code></li>
+<li>执行 {widget name=&quot;C&quot;}，步骤与上述步骤3相同，我们得到：
+<code>javascript
+uris = [
+    &#39;/static/photo/widget/A/A_7defa41.css&#39;,
+    &#39;/static/photo/widget/B/B_34derfb.css&#39;,
+    &#39;/static/photo/widget/C/C_23a1wfe.css&#39;
+];
+asyncUris = {
+    &#39;photo:static/index/index.js&#39; : {
+         &#39;url&#39; : &#39;/static/photo/index/index_5deaf23.js&#39;,
+         &#39;pkg&#39; : &#39;&#39;,
+         &#39;deps&#39; ： []
+     }
+};
+has = {
+    &#39;photo:static/index/index.js&#39; : true,
+    &#39;photo:widget/A/A.css&#39; : true,
+    &#39;photo:widget/B/B.css&#39; : true,
+    &#39;photo:widget/C/C.css&#39; : true
+};
+</code></li>
+<li>在要输出的html前面，我们读取 <strong>uris数组</strong> 和 <strong>asyncUris</strong>的数据，生成静态资源外链，我们得到最终的html结果：
+<code>html
+&lt;html&gt;
+&lt;head&gt;
+ &lt;link href=&quot;/static/photo/widget/A/A_7defa41.css&quot;&gt;
+ &lt;link href=&quot;/static/photo/widget/B/B_34derfb.css&quot;&gt;
+ &lt;link href=&quot;/static/photo/widget/C/C_23a1wfe.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+ &lt;div&gt;html of A&lt;/div&gt;
+ &lt;div&gt;html of B&lt;/div&gt;
+ &lt;div&gt;html of C&lt;/div&gt;
+ &lt;script type=&quot;text/javascript&quot; src=&quot;/static/common/mod_d2a34f2.js&quot;&gt;&lt;/script&gt;
+ &lt;script type=&quot;text/javascript&quot;&gt;
+   require.async([&#39;/static/index/index.js&#39;],function(){
+       console.log(&#39;index&#39;);
+   });
+ &lt;/script&gt; 
+ &lt;script type=&quot;text/javascript&quot;&gt;
+  require.resourceMap({
+     &quot;res&quot;:{        
+           &quot;photo:static/index/index.js&quot;: {
+                &quot;url&quot;: &quot;/static/photo/index/index_5deaf23.js&quot;,
+                &quot;pkg&quot;: &quot;&quot;,
+                &quot;deps&quot;: []
+           }
+     }
+  });
+ &lt;/script&gt; 
+&lt;/body&gt;
+&lt;/html&gt;
+</code></li>
+</ol>
+
+<p>看到了么！！！我们不但可以让资源按需加载，同时根据静态资源的类型在页面的不同位置进行加载，还能全部映射到正确的md5戳哦，这全依赖fis的表生成技术！那么，基于这项技术，我们是如何处理打包的呢：</p>
+
+<h3 id="toc_3">打包——资源的备份读取</h3>
+
+<p>现在，我们再来使用fis的 <a href="https://github.com/fis-dev/fis/wiki/%E9%85%8D%E7%BD%AEAPI#pack">pack配置项</a>，对网站的静态资源进行打包，配置文件大致为：<br/>
+<code>javascript<br/>
+fis.config.set(&#39;pack&#39;, {<br/>
+    &#39;pkg/aio.css&#39; : &#39;**.css&#39;   <br/>
+});<br/>
+</code><br/>
+执行fis的编译命令并使用 <strong>pack、md5</strong> 等功能：</p>
+<div class="highlight"><pre><span class="n">fis</span> <span class="n">release</span> <span class="o">--</span><span class="n">pack</span> <span class="o">--</span><span class="n">md5</span>
+</pre></div>
+<p>再来查看我们的 map.json, 它的内容变为：</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;res&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;photo:page/index.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/template/photo/page/index.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;extras&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;isPage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="nt">&quot;async&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;photo:static/index/index.js&quot;</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:static/index/index.js&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/static/photo/index/index_5deaf23.js&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;js&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/A/A.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;photo/widget/A/A.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;photo:widget/A/A.css&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/A/A.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/photo/widget/A/A_7defa41.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="s2">&quot;p0&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/B/B.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;photo/widget/B/B.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;photo:widget/B/B.css&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/B/B.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/photo/widget/B/B_34derfb.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="s2">&quot;p0&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/C/C.tpl&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;photo/widget/C/C.tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;tpl&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;photo:widget/C/C.css&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;photo:widget/C/C.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/photo/widget/C/C_23a1wfe.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="s2">&quot;p0&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;p0&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/pkg/aio_0cb4a19.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;has&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;photo:widget/A/A.css&quot;</span><span class="p">,</span> <span class="s2">&quot;photo:widget/B/B.css&quot;</span><span class="p">,</span> <span class="s2">&quot;photo:widget/C/C.css&quot;</span> <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>大家注意到了么，表里多了一张 <strong>pkg</strong> 表，所有被打包的资源会有一个 <strong>pkg属性</strong> 指向该表中的资源，而这个资源，正是我们配置的打包策略。好，让我们看看这种情况下，我们的 <strong>{widget name=&quot;resource_id&quot;}</strong>是怎么工作的吧（ <strong>注意，这个过程工程师的代码从未改动过哦</strong> ）：</p>
+
+<ol>
+<li>准备三个数据结构：
+
+<ul>
+<li>uris = []，数组，顺序存放要同步输出资源的uri</li>
+<li>asyncUris = {}，异步资源表，顺序存放要异步输出的资源的信息</li>
+<li>has = {}，hash表，存放已收集的静态资源，防止重复加载</li>
+</ul></li>
+<li>加载资源表 <strong>photo-map.json</strong></li>
+<li>执行 <strong>{html framework=&quot;photo:static/mod.js&quot;}</strong>
+
+<ol>
+<li>设置前端框架的JS文件，优先在全部静态资源之前加载</li>
+</ol></li>
+<li>执行 <strong>{require name=&quot;photo:static/index/index.tpl&quot;}</strong> 
+
+<ol>
+<li>在表中查找id为 <strong>photo:static/index/index.tpl</strong> 的资源，查看 <strong>photo:static/index/index.tpl</strong> 资源的extras属性中的 <strong>async</strong> ，发现它依赖资源 <strong>photo:static/index/index.js</strong> </li>
+<li>在表中查找id为 <strong>photo:static/index/index.js</strong> 的资源，将信息存入 <strong>asyncUris</strong> 数组中，并在 <strong>has表 **里标记已加载 **photo:static/index/index.tpl</strong> 资源,我们得到：
+<code>javascript
+uris = [];
+asyncUris = {
+    &#39;photo:static/index/index.js&#39; : {
+         &#39;url&#39; : &#39;/static/photo/index/index_5deaf23.js&#39;,
+         &#39;pkg&#39; : &#39;&#39;,
+         &#39;deps&#39; ： []
+     }
+};
+has = {
+    &#39;photo:static/index/index.tpl&#39; : true
+};
+</code></li>
+</ol></li>
+<li>执行 {widget name=&quot;photo:widget/A/A.tpl&quot;}
+
+<ol>
+<li>在表中查找id为 <strong>photo:widget/A/A.tpl</strong> 的资源，取得它的资源路径 <em>photo/widget/A/A.tpl_，记为 **tpl</em>path**</li>
+<li>模板引擎加载并渲染 tpl_path 所指向的模板文件，即 photo/widget/A/A.tpl，并输出它的html内容</li>
+<li>查看 photo:widget/A/A.tpl 资源的 <strong>deps</strong> 属性，发现它依赖资源 <strong>photo:widget/A/A.css</strong></li>
+<li>在表中查找id为 photo:widget/A/A.css 的资源，我们发现该资源有 <strong>pkg属性</strong>，表明它被 <strong>备份</strong> 在了一个打包文件中。</li>
+<li>我们使用它的pkg属性值 <strong>p0</strong> 作为key，在pkg表里读取信息，取的这个包的资源路径为 <em>/static/pkg/aio_0cb4a19.css</em> 存入 <strong>uris数组</strong> 中</li>
+<li>将p0包的 <strong>has</strong> 属性所声明的资源加入到 <strong>has表</strong> 里我们得到：
+<code>javascript
+uris = [
+    &#39;/static/pkg/aio_0cb4a19.css&#39;
+];
+asyncUris = {
+    &#39;photo:static/index/index.js&#39; : {
+         &#39;url&#39; : &#39;/static/photo/index/index_5deaf23.js&#39;,
+         &#39;pkg&#39; : &#39;&#39;,
+         &#39;deps&#39; ： []
+     }
+};
+has = {
+    &#39;photo:static/index/index.js&#39; : true,
+    &#39;photo:widget/A/A.css&#39; : true,
+    &#39;photo:widget/B/B.css&#39; : true,
+    &#39;photo:widget/C/C.css&#39; : true
+};
+</code></li>
+</ol></li>
+<li>执行 {widget name=&quot;photo:widget/B/B.tpl&quot;}，步骤与上述步骤3相同，但当我们要加载B/B.tpl的资源B/B.css时，发现它已经被has表标记为 <strong>已收集</strong>，因此跳过资源收集过程</li>
+<li>执行 {widget name=&quot;photo:widget/C/C.tpl&quot;}，结果与步骤4相同</li>
+<li>在要输出的html前面，我们读取 <strong>uris数组</strong> 的数据，生成静态资源外链，我们得到最终的html结果：
+<code>html
+&lt;html&gt;
+&lt;head&gt;
+ &lt;link href=&quot;/static/pkg/aio_0cb4a19.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+ &lt;div&gt;html of A&lt;/div&gt;
+ &lt;div&gt;html of B&lt;/div&gt;
+ &lt;div&gt;html of C&lt;/div&gt;
+ &lt;script type=&quot;text/javascript&quot; src=&quot;/static/common/mod.js&quot;&gt;&lt;/script&gt;
+  require.resourceMap({
+     &quot;res&quot;:{        
+           &quot;photo:static/index/index.js&quot;: {
+                &quot;url&quot;: &quot;/static/photo/index/index_5deaf23.js&quot;,
+                &quot;pkg&quot;: &quot;&quot;,
+                &quot;deps&quot;: []
+           }
+     }
+  });
+&lt;/body&gt;
+&lt;/html&gt;
+</code></li>
+</ol>
+
+<p><strong>出现打包了有木有啊！！！</strong></p>
+
+<h3 id="toc_4">这样做的好处</h3>
+
+<blockquote>
+<p>抱歉，这货好处实在太多了。</p>
+</blockquote>
+
+<ul>
+<li>我们可以统计 {widget} 插件的调用情况，然后自动生成最优的打包配置，让网站可以 <strong>自适应优化</strong></li>
+<li>工程师不用关心资源在哪，怎么来的，怎么没的，所有 <a href="https://github.com/fis-dev/fis/wiki/%E4%B8%89%E7%A7%8D%E8%AF%AD%E8%A8%80%E8%83%BD%E5%8A%9B">资源定位</a> 的事情，都交给fis好了。解决了前面说的 <strong>功能下线不敢删除相应资源</strong> 的问题</li>
+<li>静态资源路径都带md5戳，这个值只跟内容有关，静态资源服务器从此可以放心开启强缓存了！还能实现静态资源的分级发布，回滚神马的超方便哦！</li>
+<li>我们给 {widget name=&quot;resource_id&quot;} 加一个小小的“后门”，我们可以利用cookie、url中的get参数来控制瞬间切换线上的页面输出结果为打包或者不打包、甚至是压缩或者不压缩的资源， <strong>方便定位线上问题</strong> 有木有！</li>
+<li>我们再给 {widget name=&quot;resource_id&quot;} 加一个小小的“后门”，让它可以读取一个 domains.conf 配置文件，内容形如：
+<code>ini
+default=http://static.example.com
+debug=http://localhost:8080
+</code>
+然后我们约定一个cookie或者url值，可以一键 <strong>把线上资源映射到本地</strong> 有木有！！！方便调试啊，魂淡！</li>
+<li>我们还可以继续折腾，比如根据国际化、皮肤，终端等信息约定一种资源路径规范，当后端适配到特定地区、特定机型的访问时，静态资源管理系统帮你 <strong>送达不同的资源给不同的用户</strong> 啊，有木有！</li>
+<li>更多好处，等你来挖掘，请鞭挞我吧，公瑾！</li>
+</ul>

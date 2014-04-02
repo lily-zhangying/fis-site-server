@@ -1,0 +1,126 @@
+<!--
+title: 在html中定位资源
+toc: 
+-->
+
+<blockquote>
+<p>fis支持对html中的script、link、style、video、audio、embed等标签的src或href属性进行分析，一旦这些标签的资源定位属性可以命中已存在文件，则把命中文件的url路径替换到属性中，同时可保留原来url中的query查询信息。</p>
+</blockquote>
+
+<p>例如：<br/>
+```html<br/>
+&lt;!--源码：<br/>
+<img title="百度logo" src="images/logo.gif"/><br/>
+编译后--&gt;<br/>
+<img title="百度logo" src="/images/logo_74e5229.gif"/></p>
+
+<!--源码：
+<link rel="stylesheet" type="text/css" href="demo.css">
+编译后-->
+
+<p><link rel="stylesheet" type="text/css" href="/demo_7defa41.css"></p>
+
+<!--源码：
+<script type="text/javascript" src="demo.js"></script>
+编译后-->
+
+<script type="text/javascript" src="/demo_33c5143.js"></script>
+<div class="highlight"><pre><span class="err">值得注意的是，</span> <span class="o">**</span><span class="err">资源定位结果可以被</span><span class="n">fis</span><span class="err">的配置文件控制</span><span class="o">**</span><span class="err">，比如添加配置，调整文件发布路径：</span>
+
+<span class="o">!</span><span class="p">[</span><span class="err">资源定位工作原理</span><span class="p">](</span><span class="n">http</span><span class="o">:</span><span class="c1">//fis.baidu.com/static/docs/img/uri_0f02e83.png)</span>
+
+<span class="err">```</span><span class="n">javascript</span>
+<span class="n">fis</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="n">merge</span><span class="p">({</span>
+    <span class="n">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="n">path</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的js文件</span>
+                <span class="n">reg</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">**</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/js/xxx目录下</span>
+                <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">js</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的css文件</span>
+                <span class="n">reg</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">**</span><span class="p">.</span><span class="n">css</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/css/xxx目录下</span>
+                <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">css</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有image目录下的.png，.gif文件</span>
+                <span class="n">reg</span> <span class="o">:</span> <span class="o">/^</span><span class="err">\</span><span class="o">/</span><span class="n">images</span><span class="err">\</span><span class="o">/</span><span class="p">(.</span><span class="o">*</span><span class="err">\</span><span class="p">.(</span><span class="o">?:</span><span class="n">png</span><span class="o">|</span><span class="n">gif</span><span class="p">))</span><span class="o">/</span><span class="n">i</span><span class="p">,</span>
+                <span class="c1">//发布到/static/pic/xxx目录下</span>
+                <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">pic</span><span class="o">/</span><span class="err">$</span><span class="mi">1</span><span class="err">&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+<p>再次编译得到：<br/>
+```html<br/>
+&lt;!--源码：<br/>
+<img title="百度logo" src="images/logo.gif"/><br/>
+编译后--&gt;<br/>
+<img title="百度logo" src="/static/pic/logo_74e5229.gif"/></p>
+
+<!--源码：
+<link rel="stylesheet" type="text/css" href="demo.css">
+编译后-->
+
+<p><link rel="stylesheet" type="text/css" href="/static/css/demo_7defa41.css"></p>
+
+<!--源码：
+<script type="text/javascript" src="demo.js"></script>
+编译后-->
+
+<script type="text/javascript" src="/static/js/demo_33c5143.js"></script>
+<div class="highlight"><pre><span class="err">我们甚至可以让</span> <span class="o">**</span><span class="n">url</span><span class="err">和发布目录不一致</span><span class="o">**</span><span class="err">。比如：</span>
+<span class="err">```</span><span class="n">javascript</span>
+<span class="n">fis</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="n">merge</span><span class="p">({</span>
+    <span class="n">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="n">path</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的js文件</span>
+                <span class="n">reg</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">**</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/js/xxx目录下</span>
+                <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">js</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//访问url是/mm/static/js/xxx</span>
+                <span class="n">url</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">js</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的css文件</span>
+                <span class="n">reg</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">**</span><span class="p">.</span><span class="n">css</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/css/xxx目录下</span>
+                <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">css</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//访问url是/pp/static/css/xxx</span>
+                <span class="n">url</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">pp</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">css</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有image目录下的.png，.gif文件</span>
+                <span class="n">reg</span> <span class="o">:</span> <span class="o">/^</span><span class="err">\</span><span class="o">/</span><span class="n">images</span><span class="err">\</span><span class="o">/</span><span class="p">(.</span><span class="o">*</span><span class="err">\</span><span class="p">.(</span><span class="o">?:</span><span class="n">png</span><span class="o">|</span><span class="n">gif</span><span class="p">))</span><span class="o">/</span><span class="n">i</span><span class="p">,</span>
+                <span class="c1">//发布到/static/pic/xxx目录下</span>
+                <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">pic</span><span class="o">/</span><span class="err">$</span><span class="mi">1</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="c1">//访问url是/oo/static/baidu/xxx</span>
+                <span class="n">url</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">oo</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">baidu</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+<p>再次编译得到：<br/>
+```html<br/>
+&lt;!--源码：<br/>
+<img title="百度logo" src="images/logo.gif"/><br/>
+编译后--&gt;<br/>
+<img title="百度logo" src="/oo/static/baidu/logo_74e5229.gif"/></p>
+
+<!--源码：
+<link rel="stylesheet" type="text/css" href="demo.css">
+编译后-->
+
+<p><link rel="stylesheet" type="text/css" href="/pp/static/css/demo_7defa41.css"></p>
+
+<!--源码：
+<script type="text/javascript" src="demo.js"></script>
+编译后-->
+
+<script type="text/javascript" src="/mm/static/js/demo_33c5143.js"></script>

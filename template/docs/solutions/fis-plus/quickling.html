@@ -1,0 +1,286 @@
+<!--
+title: Quickling解决方案
+toc: <ul class="nav"><li><a href="#toc_0">介绍</a></li><li><a href="#toc_1">使用</a><ul class="nav"><li><a href="#toc_2">使用示例程序</a></li></ul></li><li><a href="#toc_3">使用文档</a><ul class="nav"><li><a href="#toc_4">lazyrender</a></li><li><a href="#toc_5">局部刷新</a><ul class="nav"><li><a href="#toc_6">page.js</a><ul class="nav"><li><a href="#toc_7">appPage.start()</a></li><li><a href="#toc_8">appPage.redirect()</a></li></ul></li></ul></li><li><a href="#toc_9">渲染模式</a></li></ul></li></ul>
+-->
+
+<h3 id="toc_0">介绍</h3>
+
+<p>Quickling解决方案，包括两部分</p>
+
+<ul>
+<li>分片延迟渲染(LazyRender)</li>
+<li>局部刷新</li>
+</ul>
+
+<hr/>
+
+<p><strong>分片延迟加载</strong> 一个页面可以分成多次请求进行渲染，减少首屏渲染时间。</p>
+
+<p><strong>局部刷新</strong> 后端渲染方式下实现前端局新效果，实现一站式的体验效果。提升静态资源缓存命中率。</p>
+
+<h3 id="toc_1">使用</h3>
+
+<p>lazyrender示例程序在 <code>lazyrender</code> 目录</p>
+
+<p>局部刷新 示例程序在 <code>single</code> 目录</p>
+
+<h4 id="toc_2">使用示例程序</h4>
+
+<p>第一步，需要安装<a href="https://github.com/xiangshouding/bigpipe.smarty" title="BigPipe.smarty">fis-plus</a></p>
+
+<blockquote>
+<p>$ npm install -g fis-plus</p>
+</blockquote>
+
+<p>第二步，下载示例代码</p>
+
+<p>linux or Unix:</p>
+
+<p><code>$ wget /solutions/fis-plus/solution/quickling.zip</code></p>
+
+<p>windows:</p>
+
+<p><a href="/static/quickling.zip">下载</a></p>
+
+<p>局部刷新</p>
+
+<blockquote>
+<p>$ cd single</p>
+</blockquote>
+
+<p>LazyRender</p>
+
+<blockquote>
+<p>$ cd lazyrender</p>
+</blockquote>
+
+<p>第三步，使用安装的<a href="https://github.com/xiangshouding/bigpipe.smarty" title="BigPipe.smarty">fis-plus</a>编译发布项目</p>
+
+<p>局部刷新</p>
+
+<blockquote>
+<p>$ fisp release -cmpr common</p>
+
+<p>$ fisp release -cmpr index</p>
+</blockquote>
+
+<p>LazyRender</p>
+
+<blockquote>
+<p>$ fisp release -cmp</p>
+</blockquote>
+
+<p>第四步，启动开发服务器</p>
+
+<blockquote>
+<p>$ fisp server start</p>
+</blockquote>
+
+<p>第五步，安装本地测试框架</p>
+
+<blockquote>
+<p>$ fisp server install pc</p>
+</blockquote>
+
+<p>第六步，打开浏览器访问</p>
+
+<p>局部刷新: <a href="">http://127.0.0.1:8080/index/page/index</a></p>
+
+<p>LazyRender: <a href="">http://127.0.0.1:8080/pagelet/page/index</a></p>
+
+<h3 id="toc_3">使用文档</h3>
+
+<p>ok，到现在都看到了一个比较简单的例子，当然看着这个例子，估计有可能也不知道怎么用。通过下面的内容，<br/>
+来阐述具体使用。</p>
+
+<hr/>
+
+<h4 id="toc_4"><strong>lazyrender</strong></h4>
+
+<p>首先，你得拥有一个FIS-PLUS的项目；可以下载我提供的demo。</p>
+
+<p>其次，你得使用<a href="https://github.com/xiangshouding/fis-smarty-bigpipe-plugin" title="quickling plugin">Quickling解决方案的插件</a>，引入<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/BigPipe.js" title="loader">前端loader</a>，<a href="https://github.com/zjcqoo/mod" title="modjs">modjs</a>保持最新，<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/BigPipe.js" title="loader">前端loader</a>依赖<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/lazyload.js" title="lazyload.js">lazyload.js</a></p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;pagelet:static/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;pagelet:static/lazyload.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="err">&quot;</span><span class="na">pagelet</span><span class="o">:</span><span class="na">static</span><span class="o">/</span><span class="na">BigPipe</span><span class="o">.</span><span class="na">js</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>最后，发布这个项目；访问对应URL查看页面。</p>
+
+<p>现在看一下<code>asyncrender/page/index.tpl</code></p>
+
+<p>有些widget添加了属性<code>pagelet_id</code> 和 <code>mode</code></p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;pagelet:widget/box/box.tpl&quot;</span> <span class="na">pagelet_id</span><span class="o">=</span><span class="s2">&quot;second&quot;</span> <span class="na">mode</span><span class="o">=</span><span class="s2">&quot;quickling&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<ul>
+<li>pagelet_id 给这个widget取了个名字，这个名字用来异步请求这个widget时使用</li>
+<li>mode 这个参数的值只有一个<code>quickling</code>，表明当前这个widget要进行延迟异步渲染</li>
+</ul>
+
+<p>OK，已经指明widget延迟渲染了，那么这样是不是就可以work了。NO，因为我们没有**触发**异步请求渲染页面。</p>
+
+<p>来看一下加了pagelet_id, mode属性后的widget输出源码长啥样？</p>
+<div class="highlight"><pre><span class="nt">&lt;textarea</span> <span class="na">class=</span><span class="s">&quot;g_fis_bigrender&quot;</span> <span class="na">style=</span><span class="s">&quot;display:none;&quot;</span><span class="nt">&gt;</span>BigPipe.asyncLoad({id: &quot;second&quot;});<span class="nt">&lt;/textarea&gt;&lt;div</span> <span class="na">id=</span><span class="s">&quot;second&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+<p>原来widget位置被上面的代码占据了。了解过bigrender的同学一眼就看出这是干什么的了。</p>
+
+<p><code>class=&quot;g_fis_bigrender&quot;</code>的<code>textarea</code>里面包含的是触发异步请求的接口。你只需要<br/>
+取出里面的内容触发即可。可以根据滚动事件，或者是其他什么条件来控制触发异步请求渲染。</p>
+<div class="highlight"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">elms</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;g_fis_bigrender&#39;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">elms</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">window</span><span class="p">[</span><span class="s1">&#39;eval&#39;</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">[</span><span class="s1">&#39;eval&#39;</span><span class="p">](</span><span class="nx">elms</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">innerHTML</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+<p>demo中就简单粗暴的执行了它。执行完成后，会发起一个异步请求</p>
+<div class="highlight"><pre><span class="nl">http:</span><span class="c1">//127.0.0.1:8080/pagelet/page/index?pagelets[]=second&amp;t=858607</span>
+</pre></div>
+<p>表示请求的是一个<code>pagelet_id = &#39;second&#39;</code>的widget。</p>
+
+<p>pagelets是个数组，可以一次请求多个widget。</p>
+
+<p>到这里，你应该知道怎么用及整个执行过程了。恭喜，你又知道了一个延迟加载的方法。想快速<br/>
+使用这个方案，那就用FIS改造你的项目吧。</p>
+
+<p>上面提到一次请求多个widget，那该如何处理呢。FIS提供了组(<code>group</code>)的概念</p>
+
+<p>只需要添加group属性即可；</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;a.tpl&quot;</span> <span class="na">mode</span><span class="o">=</span><span class="s2">&quot;quickling&quot;</span> <span class="na">pagelet_id</span><span class="o">=</span><span class="s2">&quot;a&quot;</span> <span class="na">group</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;b.tpl&quot;</span> <span class="na">mode</span><span class="o">=</span><span class="s2">&quot;quickling&quot;</span> <span class="na">pagelet_id</span><span class="o">=</span><span class="s2">&quot;b&quot;</span> <span class="na">group</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;a1.tpl&quot;</span> <span class="na">mode</span><span class="o">=</span><span class="s2">&quot;quickling&quot;</span> <span class="na">pagelet_id</span><span class="o">=</span><span class="s2">&quot;a1&quot;</span> <span class="na">group</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>在渲染时a + a1会发起一个请求，b发起一个请求。</p>
+
+<p>添加group以后输出的源码是什么样子的？</p>
+<div class="highlight"><pre><span class="nt">&lt;textarea</span> <span class="na">class=</span><span class="s">&quot;g_fis_bigrender g_fis_bigrender_A&quot;</span> <span class="na">style=</span><span class="s">&quot;display: none&quot;</span><span class="nt">&gt;</span>BigPipe.asyncLoad([{id: &quot;second&quot;},{id:&quot;third&quot;}])<span class="nt">&lt;/textarea&gt;&lt;div</span> <span class="na">id=</span><span class="s">&quot;second&quot;</span><span class="nt">&gt;&lt;/div&gt;&lt;div</span> <span class="na">id=</span><span class="s">&quot;third&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+<p>追加了class <code>g_fis_bigrender_A</code>，为了更好的适应不同用户需求。</p>
+
+<p>看看发起的请求；</p>
+<div class="highlight"><pre><span class="nl">http:</span><span class="c1">//127.0.0.1:8080/pagelet/page/index?pagelets[]=third&amp;pagelets[]=second&amp;force_mode=1&amp;t=915745</span>
+</pre></div>
+<hr/>
+
+<h4 id="toc_5"><strong>局部刷新</strong></h4>
+
+<p>首先，你得拥有一个FIS-PLUS的项目；可以下载我提供的demo。</p>
+
+<p>其次，你得使用<a href="https://github.com/xiangshouding/fis-smarty-bigpipe-plugin" title="quickling plugin">Quickling解决方案的插件</a>，引入<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/single/common/static/lib/js/BigPipe.js" title="loader">前端loader</a> （跟上面提到有所不同，这个相对于大一些），<a href="https://github.com/zjcqoo/mod" title="modjs">modjs</a>保持最新，<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/BigPipe.js" title="loader">前端loader</a>依赖<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/lazyrender/static/lazyload.js" title="lazyload.js">lazyload.js</a></p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/mod.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/lazyload.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:static/lib/js/BigPipe.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        ...</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>最后，发布这个项目；访问对应URL查看页面。如果你使用的是demo[single]，那么现在就可以看到效果了。如果是你自己的项目，你会发现啥反应也没有。</p>
+
+<p><code>局部刷新</code> 中FIS提供了一个可被异步请求的<code>后端框架</code>(以<a href="https://github.com/xiangshouding/bigpipe.smarty" title="BigPipe.smarty">smarty插件</a>的方式)；<br/>
+<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/single/common/static/lib/js/BigPipe.js" title="loader">前端loader</a>。</p>
+
+<p>前端loader提供接口<code>fetch</code>方法，来异步请求渲染一个widget。</p>
+<div class="highlight"><pre><span class="nx">BigPipe</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">containerId</span><span class="p">);</span>
+</pre></div>
+<p>例子</p>
+<div class="highlight"><pre><span class="nx">BigPipe</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/index/page/index?pagelets[]=&quot;pager&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;pager&#39;</span><span class="p">);</span>
+</pre></div>
+<p>表示请求<code>paglet_id=&quot;pager&quot;</code>的widget，并把它渲染到页面的<code>&lt;div id=&quot;pager&quot;&gt;&lt;/div&gt;</code><br/>
+内。</p>
+
+<p>So，这个接口提供了异步请求渲染一个widget的能力。这样就可以实现局刷了。</p>
+
+<p>但但但是，这个似乎用着实在太不顺手了。在前端需要考虑很多。</p>
+
+<p>OK，跟<a href="https://github.com/doith">@donny</a> 同学合作写的页面管理的前端库<a href="https://github.com/xiangshouding/bigpipe.smarty/blob/master/single/common/static/lib/js/spljs/page.js">page.js</a></p>
+
+<h5 id="toc_6"><strong>page.js</strong></h5>
+
+<ul>
+<li>事件代理，代理需要局刷的URL, 绑定异步接口;</li>
+<li>前进后退控制， 使用pushState</li>
+</ul>
+
+<p>提供接口</p>
+
+<h6 id="toc_7">appPage.start()</h6>
+<div class="highlight"><pre><span class="nx">appPage</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span>
+    <span class="nx">containerId</span><span class="o">:</span> <span class="s1">&#39;pager&#39;</span><span class="p">,</span>   <span class="c1">//pagelets渲染容器</span>
+    <span class="nx">pagelets</span><span class="o">:</span> <span class="s1">&#39;pager&#39;</span><span class="p">,</span>      <span class="c1">//请求的pagelet</span>
+    <span class="nx">validateUrl</span><span class="o">:</span> <span class="sr">/.*/i</span><span class="p">,</span>     <span class="c1">//符合这个规则的链接或者带data-href属性的元素进行事件代理</span>
+    <span class="nx">cacheMaxTime</span><span class="o">:</span> <span class="mi">1000</span>      <span class="c1">//每一个pagelet的缓存时间，视访问情况而定。</span>
+<span class="p">);</span>
+</pre></div>
+<p>在这个设定下，A页面 -> B页面</p>
+
+<table><thead>
+<tr>
+<th align="left">A</th>
+<th align="left">B</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">{%widget name=&quot;xxxx&quot; pagelet_id=&quot;pager&quot;%}</td>
+<td align="left">{%widget name=&quot;oooo&quot; pagelet_id=&quot;pager&quot;%}</td>
+</tr>
+</tbody></table>
+
+<p>两个都有相同的pagelet_id的widget，整页切换。</p>
+
+<p>当然我们提供了<code>widget_block</code>来搞定这类问题。只需要在layout里面使用widget_block<br/>
+其他页面extends即可。</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">widget_block</span> <span class="na">pagelet_id</span><span class="o">=</span><span class="s2">&quot;pager&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="o">%</span><span class="cp">}{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">widget_block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>整个页面就这样切换起来了。</p>
+
+<p>如果更新小范围的内容该如何办？</p>
+
+<ul>
+<li>只需在触发元素上添加<code>data-area</code>属性，</li>
+</ul>
+
+<p>如;</p>
+<div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/xxxxx&quot;</span> <span class="na">data-area=</span><span class="s">&quot;left-bar&quot;</span><span class="nt">&gt;</span>A<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+<p>当点击时回请求页面的<code>pagelet_id=&quot;left-bar&quot;</code>的widget，并渲染到当前页面的<code>&lt;div id=&quot;left-bar&quot;&gt;&lt;/div&gt;</code>内。</p>
+
+<h6 id="toc_8">appPage.redirect()</h6>
+<div class="highlight"><pre><span class="nx">appPage</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span>
+    <span class="s2">&quot;/index/page/index&quot;</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;pagelets&quot;</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span>     <span class="c1">// 需要请求的pagelet</span>
+        <span class="s2">&quot;containerId&quot;</span><span class="o">:</span> <span class="s2">&quot;xxx&quot;</span>   <span class="c1">// pagelet渲染的容器</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+<p>如果还有一些小的pagelet（widget）没有考虑到，可以用这个接口做加载。</p>
+
+<h4 id="toc_9">渲染模式</h4>
+
+<p>支持**普通渲染模式**和**pipeline**两种渲染模式。</p>
+
+<ul>
+<li>普通渲染模式<code>noscript</code>       没有被<code>pipeline</code>的渲染模式</li>
+<li>pipeline渲染模式<code>pipeline</code>   如果需要比较完整的支持pagecache，可选择这种模式。</li>
+</ul>
+
+<p>如何设定</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="o">...</span> <span class="na">mode</span><span class="o">=</span><span class="s2">&quot;noscript&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"> //noscript mode</span>
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="o">...</span> <span class="na">mode</span><span class="o">=</span><span class="s2">&quot;bigpipe&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"> //pipeline mode</span>
+</pre></div>

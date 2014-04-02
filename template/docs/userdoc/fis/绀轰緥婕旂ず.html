@@ -1,0 +1,129 @@
+<h3 id="toc_0">示例安装</h3>
+
+<p>F.I.S的官网就是使用fis系统进行开发的，现在我们使用FIS-PC解决方案重新开发了官网，用户可直接下载安装示例来直观的观察体验FIS-PC解决方案的开发模式：</p>
+<div class="highlight"><pre><span class="nv">$ </span>fis-pc install pc-demo-common
+<span class="nv">$ </span>fis-pc install pc-demo-home
+</pre></div>
+<p>或者你可以直接安装整个demo示例</p>
+<div class="highlight"><pre><span class="nv">$ </span>fis-pc install pc-demo
+</pre></div>
+<p>由于FIS官网使用了markdown语法，还需要安装FIS插件 <a href="https://github.com/fouber/fis-parser-marked">fis-parser-marked</a></p>
+<div class="highlight"><pre><span class="nv">$ </span>npm install -g fis-parser-marked
+</pre></div>
+<h3 id="toc_1">目录结构</h3>
+
+<p>在你执行命令下的目录下会下载安装common和home两个模块，具体目录如下：</p>
+<div class="highlight"><pre><span class="err">├──</span> <span class="n">common</span>   <span class="c1">//公用资源模块</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="n">fis</span><span class="o">-</span><span class="n">conf</span><span class="p">.</span><span class="n">js</span>  <span class="c1">//配置文件</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="n">page</span>     <span class="c1">//页面模板目录</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="n">plugin</span>   <span class="c1">//smarty plugin目录</span>
+<span class="err">│  </span> <span class="err">├──</span> <span class="k">static</span>   <span class="c1">//静态资源目录</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="n">widget</span>   <span class="c1">//模块化组件目录</span>
+<span class="err">└──</span> <span class="n">home</span>    <span class="c1">//业务模块</span>
+    <span class="err">├──</span> <span class="n">fis</span><span class="o">-</span><span class="n">conf</span><span class="p">.</span><span class="n">js</span>
+    <span class="err">├──</span> <span class="n">page</span>
+    <span class="err">├──</span> <span class="k">static</span>
+    <span class="err">├──</span> <span class="n">test</span>    <span class="c1">//测试数据目录</span>
+    <span class="err">└──</span> <span class="n">widget</span>
+</pre></div>
+<p>用户根据目录规范，将代码进行分类归置，具体的开发规范可查看<a href="https://github.com/xiangshouding/fis-pc/wiki/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E8%A7%84%E8%8C%83">解决方案规范</a>。接下来我们将模块进行发布，在本地环境中预览页面：</p>
+<div class="highlight"><pre><span class="c1">//启动本地server服务</span>
+<span class="n">fis</span><span class="o">-</span><span class="n">pc</span> <span class="n">server</span> <span class="n">start</span>
+<span class="c1">//在common模块路径下发布common模块</span>
+<span class="n">fis</span><span class="o">-</span><span class="n">pc</span> <span class="k">release</span> <span class="o">-</span><span class="n">c</span>
+<span class="c1">//在home模块路径下发布home模块</span>
+<span class="n">fis</span><span class="o">-</span><span class="n">pc</span> <span class="k">release</span> <span class="o">-</span><span class="n">c</span>
+<span class="c1">//在浏览器中访问页面，可预览FIS官网</span>
+<span class="nl">http:</span><span class="c1">//localhost:8080/home/page/index</span>
+</pre></div>
+<p>发布完模块后，用户则可以在浏览器中访问编译后的页面，回到模板源码，用户可以了解到页面是如何进行开发的.</p>
+
+<h3 id="toc_2">示例解析</h3>
+
+<p>在<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6">模板框架</a>中提供了很多模板插件，为模板开发提供使用。</p>
+
+<ul>
+<li>通过<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6#html">html插件</a>控制整体页面的输出，以及注册前端组件化框架。</li>
+<li>通过<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6#head">head插件</a>在模板解析运行时，控制加载同步静态资源使用。</li>
+<li>通过<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6#body">body插件</a>可在页面底部集中输出JS静态资源。</li>
+</ul>
+
+<p>common模块中的layout.tpl，通过后端框架开发，组织整个页面:</p>
+<div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
+<span class="cp">{</span><span class="o">%*</span> <span class="err">使用</span><span class="na">html</span><span class="err">插件替换普通</span><span class="na">html</span><span class="err">标签，同时注册</span><span class="na">JS</span><span class="err">组件化库</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;common:static/mod.js&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s2">&quot;expanded&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">使用</span><span class="na">head</span><span class="err">插件替换</span><span class="na">head</span><span class="err">标签，主要为控制加载同步静态资源使用</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">        &lt;meta content=&quot;</span><span class="cp">{</span><span class="o">%</span><span class="nv">$description</span><span class="o">%</span><span class="cp">}</span><span class="x">&quot; name=&quot;description&quot;&gt;</span>
+<span class="x">        &lt;title&gt;</span><span class="cp">{</span><span class="o">%</span><span class="nv">$title</span><span class="o">%</span><span class="cp">}</span><span class="x">&lt;/title&gt;</span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;block_head_static&quot;</span><span class="o">%</span><span class="cp">}{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">使用</span><span class="na">body</span><span class="err">插件替换</span><span class="na">body</span><span class="err">标签，主要为可控制加载</span><span class="na">JS</span><span class="err">资源</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="o">%</span><span class="cp">}{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<ul>
+<li>通过<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6#require">require插件</a>加载静态资源，便于静态资源管理。</li>
+<li>通过<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6#script">script插件</a>管理JS片段，集中在页面底部加载。</li>
+<li>通过<a href="https://github.com/xiangshouding/fis-pc/wiki/smarty%E6%8F%92%E4%BB%B6#widget">widget插件</a>调用模板组件组织页面，处理对应的静态资源。</li>
+</ul>
+
+<p>home模块中的index.tpl，加载页面模板对应的静态资源，通过模板组件组织页面:</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">extends</span> <span class="na">file</span><span class="o">=</span><span class="s2">&quot;common/page/layout.tpl&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;block_head_static&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    &lt;!--[if lt IE 9]&gt;</span>
+<span class="x">        &lt;script src=&quot;/lib/js/html5.js&quot;&gt;&lt;/script&gt;</span>
+<span class="x">    &lt;![endif]--&gt;</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">模板中加载静态资源</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/css/bootstrap.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/css/bootstrap-responsive.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/js/jquery-1.10.1.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    &lt;div id=&quot;wrapper&quot;&gt;</span>
+<span class="x">        &lt;div id=&quot;sidebar&quot;&gt;</span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%*</span> <span class="err">通过</span><span class="na">widget</span><span class="err">插件加载模块化页面片段，</span><span class="na">name</span><span class="err">属性对应文件路径</span><span class="o">,</span><span class="err">模块名</span><span class="o">:</span><span class="err">文件目录路径</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span>
+                <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:widget/sidebar/sidebar.tpl&quot;</span>
+                <span class="na">data</span><span class="o">=</span><span class="nv">$docs</span>
+            <span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        &lt;/div&gt;</span>
+<span class="x">        &lt;div id=&quot;container&quot;&gt;</span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:widget/slogan/slogan.tpl&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%</span><span class="na">foreach</span> <span class="nv">$docs</span> <span class="na">as</span> <span class="nv">$index</span><span class="o">=&gt;</span><span class="nv">$doc</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">                </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span>
+                    <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:widget/section/section.tpl&quot;</span>
+                    <span class="na">call</span><span class="o">=</span><span class="s2">&quot;section&quot;</span>
+                    <span class="na">data</span><span class="o">=</span><span class="nv">$doc</span> <span class="na">index</span><span class="o">=</span><span class="nv">$index</span>
+                <span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%/</span><span class="na">foreach</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        &lt;/div&gt;</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/index/index.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">通过</span><span class="na">script</span><span class="err">插件收集</span><span class="na">JS</span><span class="err">片段</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x">var _bdhmProtocol = ((&quot;https:&quot; == document.location.protocol) ? &quot; https://&quot; : &quot; http://&quot;);</span>
+<span class="x">document.write(unescape(&quot;%3Cscript src=&#39;&quot; + _bdhmProtocol + &quot;hm.baidu.com/h.js%3F70b541fe48dd916f7163051b0ce5a0e3&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&quot;));</span><span class="cp">{</span><span class="o">%/</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>模块中的widget目录为组件的资源目录，包括模板组件、JS组件、CSS组件：</p>
+
+<ul>
+<li>模板组件的调用方式为通过widget插件。</li>
+<li>JS组件可通过前端组件化框架中的<a href="https://github.com/xiangshouding/fis-pc/wiki/MODJS%E4%BD%BF%E7%94%A8#-1">require方法</a>进行同步加载以及<a href="https://github.com/xiangshouding/fis-pc/wiki/MODJS%E4%BD%BF%E7%94%A8#-1">require.async方法</a>进行异步加载。</li>
+</ul>
+
+<p>common模块中的sidebar模板组件：</p>
+<div class="highlight"><pre><span class="x">&lt;a id=&quot;btn-navbar&quot; class=&quot;btn-navbar&quot; data-toggle=&quot;collapse&quot; data-target=&quot;.nav-collapse&quot;&gt;</span>
+<span class="x">    &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
+<span class="x">    &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
+<span class="x">    &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
+<span class="x">&lt;/a&gt;</span>
+<span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:widget/nav/nav.tpl&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"> require(&#39;./sidebar.js&#39;); </span><span class="cp">{</span><span class="o">%/</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>为了在本地开发中可以看到相应的数据展示，在模块test目录中可配置页面模板对应的测试数据，用户可以根据<a href="https://github.com/xiangshouding/fis-pc/wiki/%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95%E6%95%B0%E6%8D%AE%E5%8A%9F%E8%83%BD">本地测试功能</a>进行本地开发调试。在home模块中已经配置了对应测试数据，用户可修改数据进行页面调试。</p>
+
+<p>通过后端模板框架进行页面模板开发，同时由FIS-PC解决方案为你解决静态资源的管理和组织页面，为您解决很多很多问题，除了具体业务开发，其他的就都交给FIS吧！</p>

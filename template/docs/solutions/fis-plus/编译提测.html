@@ -1,0 +1,48 @@
+<!--
+title: 编译提测
+toc: <ul class="nav"><li><a href="#toc_0">编译脚本</a></li><li><a href="#toc_1">icafe编译</a></li></ul>
+-->
+
+<h2 id="toc_0">编译脚本</h2>
+
+<p>上线、提测都需要icafe通过编译脚本进行项目编译，基于FIS-Plus的基础编译脚本：</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nv">MOD_NAME</span><span class="o">=</span><span class="s2">&quot;output&quot;</span>
+<span class="nv">TAR</span><span class="o">=</span><span class="s2">&quot;$MOD_NAME.tar.gz&quot;</span>
+
+<span class="c"># add path</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/fis/npm/bin:<span class="nv">$PATH</span>
+<span class="c">#show fis-plus version</span>
+fisp --version --no-color
+
+<span class="c">#通过fis-plus release 命令进行模块编译 开启optimize、md5、打包功能，同时需开启-u 独立缓存编译方式，产出到同目录下output中</span>
+fisp release -cuompd output
+<span class="c">#进入output目录</span>
+<span class="nb">cd </span>output
+<span class="c">#删除产出的test目录</span>
+rm -rf <span class="nb">test</span>
+
+<span class="c">#将output目录进行打包</span>
+tar zcf <span class="nv">$TAR</span> ./*
+mv <span class="nv">$TAR</span> ../
+
+<span class="nb">cd</span> ..
+rm -rf output
+
+mkdir output
+
+mv <span class="nv">$TAR</span> output/
+
+<span class="nb">echo</span> <span class="s2">&quot;build end&quot;</span>
+</pre></div>
+<h2 id="toc_1">icafe编译</h2>
+
+<p>产品线同学几乎都需要通过icafe进行编译提测，下面将介绍如何正确选择fis编译机器进行编译的过程：</p>
+
+<ul>
+<li><p>在单元测试编辑前，需要选择fis编译机器<br/>
+<img src="/static/fis-site/images/fis-plus/icafe1.jpg" alt="icafe"/></p></li>
+<li><p>选择对应的可以进行FIS编译的机器<br/>
+<img src="/static/fis-site/images/fis-plus/icafe2.jpg" alt="icafe"/></p></li>
+</ul>

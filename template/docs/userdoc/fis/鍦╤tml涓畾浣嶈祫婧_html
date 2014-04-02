@@ -1,0 +1,109 @@
+<!--
+title: 在html中定位资源
+toc: 
+-->
+
+<blockquote>
+<p>fis支持对html中的script、link、style、video、audio、embed等标签的src或href属性进行分析，一旦这些标签的资源定位属性可以命中已存在文件，则把命中文件的url路径替换到属性中，同时可保留原来url中的query查询信息。</p>
+</blockquote>
+
+<p>例如：</p>
+<div class="highlight"><pre><span class="c">&lt;!--源码：</span>
+<span class="c">&lt;img title=&quot;百度logo&quot; src=&quot;images/logo.gif&quot;/&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;/images/logo_74e5229.gif&quot;</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!--源码：</span>
+<span class="c">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;demo.css&quot;&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/demo_7defa41.css&quot;</span><span class="nt">&gt;</span>
+
+<span class="c">&lt;!--源码：</span>
+<span class="c">&lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;/demo_33c5143.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+<p>值得注意的是， <strong>资源定位结果可以被fis的配置文件控制</strong>，比如添加配置，调整文件发布路径：</p>
+
+<p><img src="http://fis.baidu.com/static/docs/img/uri_0f02e83.png" alt="资源定位工作原理"/></p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;roadmap.path&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1">//所有的js文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.js&#39;</span><span class="p">,</span>
+        <span class="c1">//发布到/static/js/xxx目录下</span>
+        <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/js$&amp;&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//所有的css文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.css&#39;</span><span class="p">,</span>
+        <span class="c1">//发布到/static/css/xxx目录下</span>
+        <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/css$&amp;&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//所有image目录下的.png，.gif文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/^\/images\/(.*\.(?:png|gif))/i</span><span class="p">,</span>
+        <span class="c1">//发布到/static/pic/xxx目录下</span>
+        <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/pic/$1&#39;</span>
+    <span class="p">}</span>
+<span class="p">]);</span>
+</pre></div>
+<p>再次编译得到：</p>
+<div class="highlight"><pre><span class="c">&lt;!--源码：</span>
+<span class="c">&lt;img title=&quot;百度logo&quot; src=&quot;images/logo.gif&quot;/&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;/static/pic/logo_74e5229.gif&quot;</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!--源码：</span>
+<span class="c">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;demo.css&quot;&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/static/css/demo_7defa41.css&quot;</span><span class="nt">&gt;</span>
+
+<span class="c">&lt;!--源码：</span>
+<span class="c">&lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;/static/js/demo_33c5143.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+<p>我们甚至可以让 <strong>url和发布目录不一致</strong>。比如：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;roadmap.path&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1">//所有的js文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.js&#39;</span><span class="p">,</span>
+        <span class="c1">//发布到/static/js/xxx目录下</span>
+        <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/js$&amp;&#39;</span><span class="p">,</span>
+        <span class="c1">//访问url是/mm/static/js/xxx</span>
+        <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;/mm/static/js$&amp;&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//所有的css文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.css&#39;</span><span class="p">,</span>
+        <span class="c1">//发布到/static/css/xxx目录下</span>
+        <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/css$&amp;&#39;</span><span class="p">,</span>
+        <span class="c1">//访问url是/pp/static/css/xxx</span>
+        <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;/pp/static/css$&amp;&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1">//所有image目录下的.png，.gif文件</span>
+        <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/^\/images\/(.*\.(?:png|gif))/i</span><span class="p">,</span>
+        <span class="c1">//发布到/static/pic/xxx目录下</span>
+        <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/pic/$1&#39;</span><span class="p">,</span>
+        <span class="c1">//访问url是/oo/static/baidu/xxx</span>
+        <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;/oo/static/baidu$&amp;&#39;</span>
+    <span class="p">}</span>
+    <span class="p">]);</span>
+</pre></div>
+<p>再次编译得到：</p>
+<div class="highlight"><pre><span class="c">&lt;!--源码：</span>
+<span class="c">&lt;img title=&quot;百度logo&quot; src=&quot;images/logo.gif&quot;/&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;/oo/static/baidu/logo_74e5229.gif&quot;</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!--源码：</span>
+<span class="c">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;demo.css&quot;&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/pp/static/css/demo_7defa41.css&quot;</span><span class="nt">&gt;</span>
+
+<span class="c">&lt;!--源码：</span>
+<span class="c">&lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt;</span>
+<span class="c">编译后--&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;/mm/static/js/demo_33c5143.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>

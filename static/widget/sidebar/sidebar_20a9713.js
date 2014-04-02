@@ -1,0 +1,1 @@
+define("widget/sidebar/sidebar.js",function(){$(".btn-navbar").click(function(){$("html").toggleClass("expanded")})});

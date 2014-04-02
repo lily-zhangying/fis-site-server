@@ -1,0 +1,126 @@
+<!--
+title: 开发一个插件
+toc: <ul class="nav"><li><a href="#toc_0">开发插件</a></li><li><a href="#toc_1">编译阶段插件</a><ul class="nav"><li><a href="#toc_2">打包阶段插件</a></li></ul></li><li><a href="#toc_3">发布插件</a></li><li><a href="#toc_4">使用插件</a></li></ul>
+weight: 3
+-->
+
+<p>按照<a href="%E6%8F%92%E4%BB%B6%E6%89%A9%E5%B1%95%E7%82%B9%E5%88%97%E8%A1%A8">插件扩展点</a>文档的介绍，在整个编译流程可以扩展的点有；</p>
+
+<ul>
+<li>编译阶段
+
+<ul>
+<li>parser</li>
+<li>preprocessor</li>
+<li>postprocessor</li>
+<li>lint</li>
+<li>test</li>
+</ul></li>
+<li>打包阶段
+
+<ul>
+<li>prepackager</li>
+<li>packager</li>
+<li>spriter</li>
+<li>postpackager</li>
+</ul></li>
+</ul>
+
+<p>编译阶段，处理的是单个文件，整个过程都使用了缓存；<br/>
+打包阶段，处理的是编译后的所有文件；</p>
+
+<p>以上扩展点也可以理解为FIS的几类插件，接下来详细说明每一类插件自定制。</p>
+
+<ul>
+<li>开发插件</li>
+<li>发布插件</li>
+<li>使用插件</li>
+</ul>
+
+<h3 id="toc_0">开发插件</h3>
+
+<p>FIS API</p>
+
+<ul>
+<li>fis.file      file对象</li>
+<li>fis.project   project对象</li>
+<li>fis.util      util类</li>
+<li>fis.compile   编译</li>
+</ul>
+
+<h3 id="toc_1">编译阶段插件</h3>
+
+<p>以parser插件为例，如果使用了less、sass、coffescript等开发维护css和js。在这个阶段就是要把它们解析为标准的css和js。</p>
+
+<p>Sample:</p>
+<div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * fis</span>
+<span class="cm"> * http://fis.baidu.com/</span>
+<span class="cm"> */</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">sass</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-sass&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">conf</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">opts</span> <span class="o">=</span> <span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">clone</span><span class="p">(</span><span class="nx">conf</span><span class="p">);</span>
+    <span class="nx">opts</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">content</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">sass</span><span class="p">.</span><span class="nx">renderSync</span><span class="p">(</span><span class="nx">opts</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+<p>如上示例代码，插件需要导出一个function，参数分别是content，file，conf。</p>
+
+<ul>
+<li>content 源码内容</li>
+<li>file 文件对象，可以获取文件路径、文件名...</li>
+<li>conf 用户配置信息</li>
+</ul>
+
+<p>最后return处理后的结果。</p>
+
+<h4 id="toc_2">打包阶段插件</h4>
+
+<p>以prepackager插件为例。prepackager即打包前需要对文件做某些处理，比如想在所有的html注释里面插入编译时间。</p>
+
+<p>Sample:</p>
+<div class="highlight"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ret</span><span class="p">,</span> <span class="nx">conf</span><span class="p">,</span> <span class="nx">settings</span><span class="p">,</span> <span class="nx">opt</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fis</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">ret</span><span class="p">.</span><span class="nx">src</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">subpath</span><span class="p">,</span> <span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">file</span><span class="p">.</span><span class="nx">isHtmlLike</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">getContent</span><span class="p">();</span>
+            <span class="nx">content</span> <span class="o">+=</span> <span class="s1">&#39;&lt;!-- build &#39;</span><span class="o">+</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">())</span><span class="o">+</span><span class="s1">&#39;--&gt;&#39;</span><span class="p">;</span>
+            <span class="nx">file</span><span class="p">.</span><span class="nx">setContent</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</pre></div>
+<p>如上，导出function参数；</p>
+
+<ul>
+<li>ret    所有文件信息</li>
+<li>conf   打包信息 -- 一般用不到</li>
+<li>settings  插件用户配置信息</li>
+<li>opt    命令行参数</li>
+</ul>
+
+<h3 id="toc_3">发布插件</h3>
+
+<p>在插件开发目录下执行</p>
+<div class="highlight"><pre><span class="nv">$ </span>npm init
+</pre></div>
+<p>比如开发一个sass的parser插件。name必须为fis-parser-为前缀的名字，如&quot;fis-parser-sass&quot;</p>
+<div class="highlight"><pre><span class="nv">$ </span>npm publish . <span class="c">#发布</span>
+</pre></div>
+<h3 id="toc_4">使用插件</h3>
+
+<p>先全局安装</p>
+<div class="highlight"><pre><span class="nv">$ </span>npm install -g fis-parser-sass
+</pre></div>
+<p>然后在fis-conf.js里面配置使用</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">modules</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">parser</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">sass</span><span class="o">:</span> <span class="s1">&#39;sass&#39;</span> <span class="c1">// sass后缀的使用fis-parser-sass处理</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>

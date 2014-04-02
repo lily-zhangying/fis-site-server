@@ -1,0 +1,166 @@
+<!--
+title: fis开发命令
+toc: <ul class="nav"><li><a href="#toc_0">fis release</a></li><li><a href="#toc_1">fis server</a></li><li><a href="#toc_2">lights install</a></li></ul>
+type: detail
+-->
+
+<blockquote>
+<p>介绍fis开发命令，完成你的所有开发需求</p>
+</blockquote>
+
+<p>执行 <strong>fisp --help</strong> 让我们来看一下fis命令的相关帮助：</p>
+<div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">fis</span><span class="o">-</span><span class="n">plus</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
+
+<span class="n">Commands</span><span class="o">:</span>
+
+  <span class="n">release</span>     <span class="n">build</span> <span class="n">and</span> <span class="n">deploy</span> <span class="n">your</span> <span class="n">project</span>
+  <span class="n">server</span>      <span class="n">launch</span> <span class="n">a</span> <span class="n">php</span><span class="o">-</span><span class="n">cgi</span> <span class="n">server</span>
+
+<span class="n">Options</span><span class="o">:</span>
+
+  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>     <span class="n">output</span> <span class="n">usage</span> <span class="n">information</span>
+  <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">output</span> <span class="n">the</span> <span class="n">version</span> <span class="n">number</span>
+  <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">color</span>     <span class="n">disable</span> <span class="n">colored</span> <span class="n">output</span>
+</pre></div>
+<ul>
+<li><strong>fisp release</strong>： 编译并发布你的项目</li>
+<li><strong>fisp server</strong>：启动一个 <strong>1.8M</strong> 大小的内置调试服务器，它采用php-java-bridge技术实现， <em>依赖java、php-cgi外部环境</em> ，可以 <strong>完美支持运行php程序</strong> 哦。</li>
+</ul>
+
+<h2 id="toc_0">fis release</h2>
+
+<p>release是一个非常强大的命令。</p>
+
+<ul>
+<li>它的主要任务就是进行代码的 <strong>编译</strong> 与 <strong>部署</strong></li>
+<li>它的参数囊括了前端开发所需的各种基础功能。通过添加不同参数，组合使用。</li>
+</ul>
+
+<p>可以在命令行下执行 <br/>
+执行 <strong>fisp release -h</strong> 让我们来看一下fis命令的相关帮助：</p>
+<div class="highlight"><pre>Usage: release <span class="o">[</span>options<span class="o">]</span>
+
+  Options:
+
+    -h, --help             output usage information
+    -d, --dest &lt;names&gt;     release output destination
+    -m, --md5 <span class="o">[</span>level<span class="o">]</span>      md5 release option
+    -D, --domains          add domain name
+    -l, --lint             with lint
+    -t, --test             with unit testing
+    -o, --optimize         with optimizing
+    -p, --pack             with package
+    -w, --watch            monitor the changes of project
+    -L, --live             automatically reload your browser
+    -c, --clean            clean compile cache
+    -r, --root &lt;path&gt;      <span class="nb">set </span>project root
+    -f, --file &lt;filename&gt;  <span class="nb">set </span>fis-conf file
+    -u, --unique           use unique compile caching
+    --verbose              <span class="nb">enable </span>verbose output
+</pre></div>
+<ul>
+<li><code>--domain</code> 或 <code>-D</code> 参数，对静态资源添加domian。<a href="/userdoc">domain配置</a></li>
+<li><code>--watch</code> 或 <code>-w</code> 参数，对项目进行增量编译，监听文件变化再触发编译</li>
+<li><code>--md5 [level]</code> 或 <code>-m [level]</code> 参数，在编译的时候可以对文件自动加md5戳，从此告别在静态资源url后面写?version=xxx的时代</li>
+<li><code>--lint</code> 或 <code>-l</code> 参数，支持在编译的时候根据项目配置自动代码检查</li>
+<li><code>--test</code> 或 <code>-t</code> 参数，支持在编译的时候对代码进行自动化测试</li>
+<li><code>--pack</code> 或 <code>-p</code> 参数，对产出文件根据项目配置进行打包</li>
+<li><code>--optimize</code> 或 <code>-o</code> 参数，对js、css、html进行压缩</li>
+<li><p><code>--dest [path|name]</code> 或 <code>-d</code> 参数，来指定编译后的代码部署路径，支持发布到 <strong>本地目录、本地调试服务器目录、远程机器目录(需要配置)</strong>，它与--watch参数配合使用，可以让你的代码保存就上传！而且--dest值支持逗号分隔，这也就意味着，你 <strong>一次编译可以同时发布到本地以及多台远程机器上</strong>！举几个栗子:</p>
+
+<ul>
+<li><p>发布到fisp server open目录下用于本地调试</p>
+<div class="highlight"><pre>fisp release
+<span class="c"># or</span>
+fisp release --dest preview
+</pre></div></li>
+<li><p>发布到项目根目录的output目录下， <em>注意，这里的output其实是一个内置的部署配置名，而不是一个目录名</em>。</p>
+<div class="highlight"><pre>fisp release -d output
+</pre></div></li>
+<li><p>发布到相对 <code>工作目录</code> 的路径</p>
+<div class="highlight"><pre>fisp release -d ../output
+</pre></div></li>
+<li><p>发布到绝对路径</p>
+<div class="highlight"><pre>fisp release -d /home/work/ouput
+<span class="c"># win</span>
+fisp release -d d:/work/output
+</pre></div></li>
+<li><p>使用配置文件的 <a href="/userdoc/fis/%E4%B8%8A%E4%BC%A0%E9%83%A8%E7%BD%B2#%E4%B8%8A%E4%BC%A0%E9%85%8D%E7%BD%AE">deploy节点配置</a> 进行发布，此配置可将代码上传至远端</p>
+<div class="highlight"><pre>fisp release -d remote
+</pre></div></li>
+<li><p>以上所有发布规则任意组合使用（一次编译同时上传到多台远端机器 &amp; 项目根目录下的output &amp; 调试服务器根目录 &amp; 本地绝对路径）</p>
+<div class="highlight"><pre>fisp releaes -d remote,qa,rd,output,preview,D:/work/output
+</pre></div></li>
+</ul></li>
+<li><p><code>--live</code> 或 <code>-L</code> 参数，支持编译后自动刷新浏览器。fis需要使用 <a href="http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-">LiveReload浏览器扩展</a> 来连接fis的livereload服务器：</p>
+
+<ul>
+<li><a href="http://download.livereload.com/2.0.9/LiveReload-2.0.9.safariextz">Safari</a></li>
+<li><a href="https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei">Chrome</a></li>
+<li><a href="http://download.livereload.com/2.0.8/LiveReload-2.0.8.xpi">Firefox</a></li>
+<li><a href="https://github.com/dvdotsenko/livereload_ie_extension/downloads">IE</a> - 真应该滚粗地球</li>
+</ul></li>
+<li><p><code>--unique</code> 或 <code>-u</code> 参数，每次编译创建一个独立的缓存目录，**解决同一台机器多人编译互相影响的问题**。如果在自己机器一人编译，那就不需要了。</p></li>
+<li><p><code>--verbose</code> 参数，编译时输出log信息</p></li>
+<li><p><code>--lint</code> 或 <code>-l</code> 参数，对项目进行lint检查</p></li>
+<li><p><code>--test</code> 或 <code>-t</code> 参数，对项目执行自动化测试。目前仅保留接口，没有测试功能</p></li>
+<li><p><code>--clean</code> 或 <code>-w</code> 参数，对项目进行清缓存编译。</p></li>
+<li><p><code>--root</code> 或 <code>-r</code> 参数，设置项目根路径</p></li>
+<li><p><code>--file</code> 或 <code>-f</code> 参数，编译时指定fis-conf配置文件路径</p></li>
+</ul>
+
+<h2 id="toc_1">fis server</h2>
+
+<p>提供本地调试的轻量级服务器，完全模拟线上运行，用户可通过配置测试数据、请求模拟等，进行线下无后端环境开发。</p>
+
+<p>fis的调试服务器依赖于用户本地的 <strong>jre</strong> 和 <strong>php-cgi</strong> 环境，所以：</p>
+
+<ul>
+<li>如果没有jre环境，请移步 <a href="http://127.0.0.1:8080/userdoc/%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8">这里</a> </li>
+<li>如果没有php-cgi环境的，请移步 <a href="http://127.0.0.1:8080/userdoc/%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8">这里</a> </li>
+<li>请把java、php-cgi命令添加到环境变量中</li>
+</ul>
+
+<p>搞定环境后，让我们来启动调试服务器看看：</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp server start
+checking java support : version 1.6.0
+checking php-cgi support : version 5.2.11
+starting fis-server on port : 8080
+</pre></div>
+<p>服务器启动之后，它会自动检查环境，最后告诉你它监听了8080端口，这个时候，你的浏览器应该打开了一个调试服务器根目录的浏览页面，地址是 <strong><a href="http://localhost:8080/">http://localhost:8080/</a></strong>。</p>
+
+<p>常用server命令:</p>
+<div class="highlight"><pre><span class="c1">//启动服务默认端口8080</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">start</span>
+
+<span class="c1">//停止服务</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">stop</span>
+
+<span class="c1">//启动服务设置端口为8081,同时设置php-cgi路径</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">start</span> <span class="o">-</span><span class="n">p</span> <span class="mh">8081</span> <span class="o">--</span><span class="n">php_exec</span> <span class="s">&quot;D:/php/php-cgi.exe&quot;</span>
+
+<span class="c1">//打开本地预览环境</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">open</span>
+
+<span class="c1">//清空本地预览环境,&lt;慎用!&gt;，清空后请安装本地调试环境</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">clean</span> 
+</pre></div>
+<p>更多使用，在命令行执行 fisp server -h 查看</p>
+
+<h2 id="toc_2">lights install</h2>
+
+<blockquote>
+<p>lights是FIS提供包管理工具，托管所有FIS资源。</p>
+</blockquote>
+
+<p>lights install命令被设计用来 各种安装。<br/>
+无论你是想初始化一个模块，还是想下载一个前端基础库，亦或下载一份配置文件，总之但凡开发需要的，只要fis仓库里有，你就用它来安装就对了。</p>
+
+<p>比如你可以在你的common/static目录下安装最新的前端框架modjs:</p>
+<div class="highlight"><pre>lights install modjs
+</pre></div>
+<ul>
+<li>可以登录 <strong><a href="http://lightjs.duapp.com/">http://lightjs.duapp.com/</a></strong> 查看所有资源</li>
+<li>更多使用，在命令行执行 lights -h 查看</li>
+<li><a href="/userdoc/lights">查看lights文档</a></li>
+</ul>

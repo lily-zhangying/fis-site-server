@@ -1,0 +1,29 @@
+<!--
+title: 在js中声明依赖
+toc: 
+-->
+
+<blockquote>
+<p>fis支持识别js文件中的 <strong>require函数</strong>，或者 <strong>注释中的@require字段</strong> 标记的依赖关系，这些分析处理对 <strong>html的script标签内容</strong> 同样有效。</p>
+</blockquote>
+<div class="highlight"><pre><span class="c1">//demo.js</span>
+<span class="cm">/**</span>
+<span class="cm"> * @require demo.css</span>
+<span class="cm"> * @require list.js</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jquery&#39;</span><span class="p">);</span>
+</pre></div>
+<p>经过编译之后，查看产出的 <strong>map.json</strong> 文件，可以看到：</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;res&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="err">...</span>
+        <span class="nt">&quot;demo.js&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/js/demo_33c5143.js&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;js&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;demo.css&quot;</span><span class="p">,</span> <span class="s2">&quot;list.js&quot;</span><span class="p">,</span> <span class="s2">&quot;jquery&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="err">...</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>

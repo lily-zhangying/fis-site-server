@@ -1,0 +1,72 @@
+<!--
+title: 自动化工具
+toc: <ul class="nav"><li><a href="#toc_0">模板XSS修复工具</a></li><li><a href="#toc_1">图片合并工具</a></li><li><a href="#toc_2">模板压缩工具</a></li><li><a href="#toc_3">JS压缩工具</a></li><li><a href="#toc_4">CSS压缩工具</a></li></ul>
+-->
+
+<h3 id="toc_0">模板XSS修复工具</h3>
+
+<ul>
+<li>功能：对Smarty模板进行XSS校验修复。</li>
+<li>默认开启：true(已默认配置)</li>
+<li>配置: </li>
+</ul>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.optimizer.tpl&#39;</span><span class="p">,</span> <span class="s1">&#39;smarty-xss&#39;</span><span class="p">);</span>
+
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;settings.optimizer.smarty-xss&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s1">&#39;escapeMap&#39;</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;js&#39;</span> <span class="o">:</span> <span class="s1">&#39;f_escape_js&#39;</span><span class="p">,</span>  <span class="c1">//配置js_escape指定js转义插件的名称</span>
+        <span class="s1">&#39;html&#39;</span> <span class="o">:</span> <span class="s1">&#39;f_escape_xml&#39;</span><span class="p">,</span> <span class="c1">//配置html_escape指定对于xml转义插件的名称</span>
+        <span class="s1">&#39;data&#39;</span> <span class="o">:</span> <span class="s1">&#39;f_escape_data&#39;</span><span class="p">,</span> <span class="c1">//配置data_escape指定data转义插件的名称</span>
+        <span class="s1">&#39;path&#39;</span> <span class="o">:</span> <span class="s1">&#39;f_escape_path&#39;</span><span class="p">,</span> <span class="c1">//配置path_escape指定url、path转义插件的名称</span>
+        <span class="s1">&#39;event&#39;</span> <span class="o">:</span> <span class="s1">&#39;f_escape_event&#39;</span><span class="p">,</span> <span class="c1">//配置event_escape指定event转义插件的名称</span>
+        <span class="s1">&#39;no_escape&#39;</span> <span class="o">:</span> <span class="s1">&#39;escape:none&#39;</span> <span class="c1">//不需要添加转义的变量标志</span>
+    <span class="p">},</span>
+    <span class="nx">leftDelimiter</span><span class="s1">&#39; : &#39;</span><span class="p">{</span><span class="o">%</span><span class="s1">&#39;, //smarty左定界符</span>
+<span class="s1">    &#39;</span><span class="nx">rightDelimiter</span><span class="s1">&#39; : &#39;</span><span class="o">%</span><span class="p">}</span><span class="s1">&#39;, //smarty右定界符</span>
+<span class="s1">    &#39;</span><span class="nx">xssSafeVars</span><span class="s1">&#39; :[          //配置白名单</span>
+<span class="s1">        &#39;</span><span class="nx">fis_safe</span><span class="err">&#39;</span>      <span class="c1">//支持正则</span>
+    <span class="p">]</span>
+<span class="p">});</span>
+</pre></div>
+<h3 id="toc_1">图片合并工具</h3>
+
+<ul>
+<li>功能：对</li>
+<li>环境要求：依赖native插件，<a href="https://github.com/xiangshouding/node-images">node-images</a> 环境需要符合个插件的要求。(OS X、Windows提供了二进制包)</li>
+<li>默认开启：true</li>
+<li>使用文档：<a href="https://github.com/xiangshouding/fis-spriter-csssprites">用户文档</a></li>
+<li>配置：</li>
+</ul>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;namespace&#39;</span><span class="p">,</span> <span class="s1">&#39;demo&#39;</span><span class="p">);</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;settings.spriter.csssprites&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="c1">//图之间的边距</span>
+    <span class="nx">margin</span><span class="o">:</span> <span class="mi">10</span>
+<span class="p">});</span>
+</pre></div>
+<h3 id="toc_2">模板压缩工具</h3>
+
+<ul>
+<li>功能：对Smarty模板进行压缩。</li>
+<li>默认开启：true(已默认配置)</li>
+<li>配置:</li>
+</ul>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.optimizer.tpl&#39;</span><span class="p">,</span> <span class="s1">&#39;html-compress&#39;</span><span class="p">);</span>
+</pre></div>
+<h3 id="toc_3">JS压缩工具</h3>
+
+<ul>
+<li>功能：通过uglify-js对JS文件进行压缩。</li>
+<li>默认开启：true(已默认配置)</li>
+<li>配置:</li>
+</ul>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.optimizer.js&#39;</span><span class="p">,</span> <span class="s1">&#39;uglify-js&#39;</span><span class="p">);</span>
+</pre></div>
+<h3 id="toc_4">CSS压缩工具</h3>
+
+<ul>
+<li>功能：通过clean-css对CSS文件进行压缩。</li>
+<li>默认开启：true(已默认配置)</li>
+<li>配置:</li>
+</ul>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.optimizer.css&#39;</span><span class="p">,</span> <span class="s1">&#39;clean-css&#39;</span><span class="p">);</span>
+</pre></div>

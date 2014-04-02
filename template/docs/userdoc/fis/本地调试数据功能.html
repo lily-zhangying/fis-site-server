@@ -1,0 +1,35 @@
+<!--
+title: 本地测试数据
+toc: <ul class="nav"><li><a href="#toc_0">浏览器书签</a></li><li><a href="#toc_1">测试数据</a></li></ul>
+-->
+
+<blockquote>
+<p>FIS提供了本地调试数据功能，本地预览模板时会根据选择的测试数据进行展现，默认的smarty版本为3.1.13。</p>
+</blockquote>
+
+<h3 id="toc_0">浏览器书签</h3>
+<div class="highlight"><pre><span class="c1">//新建浏览器书签，网址为以下内容</span>
+<span class="nx">javascript</span><span class="o">:</span> <span class="k">void</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span><span class="nx">d</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="o">=</span><span class="s1">&#39;FIS_DEBUG_DATA=4f10e208f47bfb4d35a5e6f115a6df1a;path=/;expires=&#39;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">toGMTString</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="p">;</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span> <span class="p">}();</span>
+</pre></div>
+<p>当模块进行编译发布后，在预览的时候点击书签，进入数据管理页面，修改数据后再进行渲染:<br/>
+<img src="http://c.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=83ad2515d1a20cf44290feda46323a0b/b3b7d0a20cf431ad11c0e1ab4a36acaf2edd9816.jpg?referer=e006ba57e1fe9925921b5c60d80c&amp;x=.jpg" alt="fisp test"/></p>
+
+<p>修改保存的数据会临时保存在发布目录中，如果需要保存在test目录下还需要单独粘贴复制。</p>
+
+<h3 id="toc_1">测试数据</h3>
+
+<p>测试数据存放在模块test目录下，模板文件和测试数据文件对应关系如下：</p>
+
+<p>模板:<br/>
+    <code>photo/page/index.tpl</code></p>
+
+<p>对应数据文件:</p>
+<div class="highlight"><pre><span class="mf">0.</span> <span class="n">photo</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span> <span class="p">(</span><span class="n">php</span><span class="err">格式</span><span class="p">)</span>
+<span class="mf">0.</span> <span class="n">photo</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">json</span> <span class="p">(</span><span class="n">json</span><span class="err">格式</span><span class="p">)</span>
+</pre></div>
+<p>也支持多份数据(php格式为例):</p>
+<div class="highlight"><pre><span class="mf">0.</span> <span class="n">photo</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="n">index</span><span class="o">/</span><span class="n">index_1</span><span class="p">.</span><span class="n">php</span>
+<span class="mf">0.</span> <span class="n">photo</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="n">index</span><span class="o">/</span><span class="n">index_2</span><span class="p">.</span><span class="n">php</span>
+<span class="p">...</span>
+</pre></div>
+<p>文件名: <code>index_\d+.php</code></p>

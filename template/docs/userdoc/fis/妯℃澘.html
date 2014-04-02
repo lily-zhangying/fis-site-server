@@ -1,0 +1,126 @@
+<!--
+title: 模板
+toc: <ul class="nav"><li><a href="#toc_0">页面模板</a></li><li><a href="#toc_1">前端模板</a></li><li><a href="#toc_2">模板组件化</a></li><li><a href="#toc_3">widget定义</a></li><li><a href="#toc_4">widget调用</a></li><li><a href="#toc_5">widget函数调用方式</a></li></ul>
+-->
+
+<h3 id="toc_0">页面模板</h3>
+
+<p>在模块中，用户可直接访问浏览的页面称为页面模板，文件在 <strong>模块根目录/page/</strong> 下。FIS提供提供了很多模板插件替换原生html标签，为页面模板开发提供使用。</p>
+
+<ul>
+<li>通过<a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#html">html插件</a>控制整体页面的输出，以及注册前端组件化框架。</li>
+<li>通过<a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#head">head插件</a>在模板解析运行时，控制加载同步静态资源使用。</li>
+<li>通过<a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#body">body插件</a>可在页面底部集中输出JS静态资源。</li>
+</ul>
+
+<p>从demo中common模块的layout.tpl，可以了解到如何通过后端框架进行开发，组织整个页面:</p>
+<div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
+<span class="cp">{</span><span class="o">%*</span> <span class="err">使用</span><span class="na">html</span><span class="err">插件替换普通</span><span class="na">html</span><span class="err">标签，同时注册</span><span class="na">JS</span><span class="err">组件化库</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">html</span> <span class="na">framework</span><span class="o">=</span><span class="s2">&quot;common:static/mod.js&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s2">&quot;expanded&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">使用</span><span class="na">head</span><span class="err">插件替换</span><span class="na">head</span><span class="err">标签，主要为控制加载同步静态资源使用</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="x">        &lt;meta content=&quot;</span><span class="cp">{</span><span class="o">%</span><span class="nv">$description</span><span class="o">%</span><span class="cp">}</span><span class="x">&quot; name=&quot;description&quot;&gt;</span>
+<span class="x">        &lt;title&gt;</span><span class="cp">{</span><span class="o">%</span><span class="nv">$title</span><span class="o">%</span><span class="cp">}</span><span class="x">&lt;/title&gt;</span>
+<span class="x">        </span><span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;block_head_static&quot;</span><span class="o">%</span><span class="cp">}{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">head</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">使用</span><span class="na">body</span><span class="err">插件替换</span><span class="na">body</span><span class="err">标签，主要为可控制加载</span><span class="na">JS</span><span class="err">资源</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="o">%</span><span class="cp">}{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%/</span><span class="na">body</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">html</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<ul>
+<li>通过<a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#require">require插件</a>加载静态资源，便于静态资源管理。</li>
+<li>通过<a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#script">script插件</a>管理JS片段，集中在页面底部加载。</li>
+<li>通过<a href="/userdoc/fis/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8#widget">widget插件</a>调用模板组件组织页面，处理对应的静态资源。</li>
+</ul>
+
+<p>在demo-home模块中的index.tpl，加载页面模板对应的静态资源，通过模板组件组织页面:</p>
+<div class="highlight"><pre><span class="cp">{</span><span class="o">%</span><span class="na">extends</span> <span class="na">file</span><span class="o">=</span><span class="s2">&quot;common/page/layout.tpl&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;block_head_static&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    &lt;!--[if lt IE 9]&gt;</span>
+<span class="x">        &lt;script src=&quot;/lib/js/html5.js&quot;&gt;&lt;/script&gt;</span>
+<span class="x">    &lt;![endif]--&gt;</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">模板中加载静态资源</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/css/bootstrap.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/css/bootstrap-responsive.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/js/jquery-1.10.1.js&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%</span><span class="na">block</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    &lt;div id=&quot;wrapper&quot;&gt;</span>
+<span class="x">        &lt;div id=&quot;sidebar&quot;&gt;</span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%*</span> <span class="err">通过</span><span class="na">widget</span><span class="err">插件加载模块化页面片段，</span><span class="na">name</span><span class="err">属性对应文件路径</span><span class="o">,</span><span class="err">模块名</span><span class="o">:</span><span class="err">文件目录路径</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span>
+                <span class="na">name</span><span class="o">=</span><span class="s2">&quot;common:widget/sidebar/sidebar.tpl&quot;</span>
+                <span class="na">data</span><span class="o">=</span><span class="nv">$docs</span>
+            <span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        &lt;/div&gt;</span>
+<span class="x">        &lt;div id=&quot;container&quot;&gt;</span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:widget/slogan/slogan.tpl&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%</span><span class="na">foreach</span> <span class="nv">$docs</span> <span class="na">as</span> <span class="nv">$index</span><span class="o">=&gt;</span><span class="nv">$doc</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">                </span><span class="cp">{</span><span class="o">%</span><span class="na">widget</span>
+                    <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:widget/section/section.tpl&quot;</span>
+                    <span class="na">call</span><span class="o">=</span><span class="s2">&quot;section&quot;</span>
+                    <span class="na">data</span><span class="o">=</span><span class="nv">$doc</span> <span class="na">index</span><span class="o">=</span><span class="nv">$index</span>
+                <span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">            </span><span class="cp">{</span><span class="o">%/</span><span class="na">foreach</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">        &lt;/div&gt;</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">require</span> <span class="na">name</span><span class="o">=</span><span class="s2">&quot;home:static/index/index.css&quot;</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%*</span> <span class="err">通过</span><span class="na">script</span><span class="err">插件收集</span><span class="na">JS</span><span class="err">片段</span> <span class="o">*%</span><span class="cp">}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{</span><span class="o">%</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x">var _bdhmProtocol = ((&quot;https:&quot; == document.location.protocol) ? &quot; https://&quot; : &quot; http://&quot;);</span>
+<span class="x">document.write(unescape(&quot;%3Cscript src=&#39;&quot; + _bdhmProtocol + &quot;hm.baidu.com/h.js%3F70b541fe48dd916f7163051b0ce5a0e3&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&quot;));</span><span class="cp">{</span><span class="o">%/</span><span class="na">script</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+<span class="cp">{</span><span class="o">%/</span><span class="na">block</span><span class="o">%</span><span class="cp">}</span><span class="x"></span>
+</pre></div>
+<p>在模板框架中，对应的文件调用路径均为 <code>modulename:相对模块根目录的相对路径</code> ：</p>
+<div class="highlight"><pre><span class="c1">//home为模块名，static/lib/css/bootstrap.css为绝对路径截取home模块根目录后的路径</span>
+<span class="p">{</span><span class="o">%</span><span class="n">require</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;home:static/lib/css/bootstrap.css&quot;</span><span class="o">%</span><span class="p">}</span>
+</pre></div>
+<h3 id="toc_1">前端模板</h3>
+
+<p>在FIS中，集成了<a href="http://baidufe.github.com/BaiduTemplate">百度前端模板</a>。在编译过程中，会静态编译baidu template，不需要线上编译，提高页面运行效率。</p>
+
+<p>在JS代码中，通过 <strong>__inline</strong> 方式进行编译处理前端模板。同时规定以 <strong>tmpl</strong> 为后缀的文件为前端模板，使用方式：</p>
+<div class="highlight"><pre><span class="c1">//编译前</span>
+<span class="kd">var</span> <span class="nx">demoTemplate</span> <span class="o">=</span> <span class="nx">__inline</span><span class="p">(</span><span class="s1">&#39;demo.tmpl&#39;</span><span class="p">);</span>
+<span class="c1">//编译后</span>
+<span class="kd">var</span> <span class="nx">demoTemplate</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_template_object</span><span class="p">)</span> <span class="p">{</span>
+       <span class="p">.......</span>
+<span class="p">};</span>
+</pre></div>
+<p>在使用前端模板时需要注意的问题：</p>
+<div class="highlight"><pre><span class="c1">//在__inline前端模板前加载template对象</span>
+<span class="n">require</span><span class="p">(</span><span class="s">&quot;common:static/lib/template.js&quot;</span><span class="p">)</span>
+<span class="c1">//或者通过全局加载的方式</span>
+<span class="p">{</span><span class="o">%</span><span class="n">require</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;common:static/lib/template.js&quot;</span><span class="o">%</span><span class="p">}</span>
+</pre></div>
+<p>template的安装方式</p>
+<div class="highlight"><pre><span class="c1">//在common的static/lib目录下执行下面命令</span>
+<span class="err">$</span> <span class="n">lights</span> <span class="n">install</span> <span class="n">template</span>
+</pre></div>
+<h3 id="toc_2">模板组件化</h3>
+
+<p>模板组件是能独立提供功能且能够复用的页面片段，所在规范目录 <strong>模块根目录/widget/</strong> ，模板组件以模板、JS组件、CSS组件组成（默认必须有模板）。</p>
+
+<h3 id="toc_3">widget定义</h3>
+
+<p>只要在widget目录下的Smarty模板即为模板组件，<code>目录下有与模板同名的JS、CSS文件FIS会自动添加依赖关系处理，在模板渲染时进行同步加载</code>。</p>
+
+<h3 id="toc_4">widget调用</h3>
+
+<p>调用一个模板组件需要通过widget语法，如我们想调用home下的section模板组件，则语法为</p>
+<div class="highlight"><pre><span class="c1">//调用模板的路径为 modulename:模板在widget目录下路径</span>
+<span class="p">{</span><span class="o">%</span><span class="n">widget</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;home:widget/section/section.tpl&quot;</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+<h3 id="toc_5">widget函数调用方式</h3>
+
+<p>widget插件可以直接调用某个smarty的function函数，使用方式为:</p>
+<div class="highlight"><pre><span class="c1">//在模板中定义function函数</span>
+<span class="p">{</span><span class="o">%</span><span class="k">function</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;functionDemo&quot;</span><span class="o">%</span><span class="p">}</span>
+       <span class="p">.............</span>
+<span class="p">{</span><span class="o">%/</span><span class="k">function</span><span class="o">%</span><span class="p">}</span>
+<span class="o">------------------------------------</span>
+<span class="c1">//在模板中调用此函数</span>
+<span class="p">{</span><span class="o">%</span><span class="n">widget</span> <span class="n">call</span><span class="o">=</span><span class="s">&quot;functionDemo&quot;</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>

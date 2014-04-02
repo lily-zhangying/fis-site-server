@@ -1,0 +1,97 @@
+<p>##Pages and Layout Based On Smarty</p>
+
+<p>We provide a framework based on Smarty3/PHP for template, there are alse other back-end solutions coming soon, like java, go, etc. The framework provide some smarty html tag for use so we can efficiently control the loading of static resources. </p>
+
+<p>####{%html%}</p>
+
+<p>The smarty html tag is used to dynamic control the output of page, usage:</p>
+<div class="highlight"><pre><span class="p">{</span><span class="o">%</span><span class="n">html</span><span class="o">%</span><span class="p">}</span>
+  <span class="p">....</span>
+<span class="p">{</span><span class="o">%/</span><span class="n">html</span><span class="o">%</span><span class="p">}</span>
+</pre></div>
+<p>####{%head%}</p>
+
+<p>The smarty head tag is used to dynamic control the output of head, so we can automatic load synchronous static resource.</p>
+
+<p><img src="./images/head.jpg" alt="head"/></p>
+
+<p>####{%body%}</p>
+
+<p>The smarty body tag is used to dynamic control the output of body.</p>
+
+<p><img src="./images/body.jpg" alt="body"/></p>
+
+<p>####{%script%}</p>
+
+<p>The smarty body tag is used to dynamic control the output of script,  so we can automatic concentrate JavaScript files at the bottom of the page.</p>
+
+<p><img src="./images/script.jpg" alt="script"/></p>
+
+<p>####{%require%}</p>
+
+<p>The smarty require tag is used to dynamic control the output of static resources, usage:</p>
+
+<p><img src="./images/require.jpg" alt="require"/></p>
+
+<p>####{%widget%}</p>
+
+<p>The smarty widget tag is used to dynamic control the output of widget static resources and html, usage:</p>
+
+<p><img src="./images/widget.jpg" alt="widget"/></p>
+
+<p>You can find more in <a href="./doc/widget.md">How to Develop With Widgets</a>.</p>
+
+<p>###layout and page demo</p>
+
+<p>layout.tpl from common subsystem:</p>
+<div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="cp">{%</span><span class="k">html</span><span class="cp">%}</span>
+    <span class="cp">{%</span><span class="k">head</span><span class="cp">%}</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">&quot;{%$description%}&quot;</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>{%$title%}<span class="nt">&lt;/title&gt;</span>
+        <span class="cp">{%</span><span class="k">block</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;block_head_static&quot;</span><span class="cp">%}</span>{%/block%}
+    {%/head%}
+    <span class="cp">{%</span><span class="k">body</span><span class="cp">%}</span>
+    <span class="cp">{%</span><span class="k">block</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="cp">%}</span>{%/block%}
+    {%/body%}
+{%/html%}
+</pre></div>
+<p>index.tpl from ordinary subsystem:</p>
+<div class="highlight"><pre>{%* extends from common layout.tpl *%}
+<span class="cp">{%</span><span class="k">extends</span> <span class="nv">file</span><span class="o">=</span><span class="s2">&quot;common/page/layout.tpl&quot;</span><span class="cp">%}</span>
+<span class="cp">{%</span><span class="k">block</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;block_head_static&quot;</span><span class="cp">%}</span>
+    <span class="c">&lt;!--[if lt IE 9]&gt;</span>
+<span class="c">        &lt;script src=&quot;/lib/js/html5.js&quot;&gt;&lt;/script&gt;</span>
+<span class="c">    &lt;![endif]--&gt;</span>
+    {%* registered dependence *%}
+    <span class="cp">{%</span><span class="k">require</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/css/bootstrap.css&quot;</span><span class="cp">%}</span>
+    <span class="cp">{%</span><span class="k">require</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/css/bootstrap-responsive.css&quot;</span><span class="cp">%}</span>
+    <span class="cp">{%</span><span class="k">require</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;home:static/lib/js/jquery-1.10.1.js&quot;</span><span class="cp">%}</span>
+{%/block%}
+<span class="cp">{%</span><span class="k">block</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="cp">%}</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;wrapper&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+            {%* load widget *%}
+            <span class="cp">{%</span><span class="k">widget</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;common:widget/sidebar/sidebar.tpl&quot;</span> <span class="nv">data</span><span class="o">=</span><span class="p">$</span><span class="nv">docs</span> <span class="cp">%}</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+            {%* load widget *%}
+            <span class="cp">{%</span><span class="k">widget</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;home:widget/slogan/slogan.tpl&quot;</span><span class="cp">%}</span>
+            <span class="cp">{%</span><span class="k">foreach</span> <span class="p">$</span><span class="nv">docs</span> <span class="k">as</span> <span class="p">$</span><span class="nv">index</span><span class="o">=&gt;</span><span class="p">$</span><span class="nv">doc</span><span class="cp">%}</span>
+                <span class="cp">{%</span><span class="k">widget</span>
+                    <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;home:widget/section/section.tpl&quot;</span>
+                    <span class="nv">call</span><span class="o">=</span><span class="s2">&quot;section&quot;</span>
+                    <span class="nv">data</span><span class="o">=</span><span class="p">$</span><span class="nv">doc</span> <span class="nv">index</span><span class="o">=</span><span class="p">$</span><span class="nv">index</span>
+                <span class="cp">%}</span>
+            {%/foreach%}
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="cp">{%</span><span class="k">require</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;home:static/index/index.css&quot;</span><span class="cp">%}</span>
+    {%* collect JS fragments via script plugin *%}
+    <span class="cp">{%</span><span class="k">script</span><span class="cp">%}</span>
+        var _bdhmProtocol = ((&quot;https:&quot; == document.location.protocol) ? &quot; https://&quot; : &quot; http://&quot;);
+        document.write(unescape(&quot;%3Cscript src=&#39;&quot; + _bdhmProtocol + &quot;hm.baidu.com/h.js%3F70b541fe48dd916f7163051b0ce5a0e3&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&quot;));
+    {%/script%}
+{%/block%}
+</pre></div>

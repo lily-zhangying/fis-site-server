@@ -1,0 +1,68 @@
+<!--
+title: 产出配置
+toc: <ul class="nav"><li><a href="#toc_0">配置</a></li><li><a href="#toc_1">默认配置</a></li><li><a href="#toc_2">修改配置</a></li></ul>
+-->
+
+<blockquote>
+<p>FIS-Plus根据目录规范设置产出目录，fis系统可以根据配置控制文件的产出路径。</p>
+</blockquote>
+
+<h2 id="toc_0">配置</h2>
+
+<p>用户可以根据在配置中设置 <strong>roadmap</strong> 节点来控制文件的产出路径，以及在资源表中的属性等，配置如下：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;roadmap&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">ext</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="nx">md</span> <span class="o">:</span> <span class="s1">&#39;html&#39;</span>  <span class="c1">//将md后缀的文件转为html文件</span>
+        <span class="p">},</span>
+        <span class="nx">path</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="c1">//匹配所有md文件</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.md&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/template/目录下</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/template/${namespace}$&amp;&#39;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="c1">//所有静态资源文件都使用 http://s1.example.com 或者 http://s2.example.com 作为域名</span>
+        <span class="nx">domain</span> <span class="o">:</span> <span class="s1">&#39;http://s1.example.com, http://s2.example.com&#39;</span>
+<span class="p">});</span>
+</pre></div>
+<p>更多的配置方式请参考<a href="https://github.com/fis-dev/fis/wiki/%E9%85%8D%E7%BD%AEAPI#roadmappath">目录规范与域名配置</a>。</p>
+
+<h2 id="toc_1">默认配置</h2>
+
+<p>FIS-Plus根据目录规范默认设置了文件的产出路径：</p>
+<div class="highlight"><pre>└── config
+│    └── modulename-map.json    静态资源表
+├── template 
+│    ├──home
+│    │   └── page
+│    │         └── index.tpl      page级模板文件
+│    │   └── widget
+│    │         └── menu
+│    │           └── menu.tpl   widget模板文件
+├── static
+│    └── home
+│    │   ├── pkg
+│    │   │   ├── demo.css  打包css文件
+│    │   │   └── demo.js   打包js文件       
+│    │   ├── index
+│    │   │   ├── index.css  page级css文件
+│    │   │   └── index.js   page级js文件
+│    │   └── widget             widget组件目录
+│    │       └── section
+│    │               └── section.css
+├── plugin
+├── <span class="nb">test</span>
+</pre></div>
+<p>具体的默认配置请参考<a href="/solutions/fis-plus/FIS-Plus%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88">FIS-Plus配置方案</a>。</p>
+
+<h2 id="toc_2">修改配置</h2>
+
+<p>用户如果想对其中某条配置进行修改或者新增加，可进行如下操作：</p>
+<div class="highlight"><pre><span class="c1">//增加对static/lib目录下的文件产出设置</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;roadmap.path&#39;</span><span class="p">).</span><span class="nx">unshift</span><span class="p">({</span>
+     <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/\/static\/lib\/(.*)/i</span><span class="p">,</span>
+     <span class="nx">isMod</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+     <span class="nx">release</span><span class="o">:</span> <span class="s1">&#39;/static/${namespace}/lib/$2&#39;</span>
+<span class="p">});</span>
+</pre></div>

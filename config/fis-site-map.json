@@ -1,0 +1,203 @@
+{
+    "res": {
+        "fis-site:page/blog.tpl": {
+            "uri": "/template/fis-site/page/blog.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
+        "fis-site:page/blog/detail.tpl": {
+            "uri": "/template/fis-site/page/blog/detail.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
+        "fis-site:page/blog/list.tpl": {
+            "uri": "/template/fis-site/page/blog/list.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/cases.tpl": {
+            "uri": "/template/fis-site/page/cases.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/detail.tpl": {
+            "uri": "/template/fis-site/page/detail.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
+        "fis-site:page/developer.tpl": {
+            "uri": "/template/fis-site/page/developer.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
+        "fis-site:page/error.tpl": {
+            "uri": "/template/fis-site/page/error.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/index.tpl": {
+            "uri": "/template/fis-site/page/index.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/index_en.tpl": {
+            "uri": "/template/fis-site/page/index_en.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/layout.tpl": {
+            "uri": "/template/fis-site/page/layout.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/solutions.tpl": {
+            "uri": "/template/fis-site/page/solutions.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            }
+        },
+        "fis-site:page/userdoc.tpl": {
+            "uri": "/template/fis-site/page/userdoc.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
+        "fis-site:page/userdoc_en.tpl": {
+            "uri": "/template/fis-site/page/userdoc_en.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
+        "fis-site:static/css/blog.css": {
+            "uri": "/static/fis-site/css/blog.css",
+            "type": "css"
+        },
+        "fis-site:static/css/bootstrap-theme.css": {
+            "uri": "/static/fis-site/css/bootstrap-theme.css",
+            "type": "css"
+        },
+        "fis-site:static/css/bootstrap.css": {
+            "uri": "/static/fis-site/css/bootstrap.css",
+            "type": "css"
+        },
+        "fis-site:static/css/cases.css": {
+            "uri": "/static/fis-site/css/cases.css",
+            "type": "css"
+        },
+        "fis-site:static/css/font-awesome.css": {
+            "uri": "/static/fis-site/css/font-awesome.css",
+            "type": "css"
+        },
+        "fis-site:static/css/front.css": {
+            "uri": "/static/fis-site/css/front.css",
+            "type": "css"
+        },
+        "fis-site:static/css/global.css": {
+            "uri": "/static/fis-site/css/global.css",
+            "type": "css"
+        },
+        "fis-site:static/css/syntax.css": {
+            "uri": "/static/fis-site/css/syntax.css",
+            "type": "css"
+        },
+        "fis-site:static/js/bootstrap.js": {
+            "uri": "/static/fis-site/js/bootstrap.js",
+            "type": "js"
+        },
+        "fis-site:static/js/jquery-1.10.2.js": {
+            "uri": "/static/fis-site/js/jquery-1.10.2.js",
+            "type": "js"
+        },
+        "fis-site:static/js/mod.js": {
+            "uri": "/static/fis-site/js/mod.js",
+            "type": "js"
+        },
+        "fis-site:widget/desc/desc.css": {
+            "uri": "/static/fis-site/widget/desc/desc.css",
+            "type": "css"
+        },
+        "fis-site:widget/desc/desc.tpl": {
+            "uri": "fis-site/widget/desc/desc.tpl",
+            "type": "tpl",
+            "deps": [
+                "fis-site:widget/desc/desc.css"
+            ]
+        },
+        "fis-site:widget/footer/footer.css": {
+            "uri": "/static/fis-site/widget/footer/footer.css",
+            "type": "css"
+        },
+        "fis-site:widget/footer/footer.tpl": {
+            "uri": "fis-site/widget/footer/footer.tpl",
+            "type": "tpl",
+            "deps": [
+                "fis-site:widget/footer/footer.css"
+            ]
+        },
+        "fis-site:widget/header/header.tpl": {
+            "uri": "fis-site/widget/header/header.tpl",
+            "type": "tpl"
+        },
+        "fis-site:widget/js/sidebar.js": {
+            "uri": "/static/fis-site/widget/js/sidebar.js",
+            "type": "js"
+        },
+        "fis-site:widget/solution/solution.tpl": {
+            "uri": "fis-site/widget/solution/solution.tpl",
+            "type": "tpl"
+        },
+        "fis-site:widget/whatisfis/whatisfis.css": {
+            "uri": "/static/fis-site/widget/whatisfis/whatisfis.css",
+            "type": "css"
+        },
+        "fis-site:widget/whatisfis/whatisfis.tpl": {
+            "uri": "fis-site/widget/whatisfis/whatisfis.tpl",
+            "type": "tpl",
+            "deps": [
+                "fis-site:widget/whatisfis/whatisfis.css"
+            ]
+        }
+    },
+    "pkg": {}
+}

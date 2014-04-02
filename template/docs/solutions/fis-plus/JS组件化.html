@@ -1,0 +1,42 @@
+<h2 id="toc_0">组件化处理</h2>
+
+<p>在FIS-Plus解决方案中，默认设置了widget为组件化目录，则widget目录下的JS文件都是JS组件，同时在编译处理过程中会对JS文件进行组件化define包装处理，。<br/>
+* JS源码：<br/>
+```javascript<br/>
+//common/widget/menu/menu.js<br/>
+var $ = require(&#39;common:widget/jquery/jquery.js&#39;);</p>
+
+<p>exports.init = function() {<br/>
+    $(&#39;.menu-ui ul li a&#39;).click(function(event) {<br/>
+        var self = this;<br/>
+        $(&#39;.menu-ui ul li a.active&#39;).removeClass(&#39;active&#39;);<br/>
+        $(self).addClass(&#39;active&#39;);<br/>
+        event.preventDefault();<br/>
+    });<br/>
+};<br/>
+<code><br/>
+* 编译后代码：<br/>
+</code>javascript<br/>
+define(&#39;common:widget/menu/menu.js&#39;, function(require, exports, module){<br/>
+    var $ = require(&#39;common:widget/jquery/jquery.js&#39;);<br/>
+    exports.init = function() {<br/>
+        $(&#39;.menu-ui ul li a&#39;).click(function(event) {<br/>
+            var self = this;<br/>
+            $(&#39;.menu-ui ul li a.active&#39;).removeClass(&#39;active&#39;);<br/>
+            $(self).addClass(&#39;active&#39;);<br/>
+            event.preventDefault();<br/>
+        });<br/>
+    };<br/>
+});<br/>
+```</p>
+
+<p>##目录设置</p>
+
+<p>在FIS中，如果需要设置文件的产出路径、访问url、资源id、默认依赖以及文件类型等，需要通过<a href="https://github.com/fis-dev/fis/wiki/%E9%85%8D%E7%BD%AEAPI#roadmappath">roadmap.path</a>来进行配置。FIS-PC解决方案中已经对各类目录属性进行了配置，具体的配置可以查看npm模块中fis-pc/fis-pc.js对roadmap.path的配置，用户如果想对其中某条配置进行修改或者新增加，可进行如下操作：</p>
+<div class="highlight"><pre><span class="c1">//增加对static/lib目录下的文件产出设置</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;roadmap.path&#39;</span><span class="p">).</span><span class="nx">unshift</span><span class="p">({</span>
+     <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/\/static\/lib\/(.*)/i</span><span class="p">,</span>
+     <span class="nx">isMod</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+     <span class="nx">release</span><span class="o">:</span> <span class="s1">&#39;/static/${namespace}/lib/$2&#39;</span>
+<span class="p">});</span>
+</pre></div>

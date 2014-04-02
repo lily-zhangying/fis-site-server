@@ -1,0 +1,78 @@
+<!--
+title: 在js中定位资源
+toc: 
+-->
+
+<blockquote>
+<p>js语言中，可以使用编译函数 <strong>__uri(path)</strong> 来定位资源，fis分析js文件或 <strong>html中的script标签内内容</strong> 时会替换该函数所指向文件的线上url路径。</p>
+</blockquote>
+
+<ul>
+<li><p>源码:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="nx">__uri</span><span class="p">(</span><span class="s1">&#39;images/logo.gif&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="s1">&#39;/images/logo_74e5229.gif&#39;</span><span class="p">;</span>
+</pre></div></li>
+<li><p>源码:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">css</span> <span class="o">=</span> <span class="nx">__uri</span><span class="p">(</span><span class="s1">&#39;demo.css&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">css</span> <span class="o">=</span> <span class="s1">&#39;/demo_7defa41.css&#39;</span><span class="p">;</span>
+</pre></div></li>
+<li><p>源码:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">js</span> <span class="o">=</span> <span class="nx">__uri</span><span class="p">(</span><span class="s1">&#39;demo.js&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">js</span> <span class="o">=</span> <span class="s1">&#39;/demo_33c5143.js&#39;</span><span class="p">;</span>
+</pre></div></li>
+</ul>
+
+<p><strong>资源定位结果可以被fis的配置文件控制</strong>，比如添加配置，调整文件发布路径：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">path</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的js文件</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.js&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/js/xxx目录下</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/js$&amp;&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有的css文件</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.css&#39;</span><span class="p">,</span>
+                <span class="c1">//发布到/static/css/xxx目录下</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/css$&amp;&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//所有image目录下的.png，.gif文件</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/^\/images\/(.*\.(?:png|gif))/i</span><span class="p">,</span>
+                <span class="c1">//发布到/static/pic/xxx目录下</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/pic/$1&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+<p>再次编译得到：</p>
+
+<ul>
+<li><p>源码:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="nx">__uri</span><span class="p">(</span><span class="s1">&#39;images/logo.gif&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="s1">&#39;/static/pic/logo_74e5229.gif&#39;</span><span class="p">;</span>
+</pre></div></li>
+<li><p>源码:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">css</span> <span class="o">=</span> <span class="nx">__uri</span><span class="p">(</span><span class="s1">&#39;demo.css&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">css</span> <span class="o">=</span> <span class="s1">&#39;/static/css/demo_7defa41.css&#39;</span><span class="p">;</span>
+</pre></div></li>
+<li><p>源码:</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">js</span> <span class="o">=</span> <span class="nx">__uri</span><span class="p">(</span><span class="s1">&#39;demo.js&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>编译后</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">js</span> <span class="o">=</span> <span class="s1">&#39;/static/js/demo_33c5143.js&#39;</span><span class="p">;</span>
+</pre></div></li>
+</ul>

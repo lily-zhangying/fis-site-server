@@ -1,0 +1,50 @@
+<!--
+title: 打包配置
+toc: <ul class="nav"><li><a href="#toc_0">配置</a></li><li><a href="#toc_1">打包策略</a></li><li><a href="#toc_2">基本打包原则</a></li></ul>
+-->
+
+<blockquote>
+<p>FIS-Plus提供静态资源管理系统，支持通过运行时计算静态资源使用情况来加载对应的静态资源。为了达到合理的高性能的加载方式，用户可以将静态资源进行合并。</p>
+</blockquote>
+
+<h2 id="toc_0">配置</h2>
+
+<p>用户可以在配置文件中，通过配置将静态资源进行合并处理，对demo-home模块增加打包配置：</p>
+<div class="highlight"><pre><span class="c1">//fis-conf.js</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;pack&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="c1">//打包所有static目录下的JS文件</span>
+        <span class="s1">&#39;pkg/aio.js&#39;</span> <span class="o">:</span> <span class="sr">/^\/static\/(.*\.js)$/i</span><span class="p">,</span>
+        <span class="s1">&#39;pkg/widget.js&#39;</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="sr">/^\/widget\/ui\/(.*\.js)$/i</span><span class="p">,</span>
+            <span class="s1">&#39;/widget/menu/menu.js&#39;</span>
+        <span class="p">],</span>
+        <span class="c1">//打包所有的css文件</span>
+        <span class="c1">//将内容输出为static/pkg/aio.css文件</span>
+        <span class="s1">&#39;pkg/aio.css&#39;</span> <span class="o">:</span> <span class="s1">&#39;**.css&#39;</span>
+<span class="p">});</span>
+</pre></div>
+<p>打包配置支持正则、字符串以及通配符，用户可灵活根据自己需求进行资源打包，同时注意以下打包细节：</p>
+
+<ul>
+<li>每个包只对应js或css类型，请误将其他非同类文件配置合并至包内，特别是使用通配符配置时，请注意目录下是否有其他非同类型文件</li>
+<li>使用正则配置时需要添加定界符，不然将会达不到用户配置预期</li>
+</ul>
+
+<p>输出结果：使用命令 fis release <strong>--pack</strong> --md5 --dest ./output 编译项目，然后到output目录下查看产出的home-map.json内容.fis内置的 <a href="https://github.com/fis-dev/fis/wiki/%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86#----1">打包原理</a> 与传统的打包概念不同，fis的打包实际上是在建立一个资源表，并将其描述并产出为一份map.json文件，用户应该围绕着这份描述文件来设计前后端运行框架，从而实现运行时判断打包输出策略的架构。</p>
+
+<h2 id="toc_1">打包策略</h2>
+
+<ul>
+<li>每个资源包之间不会有重复资源，合并处理包时会根据配置节点顺序，将资源合并至资源包中。</li>
+<li>根据资源包配置的匹配规则，进行资源顺序排序。</li>
+<li>每个资源包中的静态资源，会根据文件之间的依赖关系进行自动排序。</li>
+</ul>
+
+<h2 id="toc_2">基本打包原则</h2>
+
+<ul>
+<li>根据静态资源复用率情况，可将复用率较高的可合并在一起，复用率较低的可合并一起，同时可根据使用情况对静态资源不进行打包。</li>
+<li>在common模块中，可以根据其他业务模块使用common资源情况进行打包，将复用高的资源合并打包，将个别模块使用的资源独立打包。</li>
+<li>需要独立加载的JS组件资源，可不合并在包中，运行时会自动按需加载。</li>
+<li>对匹配成功的资源会合并进资源包中，同时其依赖的资源会记录在资源表中，如果需要加载资源包时，会先加载依赖的文件。</li>
+</ul>

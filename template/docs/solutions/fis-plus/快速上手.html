@@ -1,0 +1,153 @@
+<p>% 快速上手<br/>
+% FIS team</p>
+<div class="highlight"><pre><span class="n">FIS</span><span class="o">-</span><span class="n">Plus</span><span class="err">解决方案在</span><span class="n">FIS</span><span class="err">解决方案基础上进行的</span><span class="n">PC</span><span class="err">项目的特性包装，分别从：</span> <span class="err">前端框架，模板框架，自动化工具，辅助开发工具，四个部分针对性的进行设计开发。百度前端团队推出的这套标准的</span><span class="n">FIS</span><span class="o">-</span><span class="n">Plus</span><span class="err">解决方案可以支持从最简单的</span><span class="n">PC</span><span class="err">项目开发到复杂庞大的</span><span class="n">PC</span><span class="err">系统开发。本文将为大家介绍如何安装、使用上手。</span>
+</pre></div>
+<h2 id="toc_0">安装</h2>
+<div class="highlight"><pre><span class="nv">$ </span>npm install -g fis-plus
+</pre></div>
+<p>FIS-Plus的 <strong>自动化/辅助开发工具</strong> 被发布为一套 <a href="https://npmjs.org/package/fis-plus">npm包</a>，对它对环境的要求是：</p>
+
+<ul>
+<li>操作系统：任何能安装 <a href="http://nodejs.org/">nodejs</a> 的操作系统</li>
+<li>node版本：&gt;= v0.8.0</li>
+<li>jre版本：&gt;= v1.5.0 <em>【如果不需要本地调试服务器，可以忽略java环境要求】</em></li>
+<li>php-cgi版本：&gt;= v5.0.0 <em>【如果不需要本地调试服务器，可以忽略php-cgi环境要求】</em></li>
+</ul>
+
+<p>安装好FIS-Plus之后，执行 <strong>fisp -v</strong>，如果看到下面信息，恭喜，你已安装成功！</p>
+
+<p><img src="http://e.hiphotos.bdimg.com/album/s%3D550%3Bq%3D90%3Bc%3Dxiangce%2C100%2C100/sign=44f334bf4034970a4373102aa5f1a0f5/fc1f4134970a304ec93f5c6ad0c8a786c9175c05.jpg?referer=d5fb7f5d5366d016270eab189c1b&amp;x=.jpg" alt="FIS-Plus -v"/></p>
+
+<p>同时为了FIS-Plus解决方案提供了本地开发环境一系列的功能，包括 <strong>本地调试环境、模拟转发模块、测试数据模块</strong> ，安装命令：</p>
+<div class="highlight"><pre><span class="n">fisp</span> <span class="n">server</span> <span class="n">install</span> <span class="n">pc</span>
+</pre></div>
+<p>安装成功后，你将拥有百度前端团队倾情打造的前端集成解决方案的开发调试环境啦！ </p>
+
+<h2 id="toc_1">三条命令，满足你的所有需求。</h2>
+
+<p>执行 <strong>fisp --help</strong> 让我们来看一下fis命令的相关帮助：</p>
+<div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">fis</span><span class="o">-</span><span class="n">plus</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
+
+<span class="n">Commands</span><span class="o">:</span>
+
+  <span class="n">release</span>     <span class="n">build</span> <span class="n">and</span> <span class="n">deploy</span> <span class="n">your</span> <span class="n">project</span>
+  <span class="n">install</span>     <span class="n">install</span> <span class="n">components</span> <span class="n">and</span> <span class="n">demos</span>
+  <span class="n">server</span>      <span class="n">launch</span> <span class="n">a</span> <span class="n">php</span><span class="o">-</span><span class="n">cgi</span> <span class="n">server</span>
+
+<span class="n">Options</span><span class="o">:</span>
+
+  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>     <span class="n">output</span> <span class="n">usage</span> <span class="n">information</span>
+  <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">output</span> <span class="n">the</span> <span class="n">version</span> <span class="n">number</span>
+  <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">color</span>     <span class="n">disable</span> <span class="n">colored</span> <span class="n">output</span>
+</pre></div>
+<p>正如你所见，使用fis你需要——也只需要——记住三条命令：</p>
+
+<ul>
+<li><strong>fisp release</strong>： 编译并发布你的项目</li>
+<li><strong>fisp install</strong>：安装fis仓库提供的各种 <strong>组件，框架，库，样例项目，甚至配置文件</strong> 等模块</li>
+<li><strong>fisp server</strong>：启动一个 <strong>1.8M</strong> 大小的内置调试服务器，它采用php-java-bridge技术实现， <em>依赖java、php-cgi外部环境</em> ，可以 <strong>完美支持运行php程序</strong> 哦。</li>
+</ul>
+
+<h2 id="toc_2">fis install &lt;name&gt;</h2>
+
+<p>install命令被设计用来 <strong>各种安装</strong>，无论你是想初始化一个模块，还是想下载一个前端基础库，亦或下载一份配置文件，总之但凡开发需要的，只要fis仓库里有，你就用它来安装就对了。 </p>
+
+<p>比如你可以在你的common/static目录下安装最新的前端框架modjs:</p>
+<div class="highlight"><pre><span class="n">fisp</span> <span class="n">install</span> <span class="n">modjs</span>
+</pre></div>
+<h2 id="toc_3">fis release [options]</h2>
+
+<p>release是一个非常强大的命令，它的主要任务就是进行代码的 <strong>编译</strong> 与 <strong>部署</strong>，它的参数囊括了前端开发所需的各种基础功能：</p>
+
+<ol>
+<li>添加 <strong>--watch</strong> 或 <strong>-w</strong> 参数，支持对项目进行增量编译，监听文件变化再触发编译</li>
+<li>添加 <strong>--live</strong> 或 <strong>-L</strong> 参数，支持编译后自动刷新浏览器。fis需要使用 <a href="http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-">LiveReload浏览器扩展</a> 来连接fis的livereload服务器：
+
+<ul>
+<li><a href="http://download.livereload.com/2.0.9/LiveReload-2.0.9.safariextz">Safari</a></li>
+<li><a href="https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei">Chrome</a></li>
+<li><a href="http://download.livereload.com/2.0.8/LiveReload-2.0.8.xpi">Firefox</a></li>
+<li><a href="https://github.com/dvdotsenko/livereload_ie_extension/downloads">IE</a> - 真应该滚粗地球</li>
+</ul></li>
+<li><p>添加 <strong>--dest [path|name]</strong> 或 <strong>-d</strong> 参数，来指定编译后的代码部署路径，支持发布到 <strong>本地目录、本地调试服务器目录、远程机器目录(需要配置)</strong>，它与--watch参数配合使用，可以让你的代码保存就上传！而且--dest值支持逗号分隔，这也就意味着，你 <strong>一次编译可以同时发布到本地以及多台远程机器上</strong>！举几个栗子：</p>
+
+<ul>
+<li><p>发布到fis server open目录下用于本地调试</p>
+<div class="highlight"><pre><span class="o">:::</span><span class="n">txt</span>
+<span class="n">fisp</span> <span class="n">release</span>
+<span class="cp"># or</span>
+<span class="n">fisp</span> <span class="n">release</span> <span class="o">--</span><span class="n">dest</span> <span class="n">preview</span>
+</pre></div></li>
+</ul></li>
+</ol>
+<div class="highlight"><pre><span class="o">*</span> <span class="err">发布到项目根目录的</span><span class="n">output</span><span class="err">目录下，</span> <span class="n">_</span><span class="err">注意，这里的</span><span class="n">output</span><span class="err">其实是一个内置的部署配置名，而不是一个目录名</span><span class="n">_</span><span class="err">。</span>
+
+        <span class="o">:::</span><span class="n">txt</span>
+        <span class="n">fisp</span> <span class="n">release</span> <span class="o">-</span><span class="n">d</span> <span class="n">output</span>
+
+<span class="o">*</span> <span class="err">发布到相对</span> <span class="err">``工作目录``</span> <span class="err">的路径</span>
+
+        <span class="o">:::</span><span class="n">txt</span>
+        <span class="n">fisp</span> <span class="n">release</span> <span class="o">-</span><span class="n">d</span> <span class="p">..</span><span class="o">/</span><span class="n">output</span>
+
+<span class="o">*</span> <span class="err">发布到绝对路径</span>
+
+        <span class="o">:::</span><span class="n">txt</span>
+        <span class="n">fisp</span> <span class="n">release</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">ouput</span>
+        <span class="err">#</span> <span class="n">win</span>
+        <span class="n">fisp</span> <span class="n">release</span> <span class="o">-</span><span class="n">d</span> <span class="n">d</span><span class="o">:/</span><span class="n">work</span><span class="o">/</span><span class="n">output</span>
+
+<span class="o">*</span> <span class="err">使用配置文件的</span> <span class="p">[</span><span class="n">deploy</span><span class="err">节点配置</span><span class="p">](</span><span class="o">/</span><span class="n">solutions</span><span class="o">/</span><span class="n">fis</span><span class="o">-</span><span class="n">plus</span><span class="o">/%</span><span class="n">E4</span><span class="o">%</span><span class="n">B8</span><span class="o">%</span><span class="mi">8</span><span class="n">A</span><span class="o">%</span><span class="n">E4</span><span class="o">%</span><span class="n">BC</span><span class="o">%</span><span class="n">A0</span><span class="o">%</span><span class="n">E9</span><span class="o">%</span><span class="mi">83</span><span class="o">%</span><span class="n">A8</span><span class="o">%</span><span class="n">E7</span><span class="o">%</span><span class="n">BD</span><span class="o">%</span><span class="n">B2</span><span class="err">#</span><span class="o">%</span><span class="n">E4</span><span class="o">%</span><span class="n">B8</span><span class="o">%</span><span class="mi">8</span><span class="n">A</span><span class="o">%</span><span class="n">E4</span><span class="o">%</span><span class="n">BC</span><span class="o">%</span><span class="n">A0</span><span class="o">%</span><span class="n">E9</span><span class="o">%</span><span class="mi">85</span><span class="o">%</span><span class="mi">8</span><span class="n">D</span><span class="o">%</span><span class="n">E7</span><span class="o">%</span><span class="n">BD</span><span class="o">%</span><span class="n">AE</span><span class="p">)</span> <span class="err">进行发布，此配置可将代码上传至远端</span>
+
+        <span class="o">:::</span><span class="n">txt</span>
+        <span class="n">fisp</span> <span class="n">release</span> <span class="o">-</span><span class="n">d</span> <span class="n">remote</span>
+
+<span class="o">*</span> <span class="err">以上所有发布规则任意组合使用（一次编译同时上传到多台远端机器</span> <span class="o">&amp;</span> <span class="err">项目根目录下的</span><span class="n">output</span> <span class="o">&amp;</span> <span class="err">调试服务器根目录</span> <span class="o">&amp;</span> <span class="err">本地绝对路径）</span>
+
+        <span class="o">:::</span><span class="n">txt</span>
+        <span class="n">fisp</span> <span class="n">releaes</span> <span class="o">-</span><span class="n">d</span> <span class="n">remote</span><span class="p">,</span><span class="n">qa</span><span class="p">,</span><span class="n">rd</span><span class="p">,</span><span class="n">output</span><span class="p">,</span><span class="n">preview</span><span class="p">,</span><span class="n">D</span><span class="o">:/</span><span class="n">work</span><span class="o">/</span><span class="n">output</span>
+</pre></div>
+<ol>
+<li>添加 <strong>--md5 [level]</strong> 或 <strong>-m [level]</strong> 参数，在编译的时候可以对文件自动加md5戳，从此告别在静态资源url后面写?version=xxx的时代</li>
+<li>添加 <strong>--lint</strong> 或 <strong>-l</strong> 参数，支持在编译的时候根据项目配置自动代码检查</li>
+<li>添加 <strong>--test</strong> 或 <strong>-t</strong> 参数，支持在编译的时候对代码进行自动化测试</li>
+<li>添加 <strong>--pack</strong> 或 <strong>-p</strong> 参数，对产出文件根据项目配置进行打包</li>
+<li>添加 <strong>--optimize</strong> 或 <strong>-o</strong> 参数，对js、css、html进行压缩</li>
+</ol>
+
+<h2 id="toc_4">fis server &lt;command&gt; [options]</h2>
+
+<p>提供本地调试，完全模拟线上运行的轻量级服务器，用户可通过配置测试数据、请求模拟等进行线下无后端环境开发。</p>
+
+<p>fis的调试服务器依赖于用户本地的 <strong>jre</strong> 和 <strong>php-cgi</strong> 环境，所以：</p>
+
+<ul>
+<li>如果没有jre环境，请移步 <a href="http://www.java.com/">这里</a> 下载</li>
+<li>如果没有php-cgi环境的，请移步 <a href="http://php.net/downloads.php">这里</a> 下载</li>
+<li>请把java、php-cgi命令添加到环境变量中</li>
+</ul>
+
+<p>搞定环境后，让我们来启动调试服务器看看：</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp server start --no-rewrite
+checking java support : version 1.6.0
+checking php-cgi support : version 5.2.11
+starting fis-server on port : 8080
+</pre></div>
+<p>服务器启动之后，它会自动检查环境，最后告诉你它监听了8080端口，这个时候，你的浏览器应该打开了一个调试服务器根目录的浏览页面，地址是 <strong><a href="http://localhost:8080/">http://localhost:8080/</a></strong>。</p>
+
+<p>常用server命令:</p>
+<div class="highlight"><pre><span class="c1">//启动服务默认端口8080</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">start</span>
+
+<span class="c1">//停止服务</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">stop</span>
+
+<span class="c1">//启动服务设置端口为8081,同时设置php-cgi路径</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">start</span> <span class="o">-</span><span class="n">p</span> <span class="mh">8081</span> <span class="o">--</span><span class="n">php_exec</span> <span class="s">&quot;D:/php/php-cgi.exe&quot;</span>
+
+<span class="c1">//打开本地预览环境</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">open</span>
+
+<span class="c1">//清空本地预览环境,&lt;慎用!&gt;，清空后请安装本地调试环境</span>
+<span class="n">fisp</span> <span class="n">server</span> <span class="n">clean</span> 
+</pre></div>

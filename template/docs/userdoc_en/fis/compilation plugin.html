@@ -1,0 +1,311 @@
+<p>##A Toolset For Production</p>
+
+<p>FIS automation tool is not just a task runner, more precisely speaking, it is a toolset for porduction. You can start working quickly without configuring a lot of independent tasks. The plugins system simply takes files, processes them, and pipes them to the next step. If you need to do something different, it’s rather simple: the fis config is simply a JavaScript file, so you can pull in existing node modules, run them, and be on your way.</p>
+
+<p><img src="./images/compile.png" alt="pipe"/></p>
+
+<p>Listed below are some of the built-in plugins enabled by default. </p>
+
+<p>###Less</p>
+
+<p>Compile less files to CSS.</p>
+
+<p>###Hashres</p>
+
+<p>Revision static file through content hashing and rename the src that refer to them in your html/js/css/etc files.</p>
+
+<p>####In Html</p>
+<div class="highlight"><pre>before:
+<span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;demo.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;demo.css&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;images/logo.gif&quot;</span><span class="nt">/&gt;</span>
+
+after:
+<span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">&quot;百度logo&quot;</span> <span class="na">src=</span><span class="s">&quot;/images/logo_74e5229.gif&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/demo_7defa41.css&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;/demo_33c5143.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+<p>####In JavaScript</p>
+<div class="highlight"><pre><span class="c1">//before:</span>
+<span class="k">var</span> <span class="n">img</span> <span class="o">=</span> <span class="n">__uri</span><span class="p">(&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">logo</span><span class="p">.</span><span class="n">gif</span><span class="p">&#39;);</span>
+<span class="k">var</span> <span class="n">css</span> <span class="o">=</span> <span class="n">__uri</span><span class="p">(&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">css</span><span class="p">&#39;);</span>
+<span class="k">var</span> <span class="n">js</span> <span class="o">=</span> <span class="n">__uri</span><span class="p">(&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;);</span>
+
+<span class="c1">//after:</span>
+<span class="k">var</span> <span class="n">img</span> <span class="o">=</span> <span class="p">&#39;</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">logo_74e5229</span><span class="p">.</span><span class="n">gif</span><span class="p">&#39;;</span>
+<span class="k">var</span> <span class="n">css</span> <span class="o">=</span> <span class="p">&#39;</span><span class="o">/</span><span class="n">demo_7defa41</span><span class="p">.</span><span class="n">css</span><span class="p">&#39;;</span>
+<span class="k">var</span> <span class="n">js</span> <span class="o">=</span> <span class="p">&#39;</span><span class="o">/</span><span class="n">demo_33c5143</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;;</span>
+</pre></div>
+<p>The path output can be controlled by the config file,</p>
+<div class="highlight"><pre><span class="n">fis</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="err">&#39;</span><span class="n">roadmap</span><span class="p">.</span><span class="n">path</span><span class="err">&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1">//all the js files</span>
+        <span class="n">reg</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">**</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">,</span>
+        <span class="c1">//output /static/js/xxx</span>
+        <span class="n">release</span> <span class="o">:</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">js</span><span class="err">$</span><span class="o">&amp;</span><span class="err">&#39;</span>
+    <span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="c1">//before:</span>
+<span class="n">var</span> <span class="n">js</span> <span class="o">=</span> <span class="n">__uri</span><span class="p">(</span><span class="err">&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">);</span>
+
+<span class="c1">//after:</span>
+<span class="n">var</span> <span class="n">js</span> <span class="o">=</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">js</span><span class="o">/</span><span class="n">demo_33c5143</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+<p>####In CSS</p>
+<div class="highlight"><pre><span class="c1">//before:</span>
+<span class="nl">background:</span> <span class="n">url</span><span class="p">(&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
+<span class="nl">_filter:progid:</span><span class="n">DXImageTransform</span><span class="p">.</span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AlphaImageLoader</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="p">&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
+
+<span class="c1">//after:</span>
+<span class="nl">background:</span> <span class="n">url</span><span class="p">(&#39;</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg_1b8c3e0</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
+<span class="nl">_filter:progid:</span><span class="n">DXImageTransform</span><span class="p">.</span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AlphaImageLoader</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="p">&#39;</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg_1b8c3e0</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
+</pre></div>
+<p>###CDN</p>
+
+<p>Properly prepends a CDN url to those assets referenced with absolute paths.</p>
+<div class="highlight"><pre><span class="c1">//fis-conf.js</span>
+<span class="c1">//usage</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="c1">//All static resource files use as a domain name http://s1.example.com or http://s2.example.com</span>
+          <span class="nx">domain</span> <span class="o">:</span> <span class="s1">&#39;http://s1.example.com, http://s2.example.com&#39;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">//another usage</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">domain</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="c1">//All css files in widget directory use as a domain name http://css1.example.com</span>
+              <span class="s1">&#39;widget/**.css&#39;</span> <span class="o">:</span> <span class="s1">&#39;http://css1.example.com&#39;</span><span class="p">,</span>
+            <span class="c1">//All js files in widget directory use as a domain name http://css1.example.com</span>
+              <span class="s1">&#39;**.js&#39;</span> <span class="o">:</span> <span class="p">[</span><span class="s1">&#39;http://js1.example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;http://js2.example.com&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+<p>Use fis release with <code>-- domains</code> parameter to control whether to add domain</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp release --domains --dest ../output
+</pre></div>
+<p>###Inline/Embedded</p>
+
+<p>Embedding js, css, images as base64 data URIs inside your files with <code>?__inline</code> parameter.</p>
+
+<p>####In HTML</p>
+<div class="highlight"><pre><span class="c1">//before:</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;百度logo&quot;</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;images/logo.gif?__inline&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">link</span> <span class="n">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="k">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;demo.css?__inline&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">script</span> <span class="k">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;demo.js?__inline&quot;</span><span class="o">&gt;&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+
+<span class="c1">//after:</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;百度logo&quot;</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;data:image/gif;base64,R0lGODlhDgGBALMAAGBn6eYxLvvy9PnKyfO...Jzna6853wjKc850nPeoYgAgA7&quot;</span><span class="o">/&gt;</span>
+
+<span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span><span class="n">img</span> <span class="p">{</span> <span class="nl">border:</span> <span class="mh">5</span><span class="n">px</span> <span class="n">solid</span> <span class="p">#</span><span class="n">ccc</span><span class="p">;</span> <span class="p">}</span><span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">script</span> <span class="k">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="o">&gt;</span><span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(&#39;</span><span class="n">inline</span> <span class="n">file</span><span class="p">&#39;);</span><span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+</pre></div>
+<p>####In JavaScript</p>
+<div class="highlight"><pre><span class="err">源码：</span>
+<span class="c1">//before:</span>
+<span class="kr">__inline</span><span class="p">(</span><span class="err">&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">img</span> <span class="o">=</span> <span class="kr">__inline</span><span class="p">(</span><span class="err">&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">logo</span><span class="p">.</span><span class="n">gif</span><span class="err">&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">css</span> <span class="o">=</span> <span class="kr">__inline</span><span class="p">(</span><span class="err">&#39;</span><span class="n">a</span><span class="p">.</span><span class="n">css</span><span class="err">&#39;</span><span class="p">);</span>
+
+<span class="c1">//after:</span>
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">js</span> <span class="n">content</span><span class="err">&#39;</span><span class="p">);</span>
+
+<span class="n">var</span> <span class="n">img</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">data</span><span class="o">:</span><span class="n">image</span><span class="o">/</span><span class="n">gif</span><span class="p">;</span><span class="n">base64</span><span class="p">,</span><span class="n">R0lGODlhDgGBALMAAGBn6eYxLvvy9PnKyfO</span><span class="p">...</span><span class="n">Jzna6853wjKc850nPeoYgAgA7</span><span class="err">&#39;</span><span class="p">;</span>
+
+<span class="n">var</span> <span class="n">css</span> <span class="o">=</span> <span class="s">&quot;body </span><span class="se">\n</span><span class="s">{    color: red;</span><span class="se">\n</span><span class="s">}&quot;</span><span class="p">;</span>
+</pre></div>
+<p>####In CSS</p>
+<div class="highlight"><pre><span class="o">//</span><span class="n">before</span><span class="p">:</span>
+<span class="nd">@import</span> <span class="n">url</span><span class="p">(</span><span class="s">&#39;demo.css?__inline&#39;</span><span class="p">);</span>
+
+<span class="o">.</span><span class="n">style</span> <span class="p">{</span>
+    <span class="n">background</span><span class="p">:</span> <span class="n">url</span><span class="p">(</span><span class="n">images</span><span class="o">/</span><span class="n">logo</span><span class="o">.</span><span class="n">gif</span><span class="err">?</span><span class="n">__inline</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="o">//</span><span class="n">after</span><span class="p">:</span>
+<span class="o">//</span><span class="n">the</span> <span class="n">content</span> <span class="kn">from</span> <span class="nn">demo.css</span>
+<span class="n">img</span> <span class="p">{</span> <span class="n">border</span><span class="p">:</span> <span class="mi">5</span><span class="n">px</span> <span class="n">solid</span> <span class="c">#ccc; }</span>
+
+<span class="o">.</span><span class="n">style</span> <span class="p">{</span>
+    <span class="n">background</span><span class="p">:</span> <span class="n">url</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">image</span><span class="o">/</span><span class="n">gif</span><span class="p">;</span><span class="n">base64</span><span class="p">,</span><span class="n">R0lGODlhDgGBALMAAGBn6eYxLvvy9PnKyfO</span><span class="o">...</span><span class="n">Jzna6853wjKc850nPeoYgAgA7</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>###Amd-wrap</p>
+
+<p>Wrap CommonJS files in <code>define(function (require, exports, module) { ... })</code>.</p>
+<div class="highlight"><pre><span class="c1">//before</span>
+<span class="c1">//common/widget/menu/menu.js</span>
+<span class="k">var</span> <span class="err">$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(&#39;</span><span class="nl">common:</span><span class="n">widget</span><span class="o">/</span><span class="n">jquery</span><span class="o">/</span><span class="n">jquery</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;);</span>
+
+<span class="n">exports</span><span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">&#39;).</span><span class="n">click</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="k">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="n">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+        <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">.</span><span class="n">active</span><span class="p">&#39;).</span><span class="n">removeClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+        <span class="err">$</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">addClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+        <span class="k">event</span><span class="p">.</span><span class="n">preventDefault</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">//after</span>
+<span class="n">define</span><span class="p">(&#39;</span><span class="nl">common:</span><span class="n">widget</span><span class="o">/</span><span class="n">menu</span><span class="o">/</span><span class="n">menu</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;,</span> <span class="k">function</span><span class="p">(</span><span class="n">require</span><span class="p">,</span> <span class="n">exports</span><span class="p">,</span> <span class="k">module</span><span class="p">){</span>
+    <span class="k">var</span> <span class="err">$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(&#39;</span><span class="nl">common:</span><span class="n">widget</span><span class="o">/</span><span class="n">jquery</span><span class="o">/</span><span class="n">jquery</span><span class="p">.</span><span class="n">js</span><span class="p">&#39;);</span>
+    <span class="n">exports</span><span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">&#39;).</span><span class="n">click</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="k">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="n">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            <span class="err">$</span><span class="p">(&#39;.</span><span class="n">menu</span><span class="o">-</span><span class="n">ui</span> <span class="n">ul</span> <span class="n">li</span> <span class="n">a</span><span class="p">.</span><span class="n">active</span><span class="p">&#39;).</span><span class="n">removeClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+            <span class="err">$</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">addClass</span><span class="p">(&#39;</span><span class="n">active</span><span class="p">&#39;);</span>
+            <span class="k">event</span><span class="p">.</span><span class="n">preventDefault</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+<span class="p">});</span>
+</pre></div>
+<p>###Uglify-js</p>
+
+<p>Minify JavaScript files with UglifyJS. Use fisp release with <code>--optimize</code> parameter to compress.<br/>
+###Clean-css</p>
+
+<p>Minify CSS files with clean-css. Use fisp release with <code>--optimize</code> parameter to compress.</p>
+
+<p>###Html-compress</p>
+
+<p>Minify html files with html-compress. Use fisp release with <code>--optimize</code> parameter to compress.</p>
+
+<p>###Png-compressor</p>
+
+<p>Compress png images with pngquant. Use fisp release with <code>--optimize</code> parameter to compress.</p>
+
+<p>###Smarty-xss</p>
+
+<p>Prevent Smarty from XSS.</p>
+
+<p>###Concat</p>
+
+<p>Concatenate files. See more in <a href="./pack-configuration.md">Concat Files With Pack Plugin</a>.</p>
+
+<p>###Adaptive Image Spriting</p>
+
+<p>Generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions.</p>
+
+<p>####Usage</p>
+
+<p>Use image src with <code>__sprite</code> parameter</p>
+
+<p><img src="https://raw.github.com/fex-team/fis-spriter-csssprites/master/doc/image/background.png" alt="background"/></p>
+
+<p><strong>before:</strong></p>
+<div class="highlight"><pre><span class="o">//</span><span class="nt">aio</span><span class="nc">.css</span>
+<span class="nc">.header</span><span class="o">,</span> <span class="nc">.footer</span> <span class="p">{</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(/img/1px_bg.png?__sprite)</span> <span class="k">repeat-x</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">150px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">960px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.nav</span> <span class="p">{</span>
+    <span class="k">min-height</span><span class="o">:</span> <span class="m">400px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">100px</span><span class="p">;</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(/img/nav_bg.png?__sprite)</span> <span class="k">repeat-y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_add</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(/img/icon/add.jpg?__sprite)</span> <span class="k">no-repeat</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_mul</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">background</span><span class="o">:</span> <span class="sx">url(/img/icon/mul.jpg?__sprite)</span> <span class="k">no-repeat</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p><strong>after:</strong></p>
+<div class="highlight"><pre><span class="nc">.header</span><span class="o">,</span> <span class="nc">.footer</span> <span class="p">{</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">150px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">960px</span><span class="p">;</span>
+    <span class="k">background-repeat</span><span class="o">:</span> <span class="k">repeat-x</span>
+<span class="p">}</span>
+
+<span class="nc">.nav</span> <span class="p">{</span>
+    <span class="k">min-height</span><span class="o">:</span> <span class="m">400px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">100px</span><span class="p">;</span>
+    <span class="k">background-repeat</span><span class="o">:</span> <span class="k">repeat-y</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_add</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">background-repeat</span><span class="o">:</span> <span class="k">no-repeat</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_mul</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="k">background-repeat</span><span class="o">:</span> <span class="k">no-repeat</span>
+<span class="p">}</span>
+
+<span class="nc">.header</span><span class="o">,</span> <span class="nc">.footer</span> <span class="p">{</span>
+    <span class="k">background-position</span><span class="o">:</span> <span class="m">0px</span> <span class="m">0px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.nav</span> <span class="p">{</span>
+    <span class="k">background-position</span><span class="o">:</span> <span class="m">0px</span> <span class="m">0px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_add</span> <span class="p">{</span>
+    <span class="k">background-position</span><span class="o">:</span> <span class="m">0px</span> <span class="m">0px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_mul</span> <span class="p">{</span>
+    <span class="k">background-position</span><span class="o">:</span> <span class="m">0px</span> <span class="m">-25px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.header</span><span class="o">,</span> <span class="nc">.footer</span> <span class="p">{</span>
+    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&#39;aio_x.png&#39;)</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.nav</span> <span class="p">{</span>
+    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&#39;aio_y.png&#39;)</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.icon_add</span><span class="o">,</span> <span class="nc">.icon_mul</span> <span class="p">{</span>
+    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&#39;aio_z.png&#39;)</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>As shown above, <code>1px_bg.png</code> is merged into <code>aio_x.png</code> , <code>nav_bg.png</code>  is merged into <code>aio_y.png</code>, <code>add.jpg</code> and <code>mul.jpg</code> are merged into <code>aio_z.png</code>.</p>
+
+<p>####background-position</p>
+
+<table><thead>
+<tr>
+<th align="left">usage</th>
+<th align="left">demo</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">background-position: \d+px \d+px;</td>
+<td align="left">background-position: -9px -1px;</td>
+</tr>
+<tr>
+<td align="left">background-position: left  \d+px;</td>
+<td align="left">background-position: left -11px;</td>
+</tr>
+<tr>
+<td align="left">background-position: right \d+px;</td>
+<td align="left">background-position: right -1px;</td>
+</tr>
+<tr>
+<td align="left">background-position: left top;</td>
+<td align="left">background-position: left top;</td>
+</tr>
+<tr>
+<td align="left">background-position: right top;</td>
+<td align="left">background-position: right top;</td>
+</tr>
+</tbody></table>
+
+<p><strong>Use fis release with <code>- p</code> parameter to generate a sprite</strong>.</p>

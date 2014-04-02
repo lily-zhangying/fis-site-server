@@ -1,0 +1,176 @@
+<p>##RoadMap</p>
+
+<h3 id="toc_0">roadmap.path</h3>
+
+<ul>
+<li>explanation：Custom project file attributes, including but not limited to the output path, access url, resource id, dependence, file type。</li>
+<li>type：<code>Array</code></li>
+<li>default：empty</li>
+<li>options：
+
+<ul>
+<li><code>reg</code>：Regular file paths to match (RegExp) or wildcard (String). File path is the path relative to the project root directory to <code>/</code> beginning</li>
+<li><code>release</code>：Set the output file path. The default is the path to the file relative to the project root directory to <code>/</code> beginning. This value can be set to <code>false</code></li>
+<li><code>url</code>：Resource location path of the specified file to <code>/</code> beginning. The default is to release <code>value</code>, url can be released <code>release</code> inconsistent path。</li>
+<li><code>query</code>：Resource Locator query after the specified file path, such as &#39;? T = 123124132&#39;.</li>
+<li><code>id</code>：Resource id specified file. The default is <code>namespace</code> + <code></code> value subpath.</li>
+<li><code>charset</code>：Output encoding specified text file. The default is <code>utf8</code>, can be formulated as a <code>gbk</code> or <code>gb2312</code> and so on.</li>
+<li><code>isHtmlLike</code>：treated like html</li>
+<li><code>isJsLike</code>：treated like js</li>
+<li><code>isCssLike</code>：treated like css</li>
+<li><code>useCompile</code>：Whether to use the compiler</li>
+<li><code>useHash</code>：Specify whether to add the output file md5 stamp</li>
+<li><code>useDomain</code>：Specify whether the domain name is added at the file reference。</li>
+<li><code>useCache</code>：Specify whether to create the file during compilation cache</li>
+<li><code>useMap</code>：Specified in the packing stage whether to add files to the index map.json</li>
+<li><code>useParser</code>：Whether to use the parser</li>
+<li><code>usePreprocessor</code>：Whether to use the preprocessor</li>
+<li><code>useStandard</code>：Specifies whether the file through a built-in three languages ​​standardization process treatment</li>
+<li><code>usePostprocessor</code>：Whether to use the postprocessor</li>
+<li><code>useLint</code>：Whether to use lint</li>
+<li><code>useTest</code>：Whether to use test</li>
+<li><code>useOptimizer</code>：Whether to use lint optimizer</li>
+<li><code>useSprite</code>Whether to use lint csssprite</li>
+<li><code>isMod</code>：Mark file for a component of the file</li>
+<li><code>extras</code>：The additional data map.json for extensions map.json table</li>
+<li><code>requires</code>：The default resource-dependent</li>
+</ul></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">path</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="c1">//All js files in the widget directory</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;widget/**.js&#39;</span><span class="p">,</span>
+                <span class="c1">//Modular file</span>
+                <span class="nx">isMod</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="c1">//default require lib.js</span>
+                <span class="nx">requires</span> <span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;lib.js&#39;</span> <span class="p">],</span>
+                <span class="c1">//attach some information to map.json</span>
+                <span class="nx">extras</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">say</span> <span class="o">:</span> <span class="s1">&#39;123&#39;</span> <span class="p">},</span>
+                <span class="c1">//release to /static/widget/xxx</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static$&amp;&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//all js files</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.js&#39;</span><span class="p">,</span>
+                <span class="c1">//release to /static/js/xxx</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/js$&amp;&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//all ico files</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="s1">&#39;**.ico&#39;</span><span class="p">,</span>
+                <span class="c1">//do not use hash</span>
+                <span class="nx">useHash</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="c1">//release to /static/xxx</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static$&amp;&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//all png,gif files</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/^\/images\/(.*\.(?:png|gif))/i</span><span class="p">,</span>
+                <span class="c1">//url</span>
+                <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;/m/$1?log_id=123&#39;</span><span class="p">,</span>
+                <span class="c1">//release to /static/pic/xxx</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/static/pic/$1&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//all php files in template directory</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/^\/template\/(.*\.php)/i</span><span class="p">,</span>
+                <span class="c1">//treate like html</span>
+                <span class="nx">isHtmlLike</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="c1">//set encoding as gbk</span>
+                <span class="nx">charset</span> <span class="o">:</span> <span class="s1">&#39;gbk&#39;</span><span class="p">,</span>
+                <span class="c1">//release to /php/template/xxx</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="s1">&#39;/php/template/$1&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="c1">//other files</span>
+                <span class="nx">reg</span> <span class="o">:</span> <span class="sr">/.*/</span><span class="p">,</span>
+                <span class="c1">//do not release</span>
+                <span class="nx">release</span> <span class="o">:</span> <span class="kc">false</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div></li>
+</ul>
+
+<h3 id="toc_1">roadmap.ext</h3>
+
+<ul>
+<li>explanation：Specify the mapping between the extension and standardization of the language</li>
+<li>type：<code>Object</code></li>
+<li>default：empty</li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="c1">//fis-conf.js</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">ext</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="c1">//convert less suffix to css suffix</span>
+            <span class="nx">less</span> <span class="o">:</span> <span class="s1">&#39;css&#39;</span><span class="p">,</span>
+            <span class="c1">//convert coffee suffix to js</span>
+            <span class="nx">coffee</span> <span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="p">,</span>
+            <span class="c1">//convert md suffix to html</span>
+            <span class="nx">md</span> <span class="o">:</span> <span class="s1">&#39;html&#39;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div></li>
+</ul>
+
+<h3 id="toc_2">roadmap.domain</h3>
+
+<ul>
+<li>explanation：config domain</li>
+<li>type：<code>Object</code> | <code>string</code></li>
+<li>default：empty</li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+//fis-conf.js<br/>
+//usage<br/>
+fis.config.merge({<br/>
+    roadmap : {<br/>
+        //All static resource files use as a domain name http://s1.example.com or http://s2.example.com<br/>
+        domain : &#39;http://s1.example.com, http://s2.example.com&#39;<br/>
+    }<br/>
+});<br/>
+//usage<br/>
+fis.config.merge({<br/>
+    roadmap : {<br/>
+        domain : {<br/>
+            //All css files in widget directory use as a domain name http://css1.example.com<br/>
+            &#39;widget/**.css&#39; : &#39;http://css1.example.com&#39;,<br/>
+            //All js files in widget directory use as a domain name http://css1.example.com<br/>
+            &#39;**.js&#39; : [&#39;http://js1.example.com&#39;, &#39;http://js2.example.com&#39;]<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code></p>
+
+<p>Use fis release with <code>- domains</code> parameter to control whether to add domain</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp release --domains --dest ../output
+</pre></div></li>
+</ul>
+
+<h3 id="toc_3">roadmap.domain.image</h3>
+
+<ul>
+<li>explanation：set image domain</li>
+<li>type：<code>Array</code> | <code>string</code></li>
+<li>default：empty</li>
+<li><p>usage：<br/>
+<code>javascript<br/>
+//fis-conf.js<br/>
+fis.config.merge({<br/>
+    roadmap : {<br/>
+        domain : {<br/>
+            //All images use as a domain name http://img.example.com<br/>
+            &#39;image&#39; : [&#39;http://img.example.com&#39;]<br/>
+        }<br/>
+    }<br/>
+});<br/>
+</code><br/>
+Use fis release with <code>- domains</code> parameter to control whether to add domain</p>
+<div class="highlight"><pre><span class="nv">$ </span>fis release --domains --dest ../output
+</pre></div></li>
+</ul>

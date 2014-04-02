@@ -1,0 +1,53 @@
+<h2 id="toc_0">Get Started</h2>
+
+<ul>
+<li>we provide a small demo for you to exprience how to use fis.</li>
+<li>make sure you have read <a href="./installation.md">fis installation</a></li>
+</ul>
+
+<h3 id="toc_1">Initiate local environment</h3>
+
+<p>Initiate fis local environment and use lights to install demo to your machine</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp server init
+<span class="nv">$ </span>lights install pc-demo
+</pre></div>
+<ul>
+<li> fis local environment includes Samrty3, fis-data, fis-rewrite, index.php</li>
+</ul>
+
+<h3 id="toc_2">preview demo</h3>
+
+<p>let&#39;s release the demo and launch FIS server to preview the page</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>common
+<span class="nv">$ </span>fisp release -c
+
+<span class="nv">$ </span><span class="nb">cd</span> ../home
+<span class="nv">$ </span>fisp release -c
+
+<span class="nv">$ </span>fisp server start
+
+//open your internet explorer
+http://localhost:8080/home/page/index
+</pre></div>
+<p>you should see this page<br/>
+<img src="./images/fis-demo.png" alt=""/></p>
+
+<p>you can try to edit the demo&#39;s content and release them again to see your changes.</p>
+
+<h3 id="toc_3">At last</h3>
+
+<p>Congratulations, you have your first FIS project, you can continue to see:</p>
+
+<ul>
+<li><a href="./doc/command-line.md">Command Line</a></li>
+<li><a href="./doc/directory%20structure.md">Recommended Directory Structure</a></li>
+<li><a href="./doc/smarty%20framework.md">Pages and Layout Based On Smarty</a> </li>
+<li><a href="./doc/widget.md">How to Develop With Widgets</a></li>
+<li><a href="./doc/compilation%20plugin.md">A Toolset For Production</a></li>
+<li><a href="./doc/pack-configuration.md">Concat Files With Pack Plugin</a></li>
+<li><a href="./doc/rewrite%20and%20redirect.md">URL Rewriting for Beginners</a></li>
+<li><a href="./doc/deploy-configuration.md">One-Click Upload From Your PC To Server</a></li>
+<li><a href="./doc/monitor%20and%20optimize.md">Monitor and Optimize</a></li>
+</ul>
+
+<p><strong>You will see more fantastic and powerful FIS functions afterwards~</strong></p>

@@ -1,0 +1,37 @@
+<!--
+title: 插件配置
+toc: <ul class="nav"><li><a href="#toc_0">插件配置</a></li><li><a href="#toc_1">插件部署</a></li></ul>
+-->
+
+<blockquote>
+<p>FIS提供灵活易扩展的插件系统，用户可以在开发过程中根据需求新增各类编译流程插件，同时通过配置将二次开发的插件添加到处理流程中。</p>
+</blockquote>
+
+<h2 id="toc_0">插件配置</h2>
+
+<p>fis编译系统具有一个既简单又容易扩展的插件体系，在不做任何定制的情况下即可满足前端开发的基本需求，与此同时，系统也具有极强的可扩展性，fis的两大编译流程一共提供了10项扩展点，再加上命令行扩展能力，fis系统一共具有 11项扩展点。在FIS-PC中，默认配置前端模板处理、XSS修复等插件：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">parser</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">less</span> <span class="o">:</span> <span class="s1">&#39;less&#39;</span><span class="p">,</span>  <span class="c1">//对less文件处理的插件</span>
+        <span class="nx">tmpl</span><span class="o">:</span> <span class="s1">&#39;bdtmpl&#39;</span>  <span class="c1">//对前端模板处理的插件</span>
+    <span class="p">},</span>
+    <span class="nx">postprocessor</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">tpl</span><span class="o">:</span> <span class="s1">&#39;require-async&#39;</span><span class="p">,</span>  <span class="c1">//对tpl文件新增标准后处理器插件</span>
+        <span class="nx">js</span><span class="o">:</span> <span class="s1">&#39;jswrapper, require-async&#39;</span> <span class="c1">//对js文件新增标准后处理器插件</span>
+    <span class="p">},</span>
+    <span class="nx">optimizer</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">tpl</span> <span class="o">:</span> <span class="s1">&#39;smarty-xss,html-compress&#39;</span> <span class="c1">//对tpl文件新增xss修复以及压缩的代码优化器插件</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;settings.parser.bdtmpl&#39;</span><span class="p">,</span> <span class="p">{</span>    
+    <span class="c1">//对前端模板处理的插件中，初始化参数</span>
+        <span class="nx">LEFT_DELIMITER</span> <span class="o">:</span> <span class="s1">&#39;&lt;#&#39;</span><span class="p">,</span>
+        <span class="nx">RIGHT_DELIMITER</span> <span class="o">:</span> <span class="s1">&#39;#&gt;&#39;</span>
+<span class="p">});</span>
+</pre></div>
+<p>用户可以在<a href="https://github.com/fis-dev/fis/wiki/%E6%8F%92%E4%BB%B6%E6%89%A9%E5%B1%95%E7%82%B9%E5%88%97%E8%A1%A8">插件扩展列表</a>中，fis系统更多插件扩展的方式。</p>
+
+<h2 id="toc_1">插件部署</h2>
+
+<p>插件开发完发布使用都为npm包的方式，本地使用时可直接进行本地npm包安装,同时用户需要将使用的插件名称告诉FIS组成员进行编译机部署。</p>

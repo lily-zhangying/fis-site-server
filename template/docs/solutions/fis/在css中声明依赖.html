@@ -1,0 +1,27 @@
+<!--
+title: 在css中声明依赖
+toc: 
+-->
+
+<blockquote>
+<p>fis支持识别css文件 <strong>注释中的@require字段</strong> 标记的依赖关系，这些分析处理对 <strong>html的style标签内容</strong> 同样有效。</p>
+</blockquote>
+<div class="highlight"><pre><span class="c">/**</span>
+<span class="c"> * demo.css</span>
+<span class="c"> * @require reset.css</span>
+<span class="c"> */</span>
+</pre></div>
+<p>经过编译之后，查看产出的 <strong>map.json</strong> 文件，可以看到：</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;res&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="err">...</span>
+        <span class="nt">&quot;demo.css&quot;</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;uri&quot;</span> <span class="p">:</span> <span class="s2">&quot;/static/css/demo_7defa41.css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;deps&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;reset.css&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="err">...</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;pkg&quot;</span> <span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>

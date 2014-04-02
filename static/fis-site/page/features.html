@@ -1,0 +1,17 @@
+<ul>
+<li>跨平台支持win、mac、linux等系统,满足各类开发环境</li>
+<li>无内置规范，可配置 <a href="/solutions/fis/%E9%85%8D%E7%BD%AEAPI#toc_28">开发和部署规范</a>，用于满足任何前后端框架的部署需求</li>
+<li>对html、js、css实现 <a href="/solutions/fis/%E4%B8%89%E7%A7%8D%E8%AF%AD%E8%A8%80%E8%83%BD%E5%8A%9B">三种语言能力</a> 扩展，包括定位、内嵌、依赖，解决绝大多数前端构建问题</li>
+<li>支持二次包装，比如 <a href="github.com/fouber/spmx">spmx</a>、 <a href="https://github.com/fouber/phiz/">phiz</a>、 <a href="https://github.com/xspider/fis-chassis">chassis</a>，对fis进行包装后可内置新的插件、配置，从而打造属于你们团队的自己的开发工具</li>
+<li>自动生成静态资源表关系表（map.json），可用于 <a href="/developer/%E5%9F%BA%E4%BA%8Emap.json%E7%9A%84%E5%89%8D%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%AF%BC">连接前后端开发框架</a></li>
+<li>所有静态资源自动加 <code>md5版本戳</code>，服务端可开启永久强缓存,支持给所有静态资源添加域名前缀</li>
+<li>抹平编码差异，开发中无论是gbk、gb2312、utf8、utf8-bom等编码的文件，输出时都能统一指定为utf8无bom（默认）或者gbk文件</li>
+<li>可灵活扩展的插件系统，支持对构建过程和命令功能进行扩展，现已发布N多 <a href="https://npmjs.org/search?q=fis">插件</a></li>
+<li>通过插件配置可以在一个项目中无缝使用 <a href="https://github.com/fouber/fis-parser-less">less</a>、<a href="https://github.com/fouber/fis-parser-coffee-script">coffee</a>、<a href="https://github.com/fouber/fis-parser-marked">markdown</a>、<a href="https://npmjs.org/package/fis-parser-jade">jade</a>等语言开发</li>
+<li>内置 <a href="https://github.com/xiangshouding/fis-spriter-csssprites">css sprites插件</a>，简单易用</li>
+<li>内置 <a href="https://github.com/fis-dev/fis-optimizer-png-compressor">png图片压缩插件</a>，采用c++编写的node扩展，具有极高的性能，支持 <a href="https://github.com/fis-dev/fis-optimizer-png-compressor">将png24压缩为png8</a></li>
+<li>内置本地开发调试服务器，支持完美运行 <code>java</code>、<code>jsp</code>、<code>php</code> 等服务端语言</li>
+<li>支持文件监听，保存即发布</li>
+<li>支持浏览器自动刷新，可同时刷新多个终端中的页面，配合文件监听功能可实现保存即刷新</li>
+<li>支持上传到远端服务器，配合文件监听，浏览器自动刷新功能，可实现保存即增量编译上传，上传后即刷新的开发体验</li>
+</ul>
