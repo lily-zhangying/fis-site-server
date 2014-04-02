@@ -1,1 +1,0 @@
-$("#section-7").next().find("a").css("display","none");

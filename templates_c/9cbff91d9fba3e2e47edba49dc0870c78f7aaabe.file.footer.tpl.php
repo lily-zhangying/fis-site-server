@@ -1,29 +1,29 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2014-04-02 07:07:45
+<?php /* Smarty version Smarty-3.1.13, created on 2014-04-02 10:53:46
          compiled from "/Users/lily/work/fis-doc/fis-site-server/template/fis-site/widget/footer/footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1123058053533a888d2eaf13-21381431%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1305752030533bec3a48c4b2-18535244%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9cbff91d9fba3e2e47edba49dc0870c78f7aaabe' => 
     array (
       0 => '/Users/lily/work/fis-doc/fis-site-server/template/fis-site/widget/footer/footer.tpl',
-      1 => 1396422462,
+      1 => 1396435985,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1123058053533a888d2eaf13-21381431',
+  'nocache_hash' => '1305752030533bec3a48c4b2-18535244',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_533a888d2fad47_18740959',
   'variables' => 
   array (
     'en' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_533bec3a499fc8_11885205',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_533a888d2fad47_18740959')) {function content_533a888d2fad47_18740959($_smarty_tpl) {?><div id="footer">
+<?php if ($_valid && !is_callable('content_533bec3a499fc8_11885205')) {function content_533bec3a499fc8_11885205($_smarty_tpl) {?><div id="footer">
     <div class="container clearfix">
         <div class="weixin">
             <img class="img-rounded" src="/static/fis-site/widget/footer/qrcode.jpg" alt="" />

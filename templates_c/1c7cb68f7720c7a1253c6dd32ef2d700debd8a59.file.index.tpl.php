@@ -1,28 +1,26 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2014-04-02 06:57:09
+<?php /* Smarty version Smarty-3.1.13, created on 2014-04-02 10:53:46
          compiled from "/Users/lily/work/fis-doc/fis-site-server/template/fis-site/page/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:60739339533a88adc58b85-65929391%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1426629801533bec3a4159d7-36417265%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1c7cb68f7720c7a1253c6dd32ef2d700debd8a59' => 
     array (
       0 => '/Users/lily/work/fis-doc/fis-site-server/template/fis-site/page/index.tpl',
-      1 => 1396421341,
+      1 => 1396435985,
       2 => 'file',
     ),
     'd9e7ec7846152dcd57dbbaae6006898165696fd5' => 
     array (
       0 => '/Users/lily/work/fis-doc/fis-site-server/template/fis-site/page/layout.tpl',
-      1 => 1396421341,
+      1 => 1396435985,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '60739339533a88adc58b85-65929391',
+  'nocache_hash' => '1426629801533bec3a4159d7-36417265',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_533a88adcabc57_28005466',
   'variables' => 
   array (
     'description' => 0,
@@ -30,8 +28,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'pageId' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_533bec3a469b57_84574411',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_533a88adcabc57_28005466')) {function content_533a88adcabc57_28005466($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_533bec3a469b57_84574411')) {function content_533bec3a469b57_84574411($_smarty_tpl) {?><!DOCTYPE html>
 
 <?php if(!class_exists('FISResource', false)){require_once('/Users/lily/work/fis-doc/fis-site-server/plugin/FISResource.class.php');}FISResource::setFramework(FISResource::getUri("fis-site:static/js/mod.js", $_smarty_tpl->smarty)); ?><html>
     

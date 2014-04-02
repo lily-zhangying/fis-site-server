@@ -1,22 +1,20 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2014-04-02 07:07:45
+<?php /* Smarty version Smarty-3.1.13, created on 2014-04-02 10:53:46
          compiled from "/Users/lily/work/fis-doc/fis-site-server/template/fis-site/widget/header/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:177107351533a888d2bcd96-91130051%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1519415959533bec3a471fa4-29003406%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '98d30094758456bfa73850a040350ffbfa1e387d' => 
     array (
       0 => '/Users/lily/work/fis-doc/fis-site-server/template/fis-site/widget/header/header.tpl',
-      1 => 1396422462,
+      1 => 1396435985,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '177107351533a888d2bcd96-91130051',
+  'nocache_hash' => '1519415959533bec3a471fa4-29003406',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_533a888d2e5494_28127307',
   'variables' => 
   array (
     'navs' => 0,
@@ -24,8 +22,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'en' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_533bec3a489684_07378671',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_533a888d2e5494_28127307')) {function content_533a888d2e5494_28127307($_smarty_tpl) {?><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<?php if ($_valid && !is_callable('content_533bec3a489684_07378671')) {function content_533bec3a489684_07378671($_smarty_tpl) {?><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
