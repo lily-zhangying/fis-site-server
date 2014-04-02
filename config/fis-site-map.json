@@ -44,6 +44,16 @@
                 "fis-site:widget/js/sidebar.js"
             ]
         },
+        "fis-site:page/detail_en.tpl": {
+            "uri": "/template/fis-site/page/detail_en.tpl",
+            "type": "tpl",
+            "extras": {
+                "isPage": true
+            },
+            "deps": [
+                "fis-site:widget/js/sidebar.js"
+            ]
+        },
         "fis-site:page/developer.tpl": {
             "uri": "/template/fis-site/page/developer.tpl",
             "type": "tpl",

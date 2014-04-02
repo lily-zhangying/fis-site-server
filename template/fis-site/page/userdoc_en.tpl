@@ -7,7 +7,7 @@
 
     <div class="jumbotron">
         <div class="container">
-            <h1 class="with-icon"><span class="fa fa-users"></span>User Document</h1>
+            <h1 class="with-icon"><span class="fa fa-users"></span>Documentation</h1>
             <p class="desc"></p>
         </div>
     </div>

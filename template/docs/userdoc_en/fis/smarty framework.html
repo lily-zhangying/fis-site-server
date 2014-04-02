@@ -1,21 +1,25 @@
-<p>##Pages and Layout Based On Smarty</p>
+<!--
+title: Pages and Layout Based On Smarty
+toc: <ul class="nav"><li><a href="#toc_0">{%html%}</a></li><li><a href="#toc_1">{%head%}</a></li><li><a href="#toc_2">{%body%}</a></li><li><a href="#toc_3">{%require%}</a></li><li><a href="#toc_4">{%widget%}</a></li></ul><ul class="nav"><li><a href="#toc_5">layout and page demo</a></li></ul>
+type: detail
+-->
 
 <p>We provide a framework based on Smarty3/PHP for template, there are alse other back-end solutions coming soon, like java, go, etc. The framework provide some smarty html tag for use so we can efficiently control the loading of static resources. </p>
 
-<p>####{%html%}</p>
+<h4 id="toc_0">{%html%}</h4>
 
 <p>The smarty html tag is used to dynamic control the output of page, usage:</p>
 <div class="highlight"><pre><span class="p">{</span><span class="o">%</span><span class="n">html</span><span class="o">%</span><span class="p">}</span>
   <span class="p">....</span>
 <span class="p">{</span><span class="o">%/</span><span class="n">html</span><span class="o">%</span><span class="p">}</span>
 </pre></div>
-<p>####{%head%}</p>
+<h4 id="toc_1">{%head%}</h4>
 
 <p>The smarty head tag is used to dynamic control the output of head, so we can automatic load synchronous static resource.</p>
 
 <p><img src="./images/head.jpg" alt="head"/></p>
 
-<p>####{%body%}</p>
+<h4 id="toc_2">{%body%}</h4>
 
 <p>The smarty body tag is used to dynamic control the output of body.</p>
 
@@ -27,13 +31,13 @@
 
 <p><img src="./images/script.jpg" alt="script"/></p>
 
-<p>####{%require%}</p>
+<h4 id="toc_3">{%require%}</h4>
 
 <p>The smarty require tag is used to dynamic control the output of static resources, usage:</p>
 
 <p><img src="./images/require.jpg" alt="require"/></p>
 
-<p>####{%widget%}</p>
+<h4 id="toc_4">{%widget%}</h4>
 
 <p>The smarty widget tag is used to dynamic control the output of widget static resources and html, usage:</p>
 
@@ -41,7 +45,7 @@
 
 <p>You can find more in <a href="./doc/widget.md">How to Develop With Widgets</a>.</p>
 
-<p>###layout and page demo</p>
+<h3 id="toc_5">layout and page demo</h3>
 
 <p>layout.tpl from common subsystem:</p>
 <div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>

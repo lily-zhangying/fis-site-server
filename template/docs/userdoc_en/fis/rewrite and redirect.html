@@ -1,4 +1,8 @@
-<p>##URL Rewriting</p>
+<!--
+title: URL Rewriting
+toc: <ul class="nav"><li><a href="#toc_0">Rdirect</a></li><li><a href="#toc_1">Rewrite</a></li></ul>
+type: detail
+-->
 
 <p>The FIS server module gives you the ability to redirect one URL to another. This opens up all sorts of possibilities, you can simulate online url Rules in this machine, like ajax request rewrite. </p>
 
@@ -6,7 +10,7 @@
 <div class="highlight"><pre><span class="n">redirect</span> <span class="o">^</span><span class="err">\</span><span class="o">/</span><span class="n">index</span><span class="err">\</span><span class="o">?</span><span class="p">.</span><span class="o">*</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="n">index</span>
 <span class="n">rewrite</span> <span class="o">^</span><span class="err">\</span><span class="o">/</span><span class="n">news</span><span class="err">\</span><span class="o">?</span><span class="p">.</span><span class="o">*</span><span class="n">tn</span><span class="err">\</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span><span class="p">.</span><span class="o">*</span> <span class="n">app</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">news</span><span class="p">.</span><span class="n">php</span>
 </pre></div>
-<p>####Rdirect</p>
+<h4 id="toc_0">Rdirect</h4>
 
 <ul>
 <li>Description: Sends an external redirect based on a regular expression match of the current URL</li>
@@ -15,7 +19,7 @@
 
 <p>Make sure use regular expressions. The supplied regular expression is matched against the URL-path.</p>
 
-<p>####Rewrite</p>
+<h4 id="toc_1">Rewrite</h4>
 
 <ul>
 <li>Description: Sends a request to access a file based on a regular expression match of the current URL</li>

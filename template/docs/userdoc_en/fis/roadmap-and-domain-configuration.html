@@ -1,4 +1,8 @@
-<p>##RoadMap</p>
+<!--
+title: RoadMap
+toc: <ul class="nav"><li><a href="#toc_0">roadmap.path</a></li><li><a href="#toc_1">roadmap.ext</a></li><li><a href="#toc_2">roadmap.domain</a></li><li><a href="#toc_3">roadmap.domain.image</a></li></ul>
+type: detail
+-->
 
 <h3 id="toc_0">roadmap.path</h3>
 
@@ -124,29 +128,27 @@
 <li>explanation：config domain</li>
 <li>type：<code>Object</code> | <code>string</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-//usage<br/>
-fis.config.merge({<br/>
-    roadmap : {<br/>
-        //All static resource files use as a domain name http://s1.example.com or http://s2.example.com<br/>
-        domain : &#39;http://s1.example.com, http://s2.example.com&#39;<br/>
-    }<br/>
-});<br/>
-//usage<br/>
-fis.config.merge({<br/>
-    roadmap : {<br/>
-        domain : {<br/>
-            //All css files in widget directory use as a domain name http://css1.example.com<br/>
-            &#39;widget/**.css&#39; : &#39;http://css1.example.com&#39;,<br/>
-            //All js files in widget directory use as a domain name http://css1.example.com<br/>
-            &#39;**.js&#39; : [&#39;http://js1.example.com&#39;, &#39;http://js2.example.com&#39;]<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p>
-
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="c1">//fis-conf.js</span>
+<span class="c1">//usage</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="c1">//All static resource files use as a domain name http://s1.example.com or http://s2.example.com</span>
+        <span class="nx">domain</span> <span class="o">:</span> <span class="s1">&#39;http://s1.example.com, http://s2.example.com&#39;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="c1">//usage</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">domain</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="c1">//All css files in widget directory use as a domain name http://css1.example.com</span>
+            <span class="s1">&#39;widget/**.css&#39;</span> <span class="o">:</span> <span class="s1">&#39;http://css1.example.com&#39;</span><span class="p">,</span>
+            <span class="c1">//All js files in widget directory use as a domain name http://css1.example.com</span>
+            <span class="s1">&#39;**.js&#39;</span> <span class="o">:</span> <span class="p">[</span><span class="s1">&#39;http://js1.example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;http://js2.example.com&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 <p>Use fis release with <code>- domains</code> parameter to control whether to add domain</p>
 <div class="highlight"><pre><span class="nv">$ </span>fisp release --domains --dest ../output
 </pre></div></li>
@@ -158,19 +160,18 @@ fis.config.merge({<br/>
 <li>explanation：set image domain</li>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    roadmap : {<br/>
-        domain : {<br/>
-            //All images use as a domain name http://img.example.com<br/>
-            &#39;image&#39; : [&#39;http://img.example.com&#39;]<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code><br/>
-Use fis release with <code>- domains</code> parameter to control whether to add domain</p>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="c1">//fis-conf.js</span>
+<span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">roadmap</span> <span class="o">:</span> <span class="p">{</span>
+        <span class="nx">domain</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="c1">//All images use as a domain name http://img.example.com</span>
+            <span class="s1">&#39;image&#39;</span> <span class="o">:</span> <span class="p">[</span><span class="s1">&#39;http://img.example.com&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+<p>Use fis release with <code>- domains</code> parameter to control whether to add domain</p>
 <div class="highlight"><pre><span class="nv">$ </span>fis release --domains --dest ../output
 </pre></div></li>
 </ul>

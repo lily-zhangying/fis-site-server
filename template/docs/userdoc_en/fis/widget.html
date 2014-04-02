@@ -1,8 +1,12 @@
-<p>##How to Develop With Widgets</p>
+<!--
+title: How to Develop With Widgets
+toc: <ul class="nav"><li><a href="#toc_0">Why Widget</a></li><li><a href="#toc_1">Template Widget</a><ul class="nav"><li><a href="#toc_2">Call Template Widget</a></li></ul></li><li><a href="#toc_3">JavaScript Widget</a><ul class="nav"><li><a href="#toc_4">Define a Module</a></li><li><a href="#toc_5">Load a Module</a></li><li><a href="#toc_6">CSS attachment in a JavaScript Widget</a></li><li><a href="#toc_7">Subset of AMD Specification</a></li></ul></li><li><a href="#toc_8">CSS Widget</a><ul class="nav"><li><a href="#toc_9">Reference in CSS</a></li><li><a href="#toc_10">Require in Smarty</a></li><li><a href="#toc_11">Inline in CSS</a></li><li><a href="#toc_12">CSS Preprocessor</a></li></ul></li></ul>
+type: detail
+-->
 
 <p>Widget is a set of specs which let web developers leverage their HTML, CSS and JavaScript knowledge to build widgets that can be reused easily and reliably.</p>
 
-<p>###Why Widget</p>
+<h3 id="toc_0">Why Widget</h3>
 
 <p>To understand why widget(components) are so important, we need look no further than how we’ve hacked around the lack of components. As an example, let’s run through the process of consuming a typical third-party widget.</p>
 
@@ -22,7 +26,7 @@
 </pre></div>
 <p>Can we get a way to avoid this constant three-step process to achieve simple, consistent, reusable, encapsulated and composable widgets, the answer is yes, but we’re only just getting started. There are three types of widget, Template widget, JavaScript widget, CSS widget, Template widget(smarty for now) can invoke JavaScript widget and CSS widget. It’s a great time to start experimenting.</p>
 
-<p>###Template Widget</p>
+<h3 id="toc_1">Template Widget</h3>
 
 <p>Template widget can build anything from a button to a complete application as an encapsulated, reusable element. Each Smarty widget contains at least one tpl(smarty) file which has the same name width the Smarty widget directory, it also can have the same name js and css file for the widget. <strong>The reason of why the tpl, js and css must have the same name is that if you do that then you don&#39;t need to explicitly import resources.</strong> The fis framework will automatically find and load all the js and css files that the widget need when the widget rendering. </p>
 <div class="highlight"><pre><span class="n">tpl</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">tpl</span>
@@ -35,7 +39,7 @@
 <li>css, a css widget to control the style and layout of the tpl</li>
 </ul>
 
-<p>####Call Template Widget</p>
+<h4 id="toc_2">Call Template Widget</h4>
 
 <p>Use {%widget%} to call template widget with a widget a name(path).</p>
 <div class="highlight"><pre><span class="p">{</span><span class="o">%</span><span class="n">widget</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;home:widget/section/section.tpl&quot;</span> <span class="o">%</span><span class="p">}</span>
@@ -44,11 +48,11 @@
 
 <p><img src="./images/widget.jpg" alt="widget"/></p>
 
-<p>###JavaScript Widget</p>
+<h3 id="toc_3">JavaScript Widget</h3>
 
 <p>JavaScript widget can make you write like modular commonjs components that include their own css, images, etc, with fis framework(loader) you get automatic dependency resolution. Achieve faster load times with asynchronous loading and the ability to optimize downloads.</p>
 
-<p>####Define a Module</p>
+<h4 id="toc_4">Define a Module</h4>
 
 <p>The compiler automatic wraps the scripts and in AMD modules.</p>
 <div class="highlight"><pre><span class="c1">//before</span>
@@ -77,7 +81,7 @@
     <span class="p">};</span>
 <span class="p">});</span>
 </pre></div>
-<p>####Load a Module</p>
+<h4 id="toc_5">Load a Module</h4>
 
 <p>FIS framework will ensure that all dependent modules are loaded before your module execution. So when we need a module, simply provide a module name to require anywhere. </p>
 <div class="highlight"><pre><span class="c1">//sybsystem name: path</span>
@@ -94,7 +98,7 @@
       <span class="n">menu</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
 <span class="p">})</span>
 </pre></div>
-<p>####CSS attachment in a JavaScript Widget</p>
+<h4 id="toc_6">CSS attachment in a JavaScript Widget</h4>
 
 <p>JavaScript widget can make you write a JavaScript module that with a CSS file with the same name to control the style and layout of the widget. </p>
 <div class="highlight"><pre><span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
@@ -102,15 +106,15 @@
 </pre></div>
 <p>The corresponding css file will be automatically loaded in the page.</p>
 
-<p>####Subset of AMD Specification</p>
+<h4 id="toc_7">Subset of AMD Specification</h4>
 
 <p>FIS loader is a subset of AMD, <strong>does not fully comply with AMD</strong> for a better experience and higher performance.</p>
 
-<p>###CSS Widget</p>
+<h3 id="toc_8">CSS Widget</h3>
 
 <p>In general, CSS widgets are the most simple components, the css files in widget directory are css widgets, files and widgets are in one-to-one correspondence. CSS widgets offers several extensions to the CSS @import to provide more flexibility over what you can do with external files.</p>
 
-<p>####Reference in CSS</p>
+<h4 id="toc_9">Reference in CSS</h4>
 
 <p>Use @require to import external files, but without adding the imported styles to the compiled output. FIS takes a different approach to loading than traditional @import tags, while it can also run fast and optimize well.</p>
 <div class="highlight"><pre><span class="cm">/**</span>
@@ -134,14 +138,14 @@
 </pre></div>
 <p>the fis framework will find and load all the resources the widget need fast and optimize well through this map.json file.</p>
 
-<p>####Require in Smarty</p>
+<h4 id="toc_10">Require in Smarty</h4>
 
 <p>Use {%require%} to import external files in Smarty, but without adding the imported styles to the compiled output.</p>
 <div class="highlight"><pre><span class="p">{</span><span class="o">%</span><span class="n">require</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;home:static/index/index.css&quot;</span><span class="o">%</span><span class="p">}</span>
 </pre></div>
 <p><img src="./images/require.jpg" alt="require"/></p>
 
-<p>####Inline in CSS</p>
+<h4 id="toc_11">Inline in CSS</h4>
 
 <p>Use @import url(&#39;url?__inline&#39;) to include the source file in the output.</p>
 <div class="highlight"><pre><span class="o">//</span><span class="n">before</span>
@@ -151,6 +155,6 @@
 <span class="o">//</span><span class="n">below</span> <span class="ow">is</span> <span class="n">ther</span> <span class="n">sourece</span> <span class="n">of</span> <span class="n">the</span> <span class="n">demo</span><span class="o">.</span><span class="n">css</span>
 <span class="n">img</span> <span class="p">{</span> <span class="n">border</span><span class="p">:</span> <span class="mi">5</span><span class="n">px</span> <span class="n">solid</span> <span class="c">#ccc; };</span>
 </pre></div>
-<p>####CSS Preprocessor</p>
+<h4 id="toc_12">CSS Preprocessor</h4>
 
 <p>By default, the css preprocessor compile LESS files to CSS. There are also some other css preprocessor plug-ins which you can install and config to use. </p>

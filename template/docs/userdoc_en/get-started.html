@@ -1,10 +1,48 @@
 <!--
 title: Get started
 weight: 99999
-toc: 
+toc: <ul class="nav"><li><a href="#toc_0">Installation and Download</a><ul class="nav"><li><a href="#toc_1">General Installation Considerations</a></li><li><a href="#toc_2">Automation tool</a></li><li><a href="#toc_3">Front end package management tool(referred to as lights)</a></li><li><a href="#toc_4">High-performance module development framework</a></li><li><a href="#toc_5">Development environment</a></li></ul></li><li><a href="#toc_6">A Simple FIS Tutorial</a></li></ul>
 -->
 
-<ul>
-<li><a href="/userdoc_en/fis/installation">Installation and Download</a></li>
-<li><a href="/userdoc_en/fis/getting-started">A Simple FIS Tutorial</a></li>
-</ul>
+<h2 id="toc_0">Installation and Download</h2>
+
+<h3 id="toc_1">General Installation Considerations</h3>
+
+<p>Before starting the installation, first you need to know what do you want to use FIS for. FIS contains tools(automation tool, front end package management tool), framework(module loader, smarty plugins, etc), development environment(server,back end environmental requirements).</p>
+
+<h3 id="toc_2">Automation tool</h3>
+
+<p>Performing repetitive tasks like compilation, minification, adding md5 timestamp, linting, etc. FIS automation tool depends on <a href="http://nodejs.org/">Node version&gt;= 0.8</a> and <a href="https://www.npmjs.org/">npm</a>. You need to <a href="http://nodejs.org/">install nodejs</a> first, then you can install fis via npm:</p>
+<div class="highlight"><pre><span class="n">npm</span> <span class="n">install</span> <span class="n">fisp</span> <span class="o">-</span><span class="n">g</span>
+</pre></div>
+<p>check the fisp version</p>
+<div class="highlight"><pre><span class="n">fisp</span> <span class="o">-</span><span class="n">v</span>
+</pre></div>
+<p><img src="/static/fis-site/docs/userdoc_en/images/v.png" alt="fisp version"/></p>
+
+<h3 id="toc_3">Front end package management tool(referred to as lights)</h3>
+
+<p>Make it exceedingly simple to find, install and keep packages up-to-date. Lights depends on <a href="http://nodejs.org/">Node</a> and <a href="https://www.npmjs.org/">npm</a>. You can install lights client via npm:</p>
+<div class="highlight"><pre><span class="nv">$npm</span> install lights -g
+</pre></div>
+<p><a href="http://lightjs.duapp.com">View all packages available through Lights&#39;s registry</a>.</p>
+
+<h3 id="toc_4">High-performance module development framework</h3>
+
+<p>Includes front-end module loader, back-end smarty plugins, etc. It can efficiently control the loading of static resources. We can install them via lights:</p>
+<div class="highlight"><pre>//download front-end module loader
+<span class="nv">$lights</span> install modjs
+
+//download back-end smarty plugins
+<span class="nv">$ligths</span> install pc-plugin
+</pre></div>
+<p>There are alse other back-end solutions coming soon, like java, go, etc.</p>
+
+<h3 id="toc_5">Development environment</h3>
+
+<p>In case of setting up the server and php on your own computer, you need <a href="http://java.com/en/">Java version &gt;= 1.6</a> and <a href="http://cn2.php.net/downloads.php">php</a>. After install Java and php, you can init you fis development enviroment:</p>
+<div class="highlight"><pre><span class="nv">$ </span>fisp server init
+</pre></div>
+<h2 id="toc_6">A Simple FIS Tutorial</h2>
+
+<p>Then we can have <a href="/userdoc_en/fis/getting-started">A simple fis tutorial</a> to feel fis.</p>

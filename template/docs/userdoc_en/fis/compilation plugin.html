@@ -1,4 +1,8 @@
-<p>##A Toolset For Production</p>
+<!--
+title: A Toolset For Production
+toc: <ul class="nav"><li><a href="#toc_0">Less</a></li><li><a href="#toc_1">Hashres</a><ul class="nav"><li><a href="#toc_2">In Html</a></li><li><a href="#toc_3">In JavaScript</a></li><li><a href="#toc_4">In CSS</a></li></ul></li><li><a href="#toc_5">CDN</a></li><li><a href="#toc_6">Inline/Embedded</a><ul class="nav"><li><a href="#toc_7">In HTML</a></li><li><a href="#toc_8">In JavaScript</a></li><li><a href="#toc_9">In CSS</a></li></ul></li><li><a href="#toc_10">Amd-wrap</a></li><li><a href="#toc_11">Uglify-js</a></li><li><a href="#toc_12">Clean-css</a></li><li><a href="#toc_13">Html-compress</a></li><li><a href="#toc_14">Png-compressor</a></li><li><a href="#toc_15">Smarty-xss</a></li><li><a href="#toc_16">Concat</a></li><li><a href="#toc_17">Adaptive Image Spriting</a><ul class="nav"><li><a href="#toc_18">Usage</a></li><li><a href="#toc_19">background-position</a></li></ul></li></ul>
+type: detail
+-->
 
 <p>FIS automation tool is not just a task runner, more precisely speaking, it is a toolset for porduction. You can start working quickly without configuring a lot of independent tasks. The plugins system simply takes files, processes them, and pipes them to the next step. If you need to do something different, it’s rather simple: the fis config is simply a JavaScript file, so you can pull in existing node modules, run them, and be on your way.</p>
 
@@ -6,15 +10,15 @@
 
 <p>Listed below are some of the built-in plugins enabled by default. </p>
 
-<p>###Less</p>
+<h3 id="toc_0">Less</h3>
 
 <p>Compile less files to CSS.</p>
 
-<p>###Hashres</p>
+<h3 id="toc_1">Hashres</h3>
 
 <p>Revision static file through content hashing and rename the src that refer to them in your html/js/css/etc files.</p>
 
-<p>####In Html</p>
+<h4 id="toc_2">In Html</h4>
 <div class="highlight"><pre>before:
 <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;demo.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;demo.css&quot;</span><span class="nt">&gt;</span>
@@ -25,7 +29,7 @@ after:
 <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/demo_7defa41.css&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;/demo_33c5143.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre></div>
-<p>####In JavaScript</p>
+<h4 id="toc_3">In JavaScript</h4>
 <div class="highlight"><pre><span class="c1">//before:</span>
 <span class="k">var</span> <span class="n">img</span> <span class="o">=</span> <span class="n">__uri</span><span class="p">(&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">logo</span><span class="p">.</span><span class="n">gif</span><span class="p">&#39;);</span>
 <span class="k">var</span> <span class="n">css</span> <span class="o">=</span> <span class="n">__uri</span><span class="p">(&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">css</span><span class="p">&#39;);</span>
@@ -52,7 +56,7 @@ after:
 <span class="c1">//after:</span>
 <span class="n">var</span> <span class="n">js</span> <span class="o">=</span> <span class="err">&#39;</span><span class="o">/</span><span class="k">static</span><span class="o">/</span><span class="n">js</span><span class="o">/</span><span class="n">demo_33c5143</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">;</span>
 </pre></div>
-<p>####In CSS</p>
+<h4 id="toc_4">In CSS</h4>
 <div class="highlight"><pre><span class="c1">//before:</span>
 <span class="nl">background:</span> <span class="n">url</span><span class="p">(&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
 <span class="nl">_filter:progid:</span><span class="n">DXImageTransform</span><span class="p">.</span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AlphaImageLoader</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="p">&#39;</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
@@ -61,7 +65,7 @@ after:
 <span class="nl">background:</span> <span class="n">url</span><span class="p">(&#39;</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg_1b8c3e0</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
 <span class="nl">_filter:progid:</span><span class="n">DXImageTransform</span><span class="p">.</span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AlphaImageLoader</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="p">&#39;</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">body</span><span class="o">-</span><span class="n">bg_1b8c3e0</span><span class="p">.</span><span class="n">png</span><span class="p">&#39;);</span>
 </pre></div>
-<p>###CDN</p>
+<h3 id="toc_5">CDN</h3>
 
 <p>Properly prepends a CDN url to those assets referenced with absolute paths.</p>
 <div class="highlight"><pre><span class="c1">//fis-conf.js</span>
@@ -88,11 +92,11 @@ after:
 <p>Use fis release with <code>-- domains</code> parameter to control whether to add domain</p>
 <div class="highlight"><pre><span class="nv">$ </span>fisp release --domains --dest ../output
 </pre></div>
-<p>###Inline/Embedded</p>
+<h3 id="toc_6">Inline/Embedded</h3>
 
 <p>Embedding js, css, images as base64 data URIs inside your files with <code>?__inline</code> parameter.</p>
 
-<p>####In HTML</p>
+<h4 id="toc_7">In HTML</h4>
 <div class="highlight"><pre><span class="c1">//before:</span>
 <span class="o">&lt;</span><span class="n">img</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;百度logo&quot;</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;images/logo.gif?__inline&quot;</span><span class="o">/&gt;</span>
 <span class="o">&lt;</span><span class="n">link</span> <span class="n">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="k">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;demo.css?__inline&quot;</span><span class="o">&gt;</span>
@@ -105,7 +109,7 @@ after:
 
 <span class="o">&lt;</span><span class="n">script</span> <span class="k">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="o">&gt;</span><span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(&#39;</span><span class="n">inline</span> <span class="n">file</span><span class="p">&#39;);</span><span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
 </pre></div>
-<p>####In JavaScript</p>
+<h4 id="toc_8">In JavaScript</h4>
 <div class="highlight"><pre><span class="err">源码：</span>
 <span class="c1">//before:</span>
 <span class="kr">__inline</span><span class="p">(</span><span class="err">&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">js</span><span class="err">&#39;</span><span class="p">);</span>
@@ -119,7 +123,7 @@ after:
 
 <span class="n">var</span> <span class="n">css</span> <span class="o">=</span> <span class="s">&quot;body </span><span class="se">\n</span><span class="s">{    color: red;</span><span class="se">\n</span><span class="s">}&quot;</span><span class="p">;</span>
 </pre></div>
-<p>####In CSS</p>
+<h4 id="toc_9">In CSS</h4>
 <div class="highlight"><pre><span class="o">//</span><span class="n">before</span><span class="p">:</span>
 <span class="nd">@import</span> <span class="n">url</span><span class="p">(</span><span class="s">&#39;demo.css?__inline&#39;</span><span class="p">);</span>
 
@@ -135,7 +139,7 @@ after:
     <span class="n">background</span><span class="p">:</span> <span class="n">url</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">image</span><span class="o">/</span><span class="n">gif</span><span class="p">;</span><span class="n">base64</span><span class="p">,</span><span class="n">R0lGODlhDgGBALMAAGBn6eYxLvvy9PnKyfO</span><span class="o">...</span><span class="n">Jzna6853wjKc850nPeoYgAgA7</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
-<p>###Amd-wrap</p>
+<h3 id="toc_10">Amd-wrap</h3>
 
 <p>Wrap CommonJS files in <code>define(function (require, exports, module) { ... })</code>.</p>
 <div class="highlight"><pre><span class="c1">//before</span>
@@ -164,34 +168,35 @@ after:
     <span class="p">};</span>
 <span class="p">});</span>
 </pre></div>
-<p>###Uglify-js</p>
+<h3 id="toc_11">Uglify-js</h3>
 
-<p>Minify JavaScript files with UglifyJS. Use fisp release with <code>--optimize</code> parameter to compress.<br/>
-###Clean-css</p>
+<p>Minify JavaScript files with UglifyJS. Use fisp release with <code>--optimize</code> parameter to compress.</p>
+
+<h3 id="toc_12">Clean-css</h3>
 
 <p>Minify CSS files with clean-css. Use fisp release with <code>--optimize</code> parameter to compress.</p>
 
-<p>###Html-compress</p>
+<h3 id="toc_13">Html-compress</h3>
 
 <p>Minify html files with html-compress. Use fisp release with <code>--optimize</code> parameter to compress.</p>
 
-<p>###Png-compressor</p>
+<h3 id="toc_14">Png-compressor</h3>
 
 <p>Compress png images with pngquant. Use fisp release with <code>--optimize</code> parameter to compress.</p>
 
-<p>###Smarty-xss</p>
+<h3 id="toc_15">Smarty-xss</h3>
 
 <p>Prevent Smarty from XSS.</p>
 
-<p>###Concat</p>
+<h3 id="toc_16">Concat</h3>
 
 <p>Concatenate files. See more in <a href="./pack-configuration.md">Concat Files With Pack Plugin</a>.</p>
 
-<p>###Adaptive Image Spriting</p>
+<h3 id="toc_17">Adaptive Image Spriting</h3>
 
 <p>Generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions.</p>
 
-<p>####Usage</p>
+<h4 id="toc_18">Usage</h4>
 
 <p>Use image src with <code>__sprite</code> parameter</p>
 
@@ -278,7 +283,7 @@ after:
 </pre></div>
 <p>As shown above, <code>1px_bg.png</code> is merged into <code>aio_x.png</code> , <code>nav_bg.png</code>  is merged into <code>aio_y.png</code>, <code>add.jpg</code> and <code>mul.jpg</code> are merged into <code>aio_z.png</code>.</p>
 
-<p>####background-position</p>
+<h4 id="toc_19">background-position</h4>
 
 <table><thead>
 <tr>

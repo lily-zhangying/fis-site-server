@@ -1,10 +1,11 @@
-<p>##Project configuration</p>
+<!--
+title: Project configuration
+toc: <ul class="nav"><li><a href="#toc_0">project.charset</a></li><li><a href="#toc_1">project.md5Length</a></li><li><a href="#toc_2">project.md5Connector</a></li><li><a href="#toc_3">project.include</a></li><li><a href="#toc_4">project.exclude</a></li><li><a href="#toc_5">project.fileType.text</a></li><li><a href="#toc_6">project.fileType.image</a></li></ul>
+type: detail
+-->
 
 <p>Create a <strong>fis-conf.js</strong> file in the project directory, we can do all kinds of fis build system customized configurations through：</p>
 <div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
-</pre></div>
-<p>or</p>
-<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({...});</span>
 </pre></div>
 <h3 id="toc_0">project.charset</h3>
 
@@ -12,17 +13,9 @@
 <li>explanation：config encoding。</li>
 <li>type：<code>string</code></li>
 <li>default：&#39;utf8&#39;</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.charset&#39;, &#39;gbk&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : { charset : &#39;gbk&#39; }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.charset&#39;</span><span class="p">,</span> <span class="s1">&#39;gbk&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_1">project.md5Length</h3>
@@ -31,17 +24,9 @@ fis.config.merge({<br/>
 <li>explanation：the length of md5。</li>
 <li>type：<code>number</code></li>
 <li>default：7</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.md5Length&#39;, 8);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : { md5Length : 8 }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.md5Length&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_2">project.md5Connector</h3>
@@ -50,17 +35,9 @@ fis.config.merge({<br/>
 <li>explanation：Set hyphen between md5 and file name</li>
 <li>type：<code>string</code></li>
 <li>default：&#39;_&#39;</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.md5Connector &#39;, &#39;.&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : { md5Connector : &#39;.&#39; }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.md5Connector &#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_3">project.include</h3>
@@ -69,17 +46,9 @@ fis.config.merge({<br/>
 <li>explanation：set the file include filter of project source</li>
 <li>type：<code>string</code> | <code>RegExp</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.include&#39;, &#39;src/**&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : { include : &#39;src/**&#39; }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.include&#39;</span><span class="p">,</span> <span class="s1">&#39;src/**&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_4">project.exclude</h3>
@@ -88,17 +57,9 @@ fis.config.merge({<br/>
 <li>explanation：Set the file exclude filter of project source</li>
 <li>type：<code>string</code> | <code>RegExp</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.exclude&#39;, /^\/_build\//i);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : { exclude : /^\/_build\//i }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.exclude&#39;</span><span class="p">,</span> <span class="sr">/^\/_build\//i</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_5">project.fileType.text</h3>
@@ -108,21 +69,9 @@ fis.config.merge({<br/>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：empty</li>
 <li>notice：the internal list of suffixes： [ <strong>&#39;css&#39;, &#39;tpl&#39;, &#39;js&#39;, &#39;php&#39;, &#39;txt&#39;, &#39;json&#39;, &#39;xml&#39;, &#39;htm&#39;, &#39;text&#39;, &#39;xhtml&#39;, &#39;html&#39;, &#39;md&#39;, &#39;conf&#39;, &#39;po&#39;, &#39;config&#39;, &#39;tmpl&#39;, &#39;coffee&#39;, &#39;less&#39;, &#39;sass&#39;, &#39;jsp&#39;, &#39;scss&#39;, &#39;manifest&#39;, &#39;bak&#39;, &#39;asp&#39;, &#39;tmp&#39;</strong> ], additional user configuration will not override the internal list of suffixes.</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.fileType.text&#39;, &#39;tpl, js, css&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : {<br/>
-        fileType : {<br/>
-            text : &#39;tpl, js, css&#39;<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.fileType.text&#39;</span><span class="p">,</span> <span class="s1">&#39;tpl, js, css&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_6">project.fileType.image</h3>
@@ -132,19 +81,7 @@ fis.config.merge({<br/>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：empty</li>
 <li>notice：the internal list of suffixes： [ <strong>&#39;svg&#39;, &#39;tif&#39;, &#39;tiff&#39;, &#39;wbmp&#39;, &#39;png&#39;, &#39;bmp&#39;, &#39;fax&#39;, &#39;gif&#39;, &#39;ico&#39;, &#39;jfif&#39;, &#39;jpe&#39;, &#39;jpeg&#39;, &#39;jpg&#39;, &#39;woff&#39;, &#39;cur&#39;</strong> ], additional user configuration will not override the internal list of suffixes.</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;project.fileType.image&#39;, &#39;swf, cur, ico&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-fis.config.merge({<br/>
-    project : {<br/>
-        fileType : {<br/>
-            image : &#39;swf, cur, ico&#39;<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;project.fileType.image&#39;</span><span class="p">,</span> <span class="s1">&#39;swf, cur, ico&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>

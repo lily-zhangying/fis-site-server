@@ -1,10 +1,8 @@
 <!--
 title: Command Line
-toc: 
+toc: <ul class="nav"><li><a href="#toc_0">fisp release</a></li><li><a href="#toc_1">fisp server</a></li><li><a href="#toc_2">lights install</a></li></ul>
 type: detail
 -->
-
-<p>##Command Line</p>
 
 <p>There are three commands you have to know which can meet all you needs.</p>
 <div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">fis</span><span class="o">-</span><span class="n">plus</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>
@@ -21,7 +19,7 @@ type: detail
     <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>  <span class="n">output</span> <span class="n">the</span> <span class="n">version</span> <span class="n">number</span>
     <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">color</span>     <span class="n">disable</span> <span class="n">colored</span> <span class="n">output</span>
 </pre></div>
-<p>###fisp release</p>
+<h3 id="toc_0">fisp release</h3>
 
 <p>fisp release is a very powerful command which can compile and deploy your code. It can meet a variety of front-end development needs with the appropriate parameter. Below is the output from fisp release --help</p>
 <div class="highlight"><pre>  <span class="nb">Usage</span><span class="p">:</span> <span class="nx">release</span> <span class="err">[</span><span class="nx">options</span><span class="cp">]</span>
@@ -44,7 +42,7 @@ type: detail
     -u, --unique           use unique compile caching
     --verbose              enable verbose output
 </pre></div>
-<p>###fisp server</p>
+<h3 id="toc_1">fisp server</h3>
 
 <p>fisp server command can start a small built-in server which can monitor your file changes. If you run php/smarty on your pc, make sure you have installed <a href="http://java.com/en/">Java version &gt;= 1.6</a> and <a href="http://cn2.php.net/downloads.php">php</a>. After install Java and php, we can start the debug server, after the server starts, it automatically checks the environment, and finally tell you that port it is listening on:</p>
 <div class="highlight"><pre><span class="nv">$ </span>fisp server start
@@ -82,7 +80,7 @@ starting fis-server on port : 8080
     --include <span class="nt">&lt;glob&gt;</span>               clean include filter
     --exclude <span class="nt">&lt;glob&gt;</span>               clean exclude filter
 </pre></div>
-<p>###lights install</p>
+<h3 id="toc_2">lights install</h3>
 
 <p>Lights is a front end package management tool which can make it exceedingly simple to find, install and keep packages up-to-date. You can install fis demo, modules and other resources through lights. Below is the output from lights --help</p>
 <div class="highlight"><pre><span class="n">Usage</span><span class="o">:</span> <span class="n">lights</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span>

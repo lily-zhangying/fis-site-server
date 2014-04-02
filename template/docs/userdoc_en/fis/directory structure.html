@@ -1,4 +1,8 @@
-<p>##Recommended Directory Structure</p>
+<!--
+title: Recommended Directory Structure
+toc: <ul class="nav"><li><a href="#toc_0">Subsystem</a></li><li><a href="#toc_1">Page</a></li><li><a href="#toc_2">Widget</a><ul class="nav"><li><a href="#toc_3">CSS widget</a></li><li><a href="#toc_4">JavaScript widget</a></li><li><a href="#toc_5">Template widget</a></li></ul></li></ul>
+type: detail
+-->
 
 <p>The FIS recommended project directory structure which consists of four levels:</p>
 
@@ -50,37 +54,37 @@
 <li>test, this directory contains application tests, these could be hand-written based on some other testing framework. </li>
 </ul>
 
-<p>###Subsystem</p>
+<h3 id="toc_0">Subsystem</h3>
 
 <p>The reason we isolate the subsystem is to result in greater maintainability which can make parallel developments easily and deploy the subsystem parallelly. There are two types of subsystem, common subsystem and ordinary subsystem, the common subsystem is for common libraries, modules and template on which the other ordinary subsyestems depends. The subsystem directory usually contains page, widget, static, test and the fis-conf.js. <br/>
 <strong>We do not recommend calling each other between the ordinary subsystems, but ordinary subsystem can call common subsystem</strong>, so that it can guarantee the ordinary subsystems are independent. This can bring great flexibility and maintainability  to the project. For instance, if you have many ordinary subsystems and one common subsystem, you will just release some subsystems which new feature are in, without the need to publish the entire site.</p>
 
-<p>###Page</p>
+<h3 id="toc_1">Page</h3>
 
 <p>We provide a framework based on Smarty3/PHP for template, there are alse other back-end solutions coming soon, like java, go, etc. The framework can efficiently control the loading of static resources. </p>
 
-<p>You can find more in <a href="./doc/smarty%20framework.md">Pages and Layout Based On Smarty</a>;</p>
+<p>You can find more in <a href="/userdoc_en/fis/smarty%20framework">Pages and Layout Based On Smarty</a>;</p>
 
-<p>###Widget</p>
+<h3 id="toc_2">Widget</h3>
 
 <p>There are three types of widget, Template widget, JavaScript widget, CSS widget, Template widget(smarty for now) can invoke JS widget and CSS widget.</p>
 
-<p>####CSS widget</p>
+<h4 id="toc_3">CSS widget</h4>
 
 <p>In general, CSS widgets are the most simple components, the css files in widget directory are css widgets. Each css widget contains at least one css file which has the same name with the css widget directory, while the css directory also can contains some pictures which are referenced in the css. </p>
 <div class="highlight"><pre><span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
 </pre></div>
-<p>####JavaScript widget</p>
+<h4 id="toc_4">JavaScript widget</h4>
 
 <p>The new JavaScript widget enables developers to create their own hidden implementations of HTML elements. For example, instead of pasting (and re-pasting) a script and a css into a web page, you only need call the JavaScript widget through require, the fis framework will auto load all the resources needed. The JavaScript files in widget directory are JavaScript widgets. Each JavaScript widget contains at least one JavaScript file which has the same name with the JavaScript widget directory, the JavaScript widget also can have the same name css file for the widget. </p>
 <div class="highlight"><pre><span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
 <span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
 </pre></div>
-<p>####Template widget</p>
+<h4 id="toc_5">Template widget</h4>
 
 <p>Template widget can build anything from a button to a complete application as an encapsulated, reusable element. Each Smarty widget contains at least one tpl(smarty) file which has the same name width the Smarty widget directory, the template provides a method for declaring document fragments in HTML. The Smarty widget also can have the same name js and css file for the widget. <strong>The reason of why the tpl, js and css must have the same name is that if you do that then you don&#39;t need to explicitly import resources.</strong> The fis framework will automatically find and load all the js and css files that the widget need when the widget rendering. </p>
 <div class="highlight"><pre><span class="n">tpl</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">tpl</span>
 <span class="n">js</span><span class="o">:</span>  <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">js</span>
 <span class="n">css</span><span class="o">:</span> <span class="n">path_to_widget</span><span class="sr">/widget/ui/widget name/</span><span class="n">widget</span> <span class="n">name</span><span class="o">.</span><span class="na">css</span>
 </pre></div>
-<p>You can find more in <a href="./doc/widget.md">How to Develop With Widgets</a>.</p>
+<p>You can find more in <a href="/userdoc_en/fis/widget">How to Develop With Widgets</a></p>

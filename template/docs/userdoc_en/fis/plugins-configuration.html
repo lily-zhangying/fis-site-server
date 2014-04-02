@@ -1,4 +1,8 @@
-<p>##Plugins</p>
+<!--
+title: Plugins
+toc: <ul class="nav"><li><a href="#toc_0">modules.parser</a></li><li><a href="#toc_1">modules.preprocessor</a></li><li><a href="#toc_2">modules.postprocessor</a></li><li><a href="#toc_3">modules.lint</a></li><li><a href="#toc_4">modules.test</a></li><li><a href="#toc_5">modules.optimizer</a></li><li><a href="#toc_6">modules.prepackager</a></li><li><a href="#toc_7">modules.packager</a></li><li><a href="#toc_8">modules.spriter</a></li><li><a href="#toc_9">modules.postpackager</a></li></ul>
+type: detail
+-->
 
 <h3 id="toc_0">modules.parser</h3>
 
@@ -40,23 +44,9 @@
 <li>explanation：config preprocessor plugins</li>
 <li>type：<code>Object</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.preprocessor.css&#39;, &#39;image-set&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        preprocessor : {<br/>
-            //css file will be compiled by fis-preprocessor-image-se plugin<br/>
-            css : &#39;image-set&#39;<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.preprocessor.css&#39;</span><span class="p">,</span> <span class="s1">&#39;image-set&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_2">modules.postprocessor</h3>
@@ -64,11 +54,10 @@ fis.config.merge({<br/>
 <ul>
 <li>explanation：config postprocessor plugins</li>
 <li>type：<code>Object</code></li>
-<li>default：
-<code>javascript
-{ js : &#39;jswrapper&#39; }
-</code></li>
-<li>usage：like modules.preprocessor</li>
+<li><p>default：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.postprocessor.js&#39;</span><span class="p">,</span> <span class="s1">&#39;jswrapper&#39;</span><span class="p">);</span>
+</pre></div></li>
+<li><p>usage：like modules.preprocessor</p></li>
 </ul>
 
 <h3 id="toc_3">modules.lint</h3>
@@ -77,80 +66,29 @@ fis.config.merge({<br/>
 <li>explanation：lint plugin</li>
 <li>type：<code>Object</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.lint.js&#39;, &#39;jshint&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        lint : {<br/>
-            //js files will be linted by fis-lint-jshint plugin<br/>
-            js : &#39;jshint&#39;<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p></li>
-</ul>
-
-<h3 id="toc_4">modules.test</h3>
-
-<ul>
-<li>explanation：test plugin</li>
-<li>type：<code>Object</code></li>
-<li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.test.js&#39;, &#39;phantomjs&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        test : {<br/>
-            //js files will by tested by fis-test-phantomjs plugin<br/>
-            js : &#39;phantomjs&#39;<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p></li>
-</ul>
-
-<h3 id="toc_5">modules.optimizer</h3>
-
-<ul>
-<li>explanation：minification</li>
-<li>type：<code>Object</code></li>
-<li>default：
-<code>javascript
-{
-    js : &#39;uglify-js&#39;,
-    css : &#39;clean-css&#39;,
-    png : &#39;png-compressor&#39;
-}
-</code></li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.optimizer.js&#39;, &#39;uglify-js&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        optimizer : {<br/>
-            //js files will by minified by fis-optimizer-uglify-js<br/>
-            js : &#39;uglify-js&#39;<br/>
-        }<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.lint.js&#39;</span><span class="p">,</span> <span class="s1">&#39;jshint&#39;</span><span class="p">);</span>
+</pre></div>
+<h3 id="toc_4">modules.test</h3></li>
+<li><p>explanation：test plugin</p></li>
+<li><p>type：<code>Object</code></p></li>
+<li><p>default：empty</p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.test.js&#39;</span><span class="p">,</span> <span class="s1">&#39;phantomjs&#39;</span><span class="p">);</span>
+</pre></div>
+<h3 id="toc_5">modules.optimizer</h3></li>
+<li><p>explanation：minification</p></li>
+<li><p>type：<code>Object</code></p></li>
+<li><p>default：</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nx">js</span> <span class="o">:</span> <span class="s1">&#39;uglify-js&#39;</span><span class="p">,</span>
+    <span class="nx">css</span> <span class="o">:</span> <span class="s1">&#39;clean-css&#39;</span><span class="p">,</span>
+    <span class="nx">png</span> <span class="o">:</span> <span class="s1">&#39;png-compressor&#39;</span>
+<span class="p">}</span>
+</pre></div></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.optimizer.js&#39;</span><span class="p">,</span> <span class="s1">&#39;uglify-js&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_6">modules.prepackager</h3>
@@ -159,20 +97,9 @@ fis.config.merge({<br/>
 <li>explanation：pre-packager plugin</li>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.prepackager&#39;, &#39;oo, xx&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        prepackager : &#39;oo, xx&#39;<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.prepackager&#39;</span><span class="p">,</span> <span class="s1">&#39;oo, xx&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_7">modules.packager</h3>
@@ -181,20 +108,9 @@ fis.config.merge({<br/>
 <li>explanation：packager plugin</li>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：&#39;map&#39;</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.packager&#39;, &#39;your_packager&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        packager : &#39;your_packager&#39;<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.packager&#39;</span><span class="p">,</span> <span class="s1">&#39;your_packager&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_8">modules.spriter</h3>
@@ -203,20 +119,9 @@ fis.config.merge({<br/>
 <li>explanation：csssprite plugin。</li>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：&#39;csssprites&#39;</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.spriter&#39;, &#39;your_spriter&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        spriter : &#39;your_spriter&#39;<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.spriter&#39;</span><span class="p">,</span> <span class="s1">&#39;your_spriter&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
 
 <h3 id="toc_9">modules.postpackager</h3>
@@ -225,18 +130,7 @@ fis.config.merge({<br/>
 <li>explanation：post-packager plugin</li>
 <li>type：<code>Array</code> | <code>string</code></li>
 <li>default：empty</li>
-<li><p>usage：<br/>
-<code>javascript<br/>
-fis.config.set(&#39;modules.postpackager&#39;, &#39;your_postpackager&#39;);<br/>
-</code></p>
-
-<p>or<br/>
-<code>javascript<br/>
-//fis-conf.js<br/>
-fis.config.merge({<br/>
-    modules : {<br/>
-        postpackager : &#39;your_postpackager&#39;<br/>
-    }<br/>
-});<br/>
-</code></p></li>
+<li><p>usage：</p>
+<div class="highlight"><pre><span class="nx">fis</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;modules.postpackager&#39;</span><span class="p">,</span> <span class="s1">&#39;your_postpackager&#39;</span><span class="p">);</span>
+</pre></div></li>
 </ul>
